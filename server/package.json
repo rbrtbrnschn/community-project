@@ -1,0 +1,27 @@
+{
+  "name": "community-project",
+  "version": "1.0.0",
+  "description": "Automated Multiplayer Task Handler (TodoApp With A Twist)",
+  "main": "server.js",
+  "scripts": {
+    "test": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rbrtbrnschn/community-project.git"
+  },
+  "keywords": [
+    "TodoApp",
+    "webapp",
+    "tasks"
+  ],
+  "author": "rbrtbrnschn",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rbrtbrnschn/community-project/issues"
+  },
+  "homepage": "https://github.com/rbrtbrnschn/community-project#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
