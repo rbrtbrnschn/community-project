@@ -3,8 +3,9 @@
 ## Getting Started
 - ``` git clone https://github.com/rbrtbrnschn/community-project.git ```
 - ``` cd community-project ```
-- ``` npm i ```
+- ``` npm run dev-install ```
 - rename SAMPLE.env to .env
+## ``` npm run dev-start ```
 
  
 ## Links
