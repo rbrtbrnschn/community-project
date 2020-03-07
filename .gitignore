@@ -4,5 +4,4 @@ client/node_modules/*
 node_modules/*
 
 # Safe
-!node_modules/concurrently/
 .env
