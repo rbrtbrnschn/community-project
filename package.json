@@ -1,0 +1,24 @@
+{
+  "name": "community-project",
+  "version": "1.0.0",
+  "description": "## Getting Started - ``` git clone https://github.com/rbrtbrnschn/community-project.git ``` - ``` cd community-project ``` - ``` npm i ``` - rename SAMPLE.env to .env",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rbrtbrnschn/community-project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rbrtbrnschn/community-project/issues"
+  },
+  "homepage": "https://github.com/rbrtbrnschn/community-project#readme",
+  "dependencies": {
+    "concurrently": "^5.1.0",
+    "dotenv": "^8.2.0"
+  }
+}
