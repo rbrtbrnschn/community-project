@@ -4,8 +4,8 @@
   "description": "## Getting Started - ``` git clone https://github.com/rbrtbrnschn/community-project.git ``` - ``` cd community-project ``` - ``` npm i ``` - rename SAMPLE.env to .env",
   "main": "index.js",
   "scripts": {
-    "install": "concurrently \"npm i\" \"cd server && npm i\" \"cd client && npm i\" ",
-    "run": "concurrently \"cd server && npm start\" \"cd client && npm start\" "
+    "dev-install": "concurrently \"npm i\" \"cd server && npm i\" \"cd client && npm i\" ",
+    "dev-start": "concurrently \"cd server && npm start\" \"cd client && npm start\" "
   },
   "repository": {
     "type": "git",
