@@ -10,6 +10,6 @@
 ## Info Page Coming Soon
 
 ## Links
-### [Trello](https://trello.com/b/PLIlzSJR/community-project)
+### [Trello](https://trello.com/b/ce4JUEZA/community-project)
 ### [Discord](https://discord.gg/q2wRePf)
 ### [Website](https://doesisaacbeat.me)
