@@ -7,7 +7,8 @@
 - rename SAMPLE.env to .env
 ## ``` npm run dev-start ```
 
- 
+## Info Page Coming Soon
+
 ## Links
 ### [Trello](https://trello.com/b/PLIlzSJR/community-project)
 ### [Discord](https://discord.gg/q2wRePf)
