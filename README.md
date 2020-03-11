@@ -1,6 +1,9 @@
 # Community-Project
 
 ## Getting Started
+### Install Node.js
+[DOWNLOAD] (https://nodejs.org/en/download/) 
+
 - ``` git clone https://github.com/rbrtbrnschn/community-project.git ```
 - ``` cd community-project ```
 - ``` npm run dev-install ```
