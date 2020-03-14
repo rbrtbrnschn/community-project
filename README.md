@@ -9,8 +9,8 @@
 <details><summary>Table Of Contents</summary>
 <p>
 
-#### [Getting Started](#getting-started)
-#### [Links](#links)
+##### [Getting Started](#getting-started)
+##### [Links](#links)
 
 </p>
 </details>
