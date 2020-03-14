@@ -1,6 +1,9 @@
 # Community-Project
+**Version 1.0.0** [Change Log](CHANGELOG.md)
+## Content
+#### [Getting Started](#getting-started)
 
-## Getting Started
+## <a name="getting-started"></a>Getting Started
 [Download & Install Node.js](https://nodejs.org/en/download/) 
 
 - ``` git clone https://github.com/rbrtbrnschn/community-project.git ```
