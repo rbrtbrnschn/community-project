@@ -7,11 +7,15 @@
 ## Description
 *insert new name here* is a _multiplayer_ todo-app. We keep score for your _tasks, habits, scores, etc._ that you share with your friends.
 
-<details>
-  <h2>Content</h2>
-  <br>
-  #### [Getting Started](#getting-started)
+<details><summary>CLICK ME</summary>
+<p>
+
+#### [Getting Started](#getting-started)
+#### [Links](#links)
+
+</p>
 </details>
+
 
 
 ## <a name="getting-started"></a>Getting Started
@@ -23,9 +27,7 @@
 - rename SAMPLE.env to .env
 ## ``` npm run dev-start ```
 
-## Info Page Coming Soon
-
-## Links
+## <a name="links"></a>Links
 ### [Trello](https://trello.com/invite/b/ce4JUEZA/07b8611e4c172292c22fe86dd9a1d49b/community-project)
 ### [Discord](https://discord.gg/q2wRePf)
 ### [Website](https://doesisaacbeat.me)
