@@ -1,8 +1,9 @@
 # Community-Project
+*Version 1.0.0* [Change Log](CHANGELOG.md)
 
 ## Description
+*insert new name here* is a _multiplayer_ todo-app. We keep score for your _tasks, habits, scores, etc._ 
 
-**Version 1.0.0** [Change Log](CHANGELOG.md)
 ## Content
 #### [Getting Started](#getting-started)
 
