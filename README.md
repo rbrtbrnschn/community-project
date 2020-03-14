@@ -1,8 +1,11 @@
 # Community-Project
 *Version 1.0.0* [Change Log](CHANGELOG.md)
 
+[![Website shields.io](https://img.shields.io/website-up-down-green-red/http/shields.io.svg)](https://doesisaacbeat.me/)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+
 ## Description
-*insert new name here* is a _multiplayer_ todo-app. We keep score for your _tasks, habits, scores, etc._ 
+*insert new name here* is a _multiplayer_ todo-app. We keep score for your _tasks, habits, scores, etc._ that you share with your friends.
 
 ## Content
 #### [Getting Started](#getting-started)
