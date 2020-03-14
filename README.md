@@ -1,4 +1,7 @@
 # Community-Project
+
+## Description
+
 **Version 1.0.0** [Change Log](CHANGELOG.md)
 ## Content
 #### [Getting Started](#getting-started)
