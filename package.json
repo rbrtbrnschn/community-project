@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev-install": "npm i concurrently && concurrently \"npm i\" \"cd server && npm i\" \"cd client && npm i\" ",
-    "dev-start": "concurrently \"cd server && npm start\" \"cd client && npm start\" "
+    "dev-start": "concurrently \"cd server && npm start\" \"cd client && npm start\" ",
+    "git": "node ./scripts/git.js"
   },
   "repository": {
     "type": "git",
