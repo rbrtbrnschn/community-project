@@ -13,6 +13,7 @@
 <p>
 
 ##### [Getting Started](#getting-started)
+#### [Scripts](#scripts)
 ##### [Links](#links)
 ##### [Prototyping](#prototype-container)
 
@@ -24,11 +25,20 @@
 ## <a name="getting-started"></a>Getting Started
 [Download & Install Node.js](https://nodejs.org/en/download/) 
 
-- ``` git clone https://github.com/rbrtbrnschn/community-project.git ```
-- ``` cd community-project ```
-- ``` npm run dev-install ```
+- ` git clone https://github.com/rbrtbrnschn/community-project.git `
+- ` cd community-project && npm run dev-install `
 - rename SAMPLE.env to .env
-## ``` npm run dev-start ```
+- replace server/SAMPLE_CONFIG.js with **config.js** downloaded from trello
+## ``` npm run dev ```
+
+---
+
+## <a name="scripts"></a>Scripts
+`npm run dev-install` - installs dev-dependencies for you to start working
+
+`npm run dev` - starts webapp in development mode
+
+`npm run git your commit message` - adds, commits with your commit message and pushes to your forked repository
 
 ---
 
