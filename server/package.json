@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "node server.js",
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "dev": "nodemon"
   },
   "repository": {
     "type": "git",
@@ -24,6 +25,11 @@
   "homepage": "https://github.com/rbrtbrnschn/community-project#readme",
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "ts-node-dev": "^1.0.0-pre.44",
+    "typescript": "^3.8.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
   }
 }
