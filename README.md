@@ -7,7 +7,7 @@
 [![Discord Server](https://img.shields.io/discord/675237870532821003)](https://discord.gg/q2wRePf)
 [![Please Fork](https://img.shields.io/badge/Please-Fork-success)](#)
 ## Description
-~Community Project~ is a _multiplayer_ todo-app. We keep score for your _tasks, habits, scores, etc._ that you share with your friends.
+~Community Project~ is a _multiplayer_ todo-app. We keep score for your _tasks, habits, scores, etc._ that you share with your friends. Be it with only one or as a group - no problem. 
 
 <details><summary>Table Of Contents</summary>
 <p>
@@ -43,6 +43,8 @@
 ---
 
 ## <a name="prototype-container"></a>Prototyping
+
+Coming Soon.
 
 ---
 
