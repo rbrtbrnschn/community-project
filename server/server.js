@@ -5,10 +5,8 @@ require("dotenv").config({ path: "../.env" });
 const express = require("express");
 const app = express();
 const cors = require("cors");
-//! Configuration
-// pipe backend requests
-// attempt on trying to get oauth to redirect back to 3000 with all cookies | didnt work
-app.enable("trust proxy");
+
+//app.enable("trust proxy");
 app.use(cors());
 
 //! Server

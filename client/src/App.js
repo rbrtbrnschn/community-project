@@ -1,7 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Homepage from "./pages/Homepage";
-import DownloadPage from "./pages/Download";
 import "./App.css";
 
 function App() {
@@ -10,7 +9,6 @@ function App() {
       <Router>
         <Switch>
           <Route path="/" exact component={Homepage}></Route>
-          <Route path="/download" exact component={DownloadPage}></Route>
         </Switch>
       </Router>
     </div>
