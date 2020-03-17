@@ -25,9 +25,6 @@ exec("git pull origin master", (err, a) => {
         return;
       }
       t++;
-    });
-  });
-  console.log("t:",t)
   switch (t) {
     case 3:
       console.log(`Pushed Commit: ${commitMessage}`);
@@ -40,4 +37,6 @@ exec("git pull origin master", (err, a) => {
     default:
       break;
   }
+    });
+  });
 });
