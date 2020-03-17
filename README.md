@@ -14,9 +14,10 @@ _TodoHub_ is a _multiplayer_ todo-app that keeps track of everything imaginable:
 <p>
 
 ##### [Getting Started](#getting-started)
-#### [Scripts](#scripts)
+##### [Scripts](#scripts)
 ##### [Links](#links)
 ##### [Prototyping](#prototype-container)
+##### [How To Contribute](#contribution)
 
 </p>
 </details>
@@ -27,7 +28,8 @@ _TodoHub_ is a _multiplayer_ todo-app that keeps track of everything imaginable:
 [Download & Install Node.js](https://nodejs.org/en/download/) 
 - Fork this repository
 - `clone` your forked version to your pc
-- `cd community-project && npm run dev-install `
+- `cd todohub && npm run dev-install` go into the directory and install dependencies
+- `git checkout -b local` create a new branch for your _local_ development
 - rename SAMPLE.env to .env
 - replace server/SAMPLE_CONFIG.js with **config.js** downloaded from trello
 ### ``` npm run dev ```
@@ -47,6 +49,17 @@ _TodoHub_ is a _multiplayer_ todo-app that keeps track of everything imaginable:
 
 Coming Soon.
 
+---
+
+## <a name="contribution"></a>How to contribute? It's easy.
+
+- `git add .` add all changes
+- `git commit -m "Commit Message Here"` commit those changes
+- `git push origin local` push said commit to github
+- go ahead and make a [pull request](https://github.com/rbrtbrnschn/todo-hub/compare)
+_compare across forks_ if you need to
+select your local branch and your forked repository
+- hit new **create pull request** 
 ---
 
 ## <a name="links"></a>Links
