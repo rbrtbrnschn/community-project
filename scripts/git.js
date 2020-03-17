@@ -25,18 +25,20 @@ exec("git pull origin master", (err, a) => {
         return;
       }
       t++;
-  switch (t) {
-    case 3:
-      console.log(`Pushed Commit: ${commitMessage}`);
-      break;
-    case 2:
-      console.log("Added & Comitted Commit.");
-      break;
-    case 1:
-      console.log("Pulled Potential Changes From Repo.");
-    default:
-      break;
-  }
+	  switch (t) {
+	    case 3:
+	      console.log(`Pushed Commit: ${commitMessage}`);
+	      break;
+	    case 2:
+	      console.log("Added & Comitted Commit.");
+	      console.log("Failed To Push.")
+	      break;
+	    case 1:
+	      console.log("Pulled Potential Changes From Repo.");
+	      console.log("Failed To Push.")
+	    default:
+	      break;
+	  }
     });
   });
 });
