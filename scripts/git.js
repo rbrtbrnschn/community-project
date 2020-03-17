@@ -27,6 +27,7 @@ exec("git pull origin master", (err, a) => {
       t++;
     });
   });
+  console.log("t:",t)
   switch (t) {
     case 3:
       console.log(`Pushed Commit: ${commitMessage}`);
