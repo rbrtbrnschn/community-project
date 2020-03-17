@@ -9,6 +9,7 @@
 ## Description
 _TodoHub_ is a _multiplayer_ todo-app that keeps track of everything imaginable: _scores, habits, challanges, bets, tasks, you name it_. Doesn't matter if it's just you and a friend or a group of a 100 - providing **vibrant, stunning** graphs displaying current _statistics, streaks and more_.
 
+
 <details><summary>Table Of Contents</summary>
 <p>
 
