@@ -26,6 +26,7 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "mongoose": "^5.9.5",
     "ts-node-dev": "^1.0.0-pre.44",
     "typescript": "^3.8.3"
   },
