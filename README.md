@@ -24,12 +24,12 @@ _TodoHub_ is a _multiplayer_ todo-app that keeps track of everything imaginable:
 
 ## <a name="getting-started"></a>Getting Started
 [Download & Install Node.js](https://nodejs.org/en/download/) 
-
-- ` git clone https://github.com/rbrtbrnschn/community-project.git `
-- ` cd community-project && npm run dev-install `
+- Fork this repository
+- `clone` your forked version to your pc
+- `cd community-project && npm run dev-install `
 - rename SAMPLE.env to .env
 - replace server/SAMPLE_CONFIG.js with **config.js** downloaded from trello
-## ``` npm run dev ```
+### ``` npm run dev ```
 
 ---
 
