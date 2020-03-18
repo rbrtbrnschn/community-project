@@ -9,6 +9,13 @@ class homepage extends Component {
       <div>
         <h4> Home </h4>
         <a href="/api/auth/discord/login">Login with discord</a>
+        <p></p>
+        <a href="/api/auth/google/login">Login with google</a>
+        <p></p>
+        <a href="/api/auth/logout">Logout</a>
+        
+        
+
       </div>
     );
   }

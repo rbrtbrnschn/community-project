@@ -48,7 +48,7 @@ passport.use(
               .save()
               .then(newPlayer => {
                 console.log("Created Player:", newUser.name);
-                done(null, { user: newUser, player: newPlayer }); // passes the profile data to serializeUser
+                done(null, newUser); // passes the profile data to serializeUser
               });
           });
       } else {

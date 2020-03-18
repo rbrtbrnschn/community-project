@@ -9,7 +9,7 @@ router.use("/discord", discord);
 router.use("/google", google);
 
 // Logout route
-router.get("/logout", (req, res) => {
+router.get("/logout",(req, res) => {
   res.cookie("__matchID", "", {
     expires: new Date(0),
     domain: "localhost",
