@@ -1,5 +1,5 @@
 import React, {useRef,useState,useEffect} from "react"
-import {useHistory} from "react-router-dom"
+import {useHistory, BrowserRouter as Router} from "react-router-dom"
 
 const Login = () => {
 	const usernameRef = useRef();
@@ -20,6 +20,7 @@ const Login = () => {
 		const data = await response.json();
 		if(!data)throw new Error("Bad Login");
 		if(data.ok)history.push("/");
+		
 	}
 	return(
 		<div>
