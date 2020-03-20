@@ -4,9 +4,11 @@ const passport = require("passport");
 const passportSetup = require("../services/passport/index");
 const discord = require("./auth/discord");
 const google = require("./auth/google");
+const local = require("./auth/local");
 
 router.use("/discord", discord);
 router.use("/google", google);
+router.use("/local",local);
 
 // Logout route
 router.get("/logout",(req, res) => {

@@ -12,8 +12,9 @@ class homepage extends Component {
         <p></p>
         <a href="/api/auth/google/login">Login with google</a>
         <p></p>
+	<a href="/login">Login</a>
+	<p></p>
         <a href="/api/auth/logout">Logout</a>
-        
         
 
       </div>

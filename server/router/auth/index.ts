@@ -1,8 +1,5 @@
 const passport = require("passport");
 
-const DiscordStrategy = require("./discord");
-const GoogleStrategy = require("./google");
-
 // Used to stuff a piece of information into a cookie
 passport.serializeUser((user, done) => {
   done(null, user);
