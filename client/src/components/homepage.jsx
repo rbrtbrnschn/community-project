@@ -1,6 +1,9 @@
 import React, { Component } from "react";
+import socketIOClient from "socket.io-client"
+
 class homepage extends Component {
   state = {};
+  socket = socketIOClient("http://localhost:3000");
   componentDidMount() {
     console.log("mounted");
   }

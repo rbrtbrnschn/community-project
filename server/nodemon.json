@@ -2,5 +2,5 @@
   "watch": [],
   "ext": ".ts,.js",
   "ignore": [],
-  "exec": "ts-node-dev server.js"
+  "exec": "ts-node-dev app.js"
 }
