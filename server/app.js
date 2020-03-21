@@ -34,6 +34,7 @@ const server = app.listen(port, () => {
 
 //! Websocket
 const io = socketIo(server);
+io.set('origins', '*:*');
 let connections = [];
 io.on("connection", socket => {
 
