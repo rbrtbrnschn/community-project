@@ -6,6 +6,7 @@ import CreateAccountPage from "./pages/CreateAccountPage"
 import LoginPage from "./pages/LoginPage"
 import TestPage from "./pages/TestPage"
 import "./App.css";
+import "bulma/css/bulma.min.css";
 
 function App() {
   return (
