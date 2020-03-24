@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import socketIOClient from "socket.io-client"
 
 class homepage extends Component {
   constructor(props) {
@@ -7,11 +6,6 @@ class homepage extends Component {
     this.state = {};
   }
 
-  defaultSocket = socketIOClient("http://localhost:3000");
-  componentDidMount() {
-    console.log("mounted");
-    const socket = socketIOClient('/todo-hub');
-  }
   render() {
     console.log("context pls:",this.props);
     return (

@@ -4,6 +4,7 @@ import { UserProvider } from "./contexts/UserContext";
 import Homepage from "./pages/Homepage";
 import CreateAccountPage from "./pages/CreateAccountPage"
 import LoginPage from "./pages/LoginPage"
+import TestPage from "./pages/TestPage"
 import "./App.css";
 import "bulma/css/bulma.min.css";
 
@@ -16,6 +17,7 @@ function App() {
             <Route path="/" exact render={props => <Homepage {...props}/>}></Route>
 	    	<Route path="/createAccount" exact render={props => <CreateAccountPage {...props} />}></Route>
             <Route path="/login" exact render={props => <LoginPage {...props} />}></Route>
+	  <Route path="/test" exact render={props => <TestPage {...props} />}></Route>
 	</Switch>
 	</UserProvider>
       </Router>
