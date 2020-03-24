@@ -26,13 +26,15 @@ passport.use(
         new User({
           userID: __playerID,
           name: profile.displayName,
-          email: profile.emails[0].value,
+          name_lower: profile.displayName.toLowerCase(),
+          email: profile.emails[0].value.toLowerCase(),
           firstLogin: true,
           createdOn: Date.now(),
           oAuth: {
             provider: profile.provider,
             providerID: profile.id,
             providerUsername: profile.displayName,
+            providerUsername_lower: profile.displayName.toLowerCase(),
             providerAvatar: profile.photos[0].value
           }
         })
@@ -41,6 +43,7 @@ passport.use(
             new Player({
               playerID: __playerID,
               username: profile._json.given_name,
+              username_lower: profile._json.given_name.toLowerCase(),
               opponents: [],
               tasks: [],
               locale: profile._json.locale

@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const taskSchema = new Schema({
   title: String,
+  title_lower: String,
   notes: String,
   payload: String,
   taskID: Number,
@@ -20,6 +21,7 @@ const taskSchema = new Schema({
 
 const habitSchema = new Schema({
   title: String,
+  title_lower: String,
   notes: String,
   payload: String,
   taskID: Number,
@@ -41,6 +43,7 @@ const habitSchema = new Schema({
 });
 const dailySchema = new Schema({
   title: String,
+  title_lower: String,
   notes: String,
   payload: String,
   taskID: Number,
@@ -60,6 +63,7 @@ const dailySchema = new Schema({
 });
 const goalSchema = new Schema({
   title: String,
+  title_lower: String,
   notes: String,
   payload: String,
   taskID: Number,
@@ -77,6 +81,7 @@ const goalSchema = new Schema({
 
 const streakSchema = new Schema({
   title: String,
+  title_lower: String,
   notes: String,
   payload: String,
   taskID: Number,
@@ -98,6 +103,7 @@ const streakSchema = new Schema({
 
 const dreamSchema = new Schema({
   title: String,
+  title_lower: String,
   notes: String,
   payload: String,
   taskID: Number,

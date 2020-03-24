@@ -41,18 +41,24 @@ const io = socketIo(server,{
         res.end();
     }
 });
+const nsp = io.of('/todo-hub');
+nsp.on('connection', function(socket){
+  console.log('someone connected:',socket.id);
+});
+nsp.emit('hi', 'everyone!');
+
 let connections = [];
-io.on("connection", socket => {
+io.on("connection", client => {
 
 	// On Connection
-	connections.push(socket);
+	connections.push(client);
 	console.log("Client Connected. Connections:",connections.length);
 	// On WIP
 	
 	
 	// On Disconnect
-	socket.on("disconnect",()=>{
-		const index = connections.findIndex(s => s.id === socket.id);
+	client.on("disconnect",()=>{
+		const index = connections.findIndex(s => s.id === client.id);
 		connections.splice(index,1);
 		console.log("Client Disconnected. Connections:", connections.length);
 	})

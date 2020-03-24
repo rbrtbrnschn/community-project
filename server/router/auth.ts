@@ -22,24 +22,15 @@ router.get("/logout",(req, res) => {
   res.redirect("/");
 });
 // Test Route
-router.get("/test", (req, res) => {
+router.get("/", (req, res) => {
   if(req.user){
-	return res.json(req.user);
+	return res.json({...req.user, ok:true});
   }
   else{
-  	return res.json({status:404,msg:"not found"})
+  	return res.json({status:404,msg:"not logged in",ok:false})
   }
   
 });
-
-// Middleware to check if the user is authenticated
-function isUserAuthenticated(req, res, next) {
-  if (req.user) {
-    next();
-  } else {
-    res.send("You must login!");
-  }
-}
 
 module.exports = router;
 

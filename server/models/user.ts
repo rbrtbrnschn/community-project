@@ -19,7 +19,9 @@ let UserDB = mongoose.createConnection(
 const userSchema = new Schema({
 	userID: String,
 	name: String,
+	name_lower: String,
 	email: String,
+	email_lower: String,
 	firstLogin: Boolean,
 	oAuth: Object,
 	createdOn: String,

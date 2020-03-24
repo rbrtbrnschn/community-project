@@ -1,12 +1,8 @@
-module.exports = () => {
-	return (req,res,next) => {
+module.exports = (req,res,next) => {
 		if(req.user){
 			next();
 		}
 		else{
-			console.log("Not Logged In");
-			return res.end();
-		}
-	
+			return res.json({status:404,msg:"Not Logged In.", ok:false});
 	}
 }

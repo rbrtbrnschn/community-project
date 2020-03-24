@@ -25,14 +25,16 @@ passport.use(
         const { id, username, avatar, email, locale } = profile;
         new User({
           userID: __playerID,
-          name: "Discord User",
-          email: email,
+	  name: username,
+	  name_lower: username.toLowerCase(),
+	  email: email.toLowerCase(),
           firstLogin: false,
           createdOn: Date.now(),
           oAuth: {
             provider: "discord",
             providerID: id,
-            providerUsername: username,
+	    providerUsername: username,
+	    providerUsername_lower: username.toLowerCase(),
             providerAvatar: avatar
           }
         })
@@ -40,7 +42,8 @@ passport.use(
           .then(newUser => {
             new Player({
               playerID: __playerID,
-              username: username,
+	      username: username,
+	      username_lower: username.toLowerCase(),
               opponents: [],
               tasks: [],
               locale: locale

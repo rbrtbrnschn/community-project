@@ -3,9 +3,11 @@ import socketIOClient from "socket.io-client"
 
 class homepage extends Component {
   state = {};
-  socket = socketIOClient("http://localhost:3000");
+  defaultSocket = socketIOClient("http://localhost:3000");
   componentDidMount() {
     console.log("mounted");
+    const socket = socketIOClient('/todo-hub');
+    
   }
   render() {
     return (

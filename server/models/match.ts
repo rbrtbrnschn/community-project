@@ -18,6 +18,7 @@ let MatchDB = mongoose.createConnection(
 );
 const matchSchema = new Schema({
   matchID: String,
+  socketID: Number,
   collectionID: String,
   createdOn: String,
   timestamps: [],
@@ -25,4 +26,3 @@ const matchSchema = new Schema({
 });
 
 module.exports = { MatchDB, matchSchema };
-

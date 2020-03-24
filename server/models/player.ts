@@ -20,7 +20,9 @@ let PlayerDB = mongoose.createConnection(
 const playerSchema = new Schema({
   playerID: String,
   username: String,
+  username_lower: String,
   opponents: Array,
+  sockets: Array,
   tasks: Array,
   locale: String
 });
