@@ -1,10 +1,26 @@
-import React, { createContext, useState, useEffect } from "react";
-const context = createContext(null);
+import React,{ useEffect} from "react";
 
-const UserProvider = ({ children }) => {
-  const [state, setState] = useState({user:{},player:{},matches:[]});
+const UserContext = React.createContext({});
 
-  useEffect( () => {
+const UserProvider = (props) => {
+
+	const [state,setState] = React.useState(
+		{user:{
+			oAuth:{}
+		},player:{
+			tasks:[],
+			opponents:[],
+			sockets:[],
+		},matches:[
+			{
+			scores: [],
+			timestamps:[],
+			},
+		],
+		ok:false});
+	const { children } = props;
+	
+	useEffect( () => {
     let _user,_player,_matches;
     // Init
     init();
@@ -15,9 +31,9 @@ const UserProvider = ({ children }) => {
     	if(_user.ok && _player.ok){
 		setState({user:_user,player:_player,matches:_matches});
 	}
-    
+
     }
-    
+
     // Get User
     async function getUser(){
     	const response = await fetch("/api/auth");
@@ -34,13 +50,13 @@ const UserProvider = ({ children }) => {
     }
     // Get Matches
     async function getMatches(player){
-	const errMessage = 
+	const errMessage =
 {status:404,msg:"player not found", ok:false}
 	if(!player.sockets){
 		console.log("matches:",errMessage);
 		return errMessage;
 	}
-	
+
 	const options = {
 		method: "POST",
 		headers: {
@@ -58,14 +74,22 @@ const UserProvider = ({ children }) => {
 
   useEffect(()=>{
      const prior = {...state};
-     if(Object.keys(prior.user).length < 1)return;
+     if(prior.ok === false)return;
     console.log(state);
   },[state])
 
-  return <context.Provider value={state}>{children}</context.Provider>;
-};
 
-UserProvider.context = context;
-export const UserConsumer = context.Consumer;
+	return(
+		<UserContext.Provider
+		value={
+			{state,
+			setState}
+		}>
+			{children}
+		</UserContext.Provider>)
 
-export default UserProvider;
+}
+
+export default UserContext;
+
+export { UserProvider };

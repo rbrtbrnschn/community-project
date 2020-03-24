@@ -1,5 +1,5 @@
-import React, {useRef,useState,useEffect} from "react"
-import {useHistory, BrowserRouter as Router} from "react-router-dom"
+import React, {useRef} from "react"
+import {useHistory} from "react-router-dom"
 
 const Login = () => {
 	const usernameRef = useRef();

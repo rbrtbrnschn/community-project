@@ -1,7 +1,6 @@
-import React, { useState, useRef, useEffect} from "react"
+import React, { useRef} from "react"
 
 const Create = () => {
-	const [state,setState] = useState({});
 	const fullNameRef = useRef();
 	const usernameRef = useRef();
 	const emailRef = useRef();
@@ -98,7 +97,6 @@ const Create = () => {
 		}
 		async function createUser(user){
 			let err = false;	
-				const {fullName, username,email,password } = user;
 				Object.values(user).forEach((stuff)=>{
 					if(stuff === undefined){err = true;}
 				});
