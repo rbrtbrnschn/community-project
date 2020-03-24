@@ -14,7 +14,7 @@ router.post("/new",async (req,res)=>{
 	const now = Date.now();
 	const timestamp = {
 		stamp: now,
-		payload: "onMatchCreate",
+		payload: "onCreate",
 	}	
 
 	// Create Match From Model

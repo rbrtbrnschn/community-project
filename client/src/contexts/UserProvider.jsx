@@ -2,7 +2,7 @@ import React, { createContext, useState, useEffect } from "react";
 const context = createContext(null);
 
 const UserProvider = ({ children }) => {
-  const [user, setUser] = useState({});
+  const [state, setState] = useState({user:{},player:{},matches:[]});
 
   useEffect( () => {
     let _user,_player,_matches;
@@ -12,6 +12,10 @@ const UserProvider = ({ children }) => {
     	_user = await getUser();
     	_player = await getPlayer(_user);
     	_matches = await getMatches(_player);
+    	if(_user.ok && _player.ok){
+		setState({user:_user,player:_player,matches:_matches});
+	}
+    
     }
     
     // Get User
@@ -52,7 +56,7 @@ const UserProvider = ({ children }) => {
 
   }, []);
 
-  return <context.Provider value={user}>{children}</context.Provider>;
+  return <context.Provider value={state}>{children}</context.Provider>;
 };
 
 UserProvider.context = context;
