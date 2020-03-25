@@ -1,11 +1,10 @@
 import React from "react"
-import SocketIO from "../components/socketIO"
+//import SocketIO from "../components/SocketIO"
 
 const TestPage = () => {
 
 	return(
 		<div>
-			<SocketIO></SocketIO>
 		</div>
 	)
 }

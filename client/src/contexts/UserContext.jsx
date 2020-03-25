@@ -1,6 +1,6 @@
 import React,{ useEffect} from "react";
-
 const UserContext = React.createContext({});
+
 
 const UserProvider = (props) => {
 

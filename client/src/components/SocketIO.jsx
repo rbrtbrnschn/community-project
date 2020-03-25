@@ -2,15 +2,15 @@ import React, { useEffect } from "react";
 import socketIOClient from "socket.io-client";
 import UserContext from "../contexts/UserContext";
 
-const SocketIO = () => {
-	const socket = socketIOClient();
+const SocketIO = ({children}) => {
+	const socket = socketIOClient("/todo-hub");
 	const context = React.useContext(UserContext);
 	const {state,setState} = context;
 	useEffect(()=>{
-		console.log("socketiosetup:",state);
-	},[state])
+		console.log("Websocket Connected.");
+	},[])
 
-	return(<div></div>)
+	return(<div>{children}</div>)
 }
 
 export default SocketIO;

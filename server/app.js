@@ -41,10 +41,25 @@ const io = socketIo(server,{
         res.end();
     }
 });
-io.on('connection', function(socket){
-  console.log(socket.id,"connected.");
-  io.emit("onConnection","connected");
-});
+const nsp = io.of("/todo-hub");
+nsp.on("connection",(client)=>{
+	// On Connect
+	client.emit("onConnection","hi")
+	
+	// On Join Rooms // After 'onConnection'
+	client.on("onJoinRooms",socketIDS =>{
+		socketIDS.forEach(s=>{
+			client.join(s+"");
+		})
+	})
+
+	// On Send Data To Room
+	client.on("onSendToRoom",({socketID, data})=>{
+		const room = socketID+"";
+		nsp.to(room).emit("onSendToRoom",data);
+	})
+})
+
 
 // Routing
 const api = require("./router/index");
