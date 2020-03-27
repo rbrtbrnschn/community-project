@@ -23,7 +23,5 @@
     "concurrently": "^5.1.0",
     "dotenv": "^8.2.0"
   },
-  "devDependencies": {
-    "gulp": "^4.0.2"
-  }
+  "devDependencies": {}
 }
