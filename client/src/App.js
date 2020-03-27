@@ -4,14 +4,16 @@ import { UserProvider } from "./contexts/UserContext";
 import Homepage from "./components/Homepage";
 import CreateAccountPage from "./components/CreateAccount"
 import LoginPage from "./components/LoginAccount"
-import TestPage from "./components/Test"
+import TestPage from "./components/Test";
 import TasksPage from "./components/Tasks";
+import Navbar from "./components/navbar";
 import "./App.css";
 import "bulma/css/bulma.min.css";
 
 function App() {
   return (
     <div className="App">
+	  <Navbar />
       <Router>
         <UserProvider>	
           <Switch>
