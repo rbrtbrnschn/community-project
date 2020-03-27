@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import Home from "../components/homepage";
-import Info from "../components/homepageInfo";
+import Home from "./homepage";
+import Info from "./info";
 class Homepage extends Component {
   state = {};
   render() {

@@ -1,10 +1,11 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { UserProvider } from "./contexts/UserContext";
-import Homepage from "./pages/Homepage";
-import CreateAccountPage from "./pages/CreateAccountPage"
-import LoginPage from "./pages/LoginPage"
-import TestPage from "./pages/TestPage"
+import Homepage from "./components/Homepage";
+import CreateAccountPage from "./components/CreateAccount"
+import LoginPage from "./components/LoginAccount"
+import TestPage from "./components/Test"
+import TasksPage from "./components/Tasks";
 import "./App.css";
 import "bulma/css/bulma.min.css";
 
@@ -18,7 +19,8 @@ function App() {
 	    	<Route path="/createAccount" exact render={props => <CreateAccountPage {...props} />}></Route>
             <Route path="/login" exact render={props => <LoginPage {...props} />}></Route>
 	  <Route path="/test" exact render={props => <TestPage {...props} />}></Route>
-	</Switch>
+	<Route path="/tasks" exact render={props => <TasksPage {...props} />}></Route>
+	  </Switch>
 	</UserProvider>
       </Router>
     </div>

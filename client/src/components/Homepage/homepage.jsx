@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import SocketIOClient from "socket.io-client";
-import UserContext from "../contexts/UserContext";
+import UserContext from "../../contexts/UserContext";
 const Home = (props) => {
 
 	const context = React.useContext(UserContext);
