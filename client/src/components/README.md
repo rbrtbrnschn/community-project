@@ -1,1 +1,1 @@
-# [Component Naming Conventions](Conventions.md)
+# [Component Naming Conventions](CONVENTIONS.md)
