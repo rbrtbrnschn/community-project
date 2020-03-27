@@ -9,6 +9,7 @@
 
 ## Example Of A **package.json**
 for a component that is a **page**
+
 _src/components/Component_
 ```json
 {
@@ -16,9 +17,48 @@ _src/components/Component_
 }
 ```
 for a component that can be used in **multiple pages and/or scenarios**
+
 _src/components/component_
 ```json
 {
 	"main":"component.js"
 }
+```
+## Why?
+_linked in [README.md](README.md)_
+For Making Life Just A Bit Easier:
+**old way** _of importing_
+
+Page Component
+```js
+import Component from "../components/thisParticularComponent/ThisParticularComponent.jsx"
+```
+Actual Component
+```js
+import "../../css/thisParticularComponent/stylesheet.css"
+```
+
+**with the casing conventions**
+
+Page Component
+```js
+import Component from "./component"
+```
+
+Actual Component
+```js
+import "./component.scss"
+```
+
+## Setting Up Routing For Pages
+It is **dead simple**.
+
+App.js
+```js
+import Component from "./components/Component"
+
+return(
+	<Component />
+);
+
 ```
