@@ -24,14 +24,24 @@ const Login = () => {
 	}
 	return(
 		<div>
-			<h2>Login</h2>
+			<h2 className="title is2">Login</h2>
 			<input type="username" placeholder="username" ref={usernameRef}></input>
 			<p></p>
 			<input type="password" placeholder="password" ref={passwordRef}></input>
 			<p></p>
-				<input type="submit" onClick={handleOnSubmit}></input>
+			<h6 className="title"></h6>
+				<input type="submit" className="button is-danger" onClick={handleOnSubmit}></input>
 			<p></p>
-			<a href="/createAccount">Create Account</a>
+			<p></p>
+			<h6 className="title"></h6>
+        			<a href="/api/auth/discord/login" className="button is-normal">Login with discord</a>
+			<p></p>	
+			
+
+        			<a href="/api/auth/google/login" className="button is-normal">Login with google</a>
+			
+        	<p></p>
+			<a href="/createAccount" className="button is-normal">Create Account</a>
 		</div>
 	)
 }

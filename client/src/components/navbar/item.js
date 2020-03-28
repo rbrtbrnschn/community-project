@@ -18,11 +18,11 @@ const DropdownNavItem = (props) => {
 	return(
 		<div className={classes}>
 			<input type="checkbox" id={"dropdown"+pos} />
-			<label for={"dropdown"+pos} className="navbar-link">
+			<label htmlFor={"dropdown"+pos} className="navbar-link">
 				{title}
 			</label>
 			<div id={"dropdown-content"+pos} className="navbar-dropdown">
-				{children.map((c,i)=>(<BasicNavItem item={c} />))}
+				{children.map((c,i)=>(<BasicNavItem key={c.title} item={c} />))}
 			</div>
 			
 

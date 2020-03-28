@@ -17,6 +17,14 @@ const Navbar = (props) => {
 		title:"Home",
 		link:"/"
 	}
+	const tasks = {
+		title:"Tasks",
+		link:"/tasks"
+	}
+	const test = {
+		title:"Test",
+		link:"/test"
+	}
 	const account = {
 		title: "Account",
 		pos:1,
@@ -29,14 +37,15 @@ const Navbar = (props) => {
 
 	return(
 	<nav className="navbar is-danger" role="navigation" aria-label="main navigation">
-		<input type="checkbox" id="toggler" class="toggler" />
+		<input type="checkbox" id="toggler" className="toggler" />
 		<div className="navbar-brand">
 			<BasicNavItem item={homepage} />
 			<Hamburger />
 		</div>
 		<div id="navbarBasicExample" className="navbar-menu">
 			<div className="navbar-start">
-		
+			<BasicNavItem item={tasks} />
+			<BasicNavItem item={test} />
 			</div>
 			<div className="navbar-end">
 			  
