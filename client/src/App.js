@@ -14,9 +14,9 @@ import "bulma/css/bulma.min.css";
 
 //! Font Awesome
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faCheckSquare, faCoffee } from '@fortawesome/free-solid-svg-icons'
+import { faCheckSquare, faCoffee,fas } from '@fortawesome/free-solid-svg-icons'
 import { fab } from '@fortawesome/free-brands-svg-icons'
-library.add(faCheckSquare,faCoffee,fab);
+library.add(faCheckSquare,faCoffee,fas,fab);
 
 function App() {
   return (

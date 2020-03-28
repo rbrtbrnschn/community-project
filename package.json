@@ -6,7 +6,8 @@
   "scripts": {
     "dev-install": "npm i concurrently && concurrently \"npm i\" \"cd server && npm i\" \"cd client && npm i\" ",
     "dev": "concurrently \"cd server && npm run dev\" \"cd client && npm run dev\" \"cd client && gulp watch\" ",
-    "git": "node ./scripts/git.js"
+    "git": "node ./scripts/git.js",
+    "start":"npm run dev"
   },
   "repository": {
     "type": "git",
