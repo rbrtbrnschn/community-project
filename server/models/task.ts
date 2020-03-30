@@ -122,4 +122,179 @@ const dreamSchema = new Schema({
   timestamps: Array
 });
 
-module.exports = {taskSchema: taskSchema, habitSchema: habitSchema, dailySchema: dailySchema, goalSchema: goalSchema, streakSchema: streakSchema, dreamSchema: dreamSchema}
+interface taskInterface {
+  title: String;
+  notes: String;
+  payload: String;
+}
+
+class Task {
+  constructor(_task: taskInterface) {
+    return this.create(_task);
+  }
+  create(task: taskInterface) {
+    const { title, notes, payload } = task;
+    const onCreate = {
+      payload: "onCreate",
+      key: Date.now(),
+      isComplete: false
+    };
+    const Task = {
+      title: title,
+      notes: notes,
+      payload: payload,
+      id: uuid(),
+      createdAt: new Date().toLocaleDateString(),
+      timestamps: [onCreate],
+      isComplete: false
+    };
+    return Task;
+  }
+}
+class Habit {
+  constructor(_task: taskInterface) {
+    return this.create(_task);
+  }
+  create(task: taskInterface) {
+    const { title, notes, payload } = task;
+    const onCreate = {
+      payload: "onCreate",
+      key: Date.now(),
+      isComplete: false
+    };
+    const Task = {
+      title: title,
+      notes: notes,
+      payload: payload,
+      id: uuid(),
+      createdAt: new Date().toLocaleDateString(),
+      timestamps: [onCreate],
+      isComplete: false
+    };
+    return Task;
+  }
+}
+class Daily {
+  constructor(_task: taskInterface) {
+    return this.create(_task);
+  }
+  create(task: taskInterface) {
+    const { title, notes, payload } = task;
+    const onCreate = {
+      payload: "onCreate",
+      key: Date.now(),
+      isComplete: false
+    };
+    const Task = {
+      title: title,
+      notes: notes,
+      payload: payload,
+      id: uuid(),
+      createdAt: new Date().toLocaleDateString(),
+      timestamps: [onCreate],
+      isComplete: false
+    };
+    return Task;
+  }
+}
+class Streak {
+  constructor(_task: taskInterface) {
+    return this.create(_task);
+  }
+  create(task: taskInterface) {
+    const { title, notes, payload } = task;
+    const onCreate = {
+      payload: "onCreate",
+      key: Date.now(),
+      isComplete: false
+    };
+    const Task = {
+      title: title,
+      notes: notes,
+      payload: payload,
+      id: uuid(),
+      createdAt: new Date().toLocaleDateString(),
+      timestamps: [onCreate],
+      isComplete: false
+    };
+    return Task;
+  }
+}
+class Goal {
+  constructor(_task: taskInterface) {
+    return this.create(_task);
+  }
+  create(task: taskInterface) {
+    const { title, notes, payload } = task;
+    const onCreate = {
+      payload: "onCreate",
+      key: Date.now(),
+      isComplete: false
+    };
+    const Task = {
+      title: title,
+      notes: notes,
+      payload: payload,
+      id: uuid(),
+      createdAt: new Date().toLocaleDateString(),
+      timestamps: [onCreate],
+      isComplete: false
+    };
+    return Task;
+  }
+}
+class Dream {
+  constructor(_task: taskInterface) {
+    return this.create(_task);
+  }
+  create(task: taskInterface) {
+    const { title, notes, payload } = task;
+    const onCreate = {
+      payload: "onCreate",
+      key: Date.now(),
+      isComplete: false
+    };
+    const Task = {
+      title: title,
+      notes: notes,
+      payload: payload,
+      id: uuid(),
+      createdAt: new Date().toLocaleDateString(),
+      timestamps: [onCreate],
+      isComplete: false
+    };
+    return Task;
+  }
+}
+class Challenge {
+  constructor(_task: taskInterface) {
+    return this.create(_task);
+  }
+  create(task: taskInterface) {
+    const { title, notes, payload } = task;
+    const onCreate = {
+      payload: "onCreate",
+      key: Date.now(),
+      isComplete: false
+    };
+    const Task = {
+      title: title,
+      notes: notes,
+      payload: payload,
+      id: uuid(),
+      createdAt: new Date().toLocaleDateString(),
+      timestamps: [onCreate],
+      isComplete: false
+    };
+    return Task;
+  }
+}
+export { taskInterface, Task, Habit, Daily, Streak, Goal, Dream, Challenge };
+module.exports = {
+  taskSchema: taskSchema,
+  habitSchema: habitSchema,
+  dailySchema: dailySchema,
+  goalSchema: goalSchema,
+  streakSchema: streakSchema,
+  dreamSchema: dreamSchema
+};

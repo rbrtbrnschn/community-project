@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-
+import { faDiscord,faGoogle } from "@fortawesome/free-brands-svg-icons"
 const Login = () => {
   const usernameRef = useRef();
   const passwordRef = useRef();
@@ -73,14 +73,25 @@ const Login = () => {
 
       <p></p>
       <h6 className="title"></h6>
-      <a href="/api/auth/discord/login" className="button is-normal">
-        Login with discord
-      </a>
+      <button onClick={()=>{window.location = "/api/auth/discord/login"}} className="button is-normal">
+	  <span className="icon is-left">
+	  <FontAwesomeIcon icon={faDiscord} />
+	  </span>
+	  <span>
+	  Login with discord
+	  </span>
+      </button>
       <p></p>
 
-      <a href="/api/auth/google/login" className="button is-normal">
-        Login with google
-      </a>
+      <button onClick={()=>{ window.location="/api/auth/google/login"}} className="button is-normal">
+	  <span className="icon is-left">
+	  <FontAwesomeIcon icon={faGoogle} />
+	  </span>
+	  <span>
+	  Login with Google
+	  </span>
+        
+      </button>
       <h2 className="title is-2"></h2>
       <p></p>
       <a href="/createAccount" className="button is-normal">

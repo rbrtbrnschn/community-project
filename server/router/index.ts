@@ -13,7 +13,7 @@ api.use("/", download);
 api.use("/user",user);
 api.use("/player",player);
 api.use("/match",match);
-//api.use("/task",task)
+api.use("/task",task)
 api.use("/auth",auth);
 
 //! Export
