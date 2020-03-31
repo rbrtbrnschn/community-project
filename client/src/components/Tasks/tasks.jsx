@@ -7,13 +7,6 @@ const Tasks = (props) => {
 	const { player } = state;
 	const { tasks } = player;
 	
-	/*const [_tasks,setTasks] = useState([]);
-	useEffect(()=>{
-		console.log("mounted");
-		setTasks(tasks)
-	},[tasks])*/
-
-
 	const handleOnComplete = async (_id) => {
 		const url = "http://localhost:3000/api/task/find/"+_id+"/complete";
 		const response = await fetch(url);
@@ -41,10 +34,56 @@ const Tasks = (props) => {
 	
 	
 	}
+	const handleOnEdit = (_id) => {
+		const modal = document.getElementById(_id+"-modal");
+		modal.classList.add("is-active");
+		
+	}
 
+	const handleOnCancle = (_id) => {
+		const modal = document.getElementById(_id+"-modal");
+		modal.classList.remove("is-active");
+	}
+	const handleOnSaveChanges = async(task) => {
+		const { id } = task;
+		const oldState = {...state};
+		const oldPlayer = {...oldState.player}
+		const newTasks = [...oldPlayer.tasks]
+		const index = newTasks.findIndex(t=> t.id === id);
+		newTasks[index] = task;
+
+		const url = "http://localhost:3000/api/task/edit";
+		const options = {
+			method: "POST",
+			headers: {
+				"Content-Type":"application/json"
+			},
+			body: JSON.stringify({task:{...newTasks[index]},index:index})
+		}
+		const response = await fetch(url,options);
+		const data = await response.json();
+
+		setState({
+			...oldState,
+			player:{
+				...oldPlayer,
+				tasks:[...newTasks]
+				}
+		})
+
+		handleOnCancle(id);
+	}
 	return(<div>
 		<h1 className="title is-3"></h1>
-		{tasks.map(t=><Task key={t.id} task={t} onComplete={()=>{handleOnComplete(t.id)}} onDelete={()=>{handleOnDelete(t.id)}} />)}
+		{tasks.map(t=><Task key={t.id} 
+			task={t} 
+			onComplete={()=>{handleOnComplete(t.id)}} 
+			onDelete={()=>{handleOnDelete(t.id)}} 
+			onEdit={()=>{handleOnEdit(t.id)}}
+			onCancle={()=>{handleOnCancle(t.id)}}
+			onSaveChanges={handleOnSaveChanges}
+
+			/>)}
 		</div>)
 }
 

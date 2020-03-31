@@ -1,23 +1,43 @@
 import React from "react";
+import {Modal} from "./modal";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faTimes,faCheck} from "@fortawesome/free-solid-svg-icons"
 const Task = (props) => {
-	const { task, onDelete, onComplete } = props;
+	const { task, onDelete, onComplete, onEdit, onCancle, onSaveChanges } = props;
 
-	return(<div className="card" id={task.id}>
-		<div className="card-content">		
+	return(<div className="task">
+		<div className="card" id={task.id}>
+		<div className="card-content" onClick={onEdit}>		
 		<p className="title is-3">{task.title}</p>
 		<p className="subtitle">{task.notes}</p>
 		</div>
 
 		<footer className="card-footer">
 		<p className="card-footer-item">
-		<span onClick={onComplete}>Complete</span>
+		<button className="button is-success"
+			onClick={onComplete}
+		>
+    		<span className="icon is-small">
+     		 <FontAwesomeIcon icon={faCheck} />
+		    </span>
+		    <span>Complete</span>
+	 	 </button>
 		</p>
 		<p className="card-footer-item">
-		<span onClick={onDelete}>Delete</span>
+		<button className="button is-danger is-outlined"
+			onClick={onDelete}
+		>
+  		  <span>Delete</span>
+  		  <span className="icon is-small">
+  		    <FontAwesomeIcon icon={faTimes} />
+  		  </span>
+  		</button>
 		</p>
 		</footer>
-		</div>)
+		</div>
+		<Modal task={task} onCancle={onCancle} onSaveChanges={onSaveChanges}/>
+		
+	</div>)
 }
 
 export default Task;

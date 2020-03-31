@@ -1,3 +1,4 @@
 const isLoggedIn = require("./isAuth");
+import {saveTaskToFile} from "./saveTask";
 
-module.exports = { isLoggedIn: isLoggedIn }
+export {isLoggedIn, saveTaskToFile}

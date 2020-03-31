@@ -2,7 +2,8 @@ const router = require("express").Router();
 const { PlayerDB, playerSchema } = require("../models/player");
 const Player = PlayerDB.model("player", playerSchema);
 import { uuid } from "uuidv4";
-//import {taskInterface,Task,Habit,Daily,Streak,Goal,Dream,Challenge} from "../models/task"
+import fs from "fs";
+//import {saveTaskToFile} from "../services/snippets"
 
 interface taskInterface {
   title: String;
@@ -217,9 +218,12 @@ class Challenge {
   }
 }
 
+
+//! Get Task By ID 
+// do action of payload with task
 router.get("/find/:id/:payload?", async (req, res) => {
   const id = parseInt(req.params.id, 10);
-  const payload = req.params.payload;
+  const { payload } = req.params;
   const { userID } = req.user;
   const player = await Player.findOne({ playerID: userID });
 
@@ -227,19 +231,24 @@ router.get("/find/:id/:payload?", async (req, res) => {
   const task = tasks.find(t => t.id === id);
   const index = tasks.indexOf(task);
   const type = task.payload;
-
+	
+  const splitDir = __dirname.split("/");
+  splitDir.pop();
+  const DEST = splitDir.join("/")+"/archive"
+  console.log(DEST);
+  
   if (payload) {
     //TODO: TEMPORARY / USE COMPLETE/DELETE/ARCHIVE methods of their Classes
     switch (payload) {
       case "complete":
         tasks.splice(index, 1);
-        break;
+	break;
       case "delete":
         tasks.splice(index, 1);
         break;
       case "archive":
         tasks.splice(index, 1);
-        break;
+	break;
       default:
         break;
     }
@@ -250,6 +259,18 @@ router.get("/find/:id/:payload?", async (req, res) => {
 });
 });
 
+//! Edit Task
+router.post("/edit",async(req,res)=>{
+	const { task, index } = req.body;
+
+	const player = await Player.findOne({playerID:req.user.userID});
+	player.tasks[index] = task;
+	player.markModified("tasks");
+	player.save();
+	return res.json(task);
+	
+})
+//! New Task
 router.post("/new", async (req, res) => {
   const { title, notes, payload } = req.body;
   const _player = await Player.findOne({ playerID: req.user.userID });
