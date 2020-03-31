@@ -1,6 +1,6 @@
 {
   "watch": [],
   "ext": ".ts,.js",
-  "ignore": [],
+  "ignore": ["archive/*.json"],
   "exec": "ts-node-dev app.js"
 }

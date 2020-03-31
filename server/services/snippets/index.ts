@@ -1,4 +1,4 @@
 const isLoggedIn = require("./isAuth");
 import {saveTaskToFile} from "./saveTask";
-
-export {isLoggedIn, saveTaskToFile}
+import { exists, read, write } from "./fsHelpers";
+export {isLoggedIn, saveTaskToFile, exists, read, write}

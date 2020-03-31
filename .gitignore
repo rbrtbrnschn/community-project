@@ -171,3 +171,4 @@ tags
 # Custom
 .env
 server/config.js
+server/archive/*.json

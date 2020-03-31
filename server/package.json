@@ -43,6 +43,7 @@
     "uuidv4": "^6.0.6"
   },
   "devDependencies": {
+    "@types/node": "^13.9.8",
     "nodemon": "^2.0.2"
   }
 }

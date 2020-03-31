@@ -1,17 +1,15 @@
 const router = require("express").Router();
 const { PlayerDB, playerSchema } = require("../models/player");
 const Player = PlayerDB.model("player", playerSchema);
-import { uuid } from "uuidv4";
-import fs from "fs";
-//import {saveTaskToFile} from "../services/snippets"
+import { exists, read, write } from "../services/snippets";
 
-interface taskInterface {
+interface taskCreation {
   title: String;
   notes: String;
   payload: String;
 }
 
-function hash() {
+function hash(): Number {
   const id = Math.round(Math.random() * 10000);
   if (id < 1000) {
     return hash();
@@ -19,265 +17,193 @@ function hash() {
     return id;
   }
 }
+function createTask(taskSetup: taskCreation) {
+  const { payload } = taskSetup;
+  let _task;
+  switch (payload) {
+    case "Task":
+      _task = new Task(taskSetup);
+      break;
+    case "Habit":
+      _task = new Habit(taskSetup);
+      break;
+    case "Daily":
+      _task = new Daily(taskSetup);
+      break;
+    case "Streak":
+      _task = new Streak(taskSetup);
+      break;
+    case "Goal":
+      _task = new Goal(taskSetup);
+      break;
+    case "Dream":
+      _task = new Dream(taskSetup);
+      break;
+    case "Challenge":
+      _task = new Challenge(taskSetup);
+      break;
+    default:
+      break;
+  }
+  return _task;
+}
 
-class _Task {
-  task: any;
-  constructor(_task: taskInterface) {
-    return this.create(_task);
-  }
-  create(task: taskInterface) {
-    let _task;
-    switch (task.payload) {
-      case "Task":
-        _task = new Task(task);
-        break;
-      case "Habit":
-        _task = new Habit(task);
-        break;
-      case "Daily":
-        _task = new Daily(task);
-        break;
-      case "Streak":
-        _task = new Streak(task);
-        break;
-      case "Goal":
-        _task = new Goal(task);
-        break;
-      case "Dream":
-        _task = new Dream(task);
-        break;
-      case "Challenge":
-        _task = new Challenge(task);
-        break;
-      default:
-        break;
-    }
-    return _task;
-  }
+function completeTask(task: Task) {
+  const stamp = { payload: "onComplete", key: Date.now(), isComplete: true };
+  task.timestamps.push(stamp);
+  task.isComplete = true;
+  task.completedAt = new Date().toLocaleDateString();
+  return task;
+}
+
+function archiveTask(task: Task) {
+  const stamp = { payload: "onArchive", key: Date.now(), isComplete: false };
+  task.timestamps.push(stamp);
+  task.archivedAt = new Date().toLocaleDateString();
+  return task;
+}
+
+function sendToArchive(task: Task, userID: String, payload: String) {
+  const splitDir = __dirname.split("/");
+  splitDir.pop();
+  const DEST = splitDir.join("/") + "/archive";
+  const path = DEST + "/" + userID + ".json";
+
+  const taskDestination =
+    payload === "complete"
+      ? "completed"
+      : payload === "archive"
+      ? "archived"
+      : "ERROR";
+
+  const writeTaskToFile = () => {
+    read(path, (data: any) => {
+      data = JSON.parse(data);
+      console.log(taskDestination);
+      data[taskDestination].push(task);
+      console.log("written to file:", data);
+      write(path, data);
+    });
+  };
+  exists(path, writeTaskToFile);
 }
 
 class Task {
-  constructor(_task: taskInterface) {
-    return this.create(_task);
-  }
-  create(task: taskInterface) {
-    const { title, notes, payload } = task;
-    const onCreate = {
-      payload: "onCreate",
-      key: Date.now(),
-      isComplete: false
-    };
-    const Task = {
-      title: title,
-      notes: notes,
-      payload: payload,
-      id: hash(),
-      createdAt: new Date().toLocaleDateString(),
-      timestamps: [onCreate],
-      isComplete: false
-    };
-    return Task;
-  }
-}
-class Habit {
-  constructor(_task: taskInterface) {
-    return this.create(_task);
-  }
-  create(task: taskInterface) {
-    const { title, notes, payload } = task;
-    const onCreate = {
-      payload: "onCreate",
-      key: Date.now(),
-      isComplete: false
-    };
-    const Task = {
-      title: title,
-      notes: notes,
-      payload: payload,
-      id: hash(),
-      createdAt: new Date().toLocaleDateString(),
-      timestamps: [onCreate],
-      isComplete: false
-    };
-    return Task;
-  }
-}
-class Daily {
-  constructor(_task: taskInterface) {
-    return this.create(_task);
-  }
-  create(task: taskInterface) {
-    const { title, notes, payload } = task;
-    const onCreate = {
-      payload: "onCreate",
-      key: Date.now(),
-      isComplete: false
-    };
-    const Task = {
-      title: title,
-      notes: notes,
-      payload: payload,
-      id: hash(),
-      createdAt: new Date().toLocaleDateString(),
-      timestamps: [onCreate],
-      isComplete: false
-    };
-    return Task;
-  }
-}
-class Streak {
-  constructor(_task: taskInterface) {
-    return this.create(_task);
-  }
-  create(task: taskInterface) {
-    const { title, notes, payload } = task;
-    const onCreate = {
-      payload: "onCreate",
-      key: Date.now(),
-      isComplete: false
-    };
-    const Task = {
-      title: title,
-      notes: notes,
-      payload: payload,
-      id: hash(),
-      createdAt: new Date().toLocaleDateString(),
-      timestamps: [onCreate],
-      isComplete: false
-    };
-    return Task;
-  }
-}
-class Goal {
-  constructor(_task: taskInterface) {
-    return this.create(_task);
-  }
-  create(task: taskInterface) {
-    const { title, notes, payload } = task;
-    const onCreate = {
-      payload: "onCreate",
-      key: Date.now(),
-      isComplete: false
-    };
-    const Task = {
-      title: title,
-      notes: notes,
-      payload: payload,
-      id: hash(),
-      createdAt: new Date().toLocaleDateString(),
-      timestamps: [onCreate],
-      isComplete: false
-    };
-    return Task;
-  }
-}
-class Dream {
-  constructor(_task: taskInterface) {
-    return this.create(_task);
-  }
-  create(task: taskInterface) {
-    const { title, notes, payload } = task;
-    const onCreate = {
-      payload: "onCreate",
-      key: Date.now(),
-      isComplete: false
-    };
-    const Task = {
-      title: title,
-      notes: notes,
-      payload: payload,
-      id: hash(),
-      createdAt: new Date().toLocaleDateString(),
-      timestamps: [onCreate],
-      isComplete: false
-    };
-    return Task;
-  }
-}
-class Challenge {
-  constructor(_task: taskInterface) {
-    return this.create(_task);
-  }
-  create(task: taskInterface) {
-    const { title, notes, payload } = task;
-    const onCreate = {
-      payload: "onCreate",
-      key: Date.now(),
-      isComplete: false
-    };
-    const Task = {
-      title: title,
-      notes: notes,
-      payload: payload,
-      id: hash(),
-      createdAt: new Date().toLocaleDateString(),
-      timestamps: [onCreate],
-      isComplete: false
-    };
-    return Task;
+  title: String;
+  notes: String;
+  payload: String;
+  id: Number;
+  createdAt: String;
+  completedAt: any;
+  archivedAt: any;
+  timestamps: Array<any>;
+  isComplete: Boolean;
+  test: any;
+
+  constructor(_task: taskCreation) {
+    const { title, notes, payload } = _task;
+    this.title = title;
+    this.notes = notes;
+    this.payload = payload;
+    this.id = hash();
+    this.createdAt = new Date().toLocaleDateString();
+    this.timestamps = [
+      { payload: "onCreate", key: Date.now(), isComplete: false }
+    ];
+    this.isComplete = false;
+    return this;
   }
 }
 
+class Habit extends Task {
+  constructor(task: taskCreation) {
+    super(task);
+  }
+}
+class Daily extends Task {
+  constructor(task: taskCreation) {
+    super(task);
+  }
+}
+class Streak extends Task {
+  constructor(task: taskCreation) {
+    super(task);
+  }
+}
+class Goal extends Task {
+  constructor(task: taskCreation) {
+    super(task);
+  }
+}
+class Dream extends Task {
+  constructor(task: taskCreation) {
+    super(task);
+  }
+}
+class Challenge extends Task {
+  constructor(task: taskCreation) {
+    super(task);
+  }
+}
 
-//! Get Task By ID 
+//! Get Task By ID
 // do action of payload with task
-router.get("/find/:id/:payload?", async (req, res) => {
+router.get("/find/:id/:payload?", async (req: any, res: any) => {
   const id = parseInt(req.params.id, 10);
   const { payload } = req.params;
   const { userID } = req.user;
   const player = await Player.findOne({ playerID: userID });
 
   const { tasks } = player;
-  const task = tasks.find(t => t.id === id);
+  const task = tasks.find((t: Task) => t.id === id);
   const index = tasks.indexOf(task);
-  const type = task.payload;
-	
-  const splitDir = __dirname.split("/");
-  splitDir.pop();
-  const DEST = splitDir.join("/")+"/archive"
-  console.log(DEST);
-  
+  //const type = task.payload;
+
   if (payload) {
-    //TODO: TEMPORARY / USE COMPLETE/DELETE/ARCHIVE methods of their Classes
     switch (payload) {
       case "complete":
+        tasks[index] = completeTask(tasks[index]);
+        sendToArchive(tasks[index], player.playerID, payload);
         tasks.splice(index, 1);
-	break;
+        break;
       case "delete":
         tasks.splice(index, 1);
         break;
       case "archive":
+        tasks[index] = archiveTask(tasks[index]);
+        sendToArchive(tasks[index], player.playerID, payload);
         tasks.splice(index, 1);
-	break;
+        break;
       default:
         break;
     }
     player.markModified("tasks");
     player.save();
   }
-  return res.json({task:{...task}
-});
+  return res.json({ task: { ...task } });
 });
 
 //! Edit Task
-router.post("/edit",async(req,res)=>{
-	const { task, index } = req.body;
+router.post("/edit", async (req: any, res: any) => {
+  let { task, index } = req.body;
 
-	const player = await Player.findOne({playerID:req.user.userID});
-	player.tasks[index] = task;
-	player.markModified("tasks");
-	player.save();
-	return res.json(task);
-	
-})
+  const player = await Player.findOne({ playerID: req.user.userID });
+  if (!index) {
+    index = player.tasks.findIndex((t: any) => t.id === task.id);
+  }
+  player.tasks[index] = task;
+  player.markModified("tasks");
+  player.save();
+  return res.json(task);
+});
 //! New Task
-router.post("/new", async (req, res) => {
+router.post("/new", async (req: any, res: any) => {
   const { title, notes, payload } = req.body;
   const _player = await Player.findOne({ playerID: req.user.userID });
   const { tasks } = _player;
 
   const task = { title: title, notes: notes, payload: payload };
-  const _task = new _Task(task);
+  const _task = createTask(task);
   _player.tasks.push(_task);
   _player.markModified("tasks");
   _player.save();

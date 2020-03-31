@@ -11,7 +11,6 @@ const Tasks = (props) => {
 		const url = "http://localhost:3000/api/task/find/"+_id+"/complete";
 		const response = await fetch(url);
 		const data = await response.json();
-		console.log("found:",data);
 		const {task} = data;
 		const i = tasks.findIndex(t => t.id === task.id);
 		const _tasks = [...tasks];
@@ -24,7 +23,6 @@ const Tasks = (props) => {
 		const url = "http://localhost:3000/api/task/find/"+_id+"/delete"
 		const response = await fetch(url);
 		const data = await response.json();
-		console.log("found:",data);
 		const {task} = data;
 		const i = tasks.findIndex(t => t.id === task.id);
 		const _tasks = [...tasks];
