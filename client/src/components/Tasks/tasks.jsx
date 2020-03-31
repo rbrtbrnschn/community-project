@@ -32,14 +32,30 @@ const Tasks = (props) => {
 	
 	
 	}
+
+	const handleOnArchive = async (_id) => {
+		const url = "http://localhost:3000/api/task/find/"+_id+"/archive"
+		const response = await fetch(url);
+		const data = await response.json();
+		const { task } = data;
+		const i = tasks.findIndex(t => t.id === task.id);
+		const _tasks = [...tasks];
+		_tasks.splice(i,1);
+		const _state = {...state};
+		setState({...state,player:{...state.player,tasks:_tasks}});
+	}
 	const handleOnEdit = (_id) => {
 		const modal = document.getElementById(_id+"-modal");
+		const html = document.querySelector("html");
+		html.classList.add("is-clipped")
 		modal.classList.add("is-active");
 		
 	}
 
 	const handleOnCancle = (_id) => {
 		const modal = document.getElementById(_id+"-modal");
+		const html = document.querySelector("html");
+		html.classList.remove("is-clipped")
 		modal.classList.remove("is-active");
 	}
 	const handleOnSaveChanges = async(task) => {
@@ -80,7 +96,7 @@ const Tasks = (props) => {
 			onEdit={()=>{handleOnEdit(t.id)}}
 			onCancle={()=>{handleOnCancle(t.id)}}
 			onSaveChanges={handleOnSaveChanges}
-
+			onArchive={handleOnArchive}
 			/>)}
 		</div>)
 }

@@ -79,9 +79,8 @@ function sendToArchive(task: Task, userID: String, payload: String) {
   const writeTaskToFile = () => {
     read(path, (data: any) => {
       data = JSON.parse(data);
-      console.log(taskDestination);
       data[taskDestination].push(task);
-      console.log("written to file:", data);
+      //console.log("written to file:", data);
       write(path, data);
     });
   };

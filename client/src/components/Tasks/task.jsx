@@ -3,7 +3,7 @@ import {Modal} from "./modal";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTimes,faCheck} from "@fortawesome/free-solid-svg-icons"
 const Task = (props) => {
-	const { task, onDelete, onComplete, onEdit, onCancle, onSaveChanges } = props;
+	const { task, onDelete, onComplete, onEdit, onCancle, onSaveChanges, onArchive } = props;
 
 	return(<div className="task">
 		<div className="card" id={task.id}>
@@ -35,7 +35,7 @@ const Task = (props) => {
 		</p>
 		</footer>
 		</div>
-		<Modal task={task} onCancle={onCancle} onSaveChanges={onSaveChanges}/>
+		<Modal task={task} onCancle={onCancle} onSaveChanges={onSaveChanges} onArchive={onArchive} />
 		
 	</div>)
 }

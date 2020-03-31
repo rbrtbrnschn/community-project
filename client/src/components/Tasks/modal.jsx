@@ -3,7 +3,7 @@ import React, { useState } from "react"
 const Modal = (props) => {
 	const { task } = props;
 	const { id, title, notes, payload } = props.task;
-	const { onCancle, onSaveChanges } = props;
+	const { onCancle, onSaveChanges, onArchive } = props;
 	
 	const [values,setValues] = useState({
 		title:title,
@@ -30,7 +30,10 @@ const Modal = (props) => {
     </section>
     <footer className="modal-card-foot">
       <button className="button is-success" onClick={()=>{onSaveChanges({...task,title:values.title,notes:values.notes})}}>Save changes</button>
+      <button className="button is-warning" onClick={()=>{onArchive(id)}}>Archive</button>    
       <button className="button" onClick={onCancle}>Cancel</button>
+	
+	
     </footer>
   </div>
 </div>
