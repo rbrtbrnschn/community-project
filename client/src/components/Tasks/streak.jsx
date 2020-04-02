@@ -1,16 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {Modal} from "./modal";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTimes,faCheck} from "@fortawesome/free-solid-svg-icons"
-const Task = (props) => {
+const Streak = (props) => {
 	const { all } = props;
-	const { task, onDelete, onComplete, onEdit, onCancle, onSaveChanges, onArchive } = all;
+	const { task, onDelete, onComplete, onEdit, onCancle, onSaveChanges, onArchive, onNewDay } = all;
+
+	useEffect(()=>{
+		onNewDay(task);
+	},[])
 
 	return(<div className="task">
 		<div className="card" id={task.id}>
 		<div className="card-content" onClick={onEdit}>		
 		<p className="title is-3">{task.title}</p>
 		<p className="subtitle">{task.notes}</p>
+		<p className="subtitle">{task.streak}</p>
 		</div>
 
 		<footer className="card-footer">
@@ -41,4 +46,4 @@ const Task = (props) => {
 	</div>)
 }
 
-export default Task;
+export default Streak;

@@ -48,19 +48,35 @@ function createTask(taskSetup: taskCreation) {
   return _task;
 }
 
-function completeTask(task: Task) {
-  const stamp = { payload: "onComplete", key: Date.now(), isComplete: true };
-  task.timestamps.push(stamp);
-  task.isComplete = true;
-  task.completedAt = new Date().toLocaleDateString();
-  return task;
-}
-
-function archiveTask(task: Task) {
-  const stamp = { payload: "onArchive", key: Date.now(), isComplete: false };
-  task.timestamps.push(stamp);
-  task.archivedAt = new Date().toLocaleDateString();
-  return task;
+function completeTask(task: any) {
+  const { payload } = task;
+  let _task;
+  switch (payload) {
+    case "Task":
+      _task = new Task()._complete(task);
+      break;
+    case "Habit":
+      _task = new Habit()._complete(task);
+      break;
+    case "Daily":
+      _task = new Daily()._complete(task);
+      break;
+    case "Streak":
+      _task = new Streak()._complete(task);
+      break;
+    case "Goal":
+      _task = new Goal()._complete(task);
+      break;
+    case "Dream":
+      _task = new Dream()._complete(task);
+      break;
+    case "Challenge":
+      _task = new Challenge()._complete(task);
+      break;
+    default:
+      break;
+  }
+  return _task;
 }
 
 function sendToArchive(task: Task, userID: String, payload: String) {
@@ -88,59 +104,106 @@ function sendToArchive(task: Task, userID: String, payload: String) {
 }
 
 class Task {
-  title: String;
-  notes: String;
-  payload: String;
-  id: Number;
-  createdAt: String;
+  title: any;
+  notes: any;
+  payload: any;
+  id: any;
+  createdAt: any;
   completedAt: any;
   archivedAt: any;
-  timestamps: Array<any>;
-  isComplete: Boolean;
-  test: any;
+  timestamps: any;
+  isComplete: any;
 
-  constructor(_task: taskCreation) {
-    const { title, notes, payload } = _task;
-    this.title = title;
-    this.notes = notes;
-    this.payload = payload;
-    this.id = hash();
-    this.createdAt = new Date().toLocaleDateString();
-    this.timestamps = [
-      { payload: "onCreate", key: Date.now(), isComplete: false }
-    ];
-    this.isComplete = false;
-    return this;
+  constructor(_task?: taskCreation) {
+    this._create(_task);
+  }
+  _create(task: any) {
+    if (task) {
+      const { title, notes, payload } = task;
+      this.title = title;
+      this.notes = notes;
+      this.payload = payload;
+      this.id = hash();
+      this.createdAt = new Date().toLocaleDateString();
+      this.timestamps = [
+        { payload: "onCreate", key: Date.now(), isComplete: false }
+      ];
+      this.isComplete = false;
+      return this;
+    }
+  }
+  _complete(task: Task) {
+    const stamp = { payload: "onComplete", key: Date.now(), isComplete: true };
+    task.timestamps.push(stamp);
+    task.isComplete = true;
+    task.completedAt = new Date().toLocaleDateString();
+    return task;
+  }
+  _archive(task: Task) {
+    const stamp = { payload: "onArchive", key: Date.now(), isComplete: false };
+    task.timestamps.push(stamp);
+    task.archivedAt = new Date().toLocaleDateString();
+    return task;
   }
 }
 
 class Habit extends Task {
-  constructor(task: taskCreation) {
+  constructor(task?: taskCreation) {
     super(task);
   }
 }
 class Daily extends Task {
-  constructor(task: taskCreation) {
+  constructor(task?: taskCreation) {
     super(task);
   }
 }
 class Streak extends Task {
-  constructor(task: taskCreation) {
+  streak: Number;
+  strikes: Number;
+  constructor(task?: taskCreation) {
     super(task);
+    this.streak = 0;
+    this.strikes = 0;
+  }
+  _complete(task: Streak) {
+    if (!task.isComplete) {
+      const stamp = {
+        payload: "onComplete",
+        key: Date.now(),
+        isComplete: true
+      };
+      task.timestamps.push(stamp);
+      task.isComplete = true;
+      task.completedAt = new Date().toLocaleDateString();
+      task.streak = +1;
+    }
+    return task;
+  }
+  _fail(task: Streak) {
+    const stamp = {
+      payload: "onFail",
+      key: Date.now(),
+      isComplete: false
+    };
+    task.timestamps.push(stamp);
+    task.strikes = +1;
+    task.streak = 0;
+
+    return task;
   }
 }
 class Goal extends Task {
-  constructor(task: taskCreation) {
+  constructor(task?: taskCreation) {
     super(task);
   }
 }
 class Dream extends Task {
-  constructor(task: taskCreation) {
+  constructor(task?: taskCreation) {
     super(task);
   }
 }
 class Challenge extends Task {
-  constructor(task: taskCreation) {
+  constructor(task?: taskCreation) {
     super(task);
   }
 }
@@ -155,31 +218,7 @@ router.get("/find/:id/:payload?", async (req: any, res: any) => {
 
   const { tasks } = player;
   const task = tasks.find((t: Task) => t.id === id);
-  const index = tasks.indexOf(task);
-  //const type = task.payload;
-
-  if (payload) {
-    switch (payload) {
-      case "complete":
-        tasks[index] = completeTask(tasks[index]);
-        sendToArchive(tasks[index], player.playerID, payload);
-        tasks.splice(index, 1);
-        break;
-      case "delete":
-        tasks.splice(index, 1);
-        break;
-      case "archive":
-        tasks[index] = archiveTask(tasks[index]);
-        sendToArchive(tasks[index], player.playerID, payload);
-        tasks.splice(index, 1);
-        break;
-      default:
-        break;
-    }
-    player.markModified("tasks");
-    player.save();
-  }
-  return res.json({ task: { ...task } });
+  return res.json(task);
 });
 
 //! Edit Task
@@ -207,6 +246,32 @@ router.post("/new", async (req: any, res: any) => {
   _player.markModified("tasks");
   _player.save();
   return res.json({ ..._task, ok: true });
+});
+
+//! Complete
+router.post("/complete", (req: any, res: any) => {
+  const task = req.body;
+  const id = req.user.userID;
+  sendToArchive(task, id, "complete");
+  return res.end();
+});
+
+//! Archive
+router.post("/archive", (req: any, res: any) => {
+  const task = req.body;
+  const id = req.user.userID;
+  sendToArchive(task, id, "archive");
+  return res.end()
+});
+
+//! Update All
+router.post("/update", async (req: any, res: any) => {
+  const tasks = req.body;
+  const player = await Player.findOne({ playerID: req.user.userID });
+  player.tasks = tasks;
+  player.markModified("tasks");
+  player.save()
+  return res.end();
 });
 
 module.exports = router;

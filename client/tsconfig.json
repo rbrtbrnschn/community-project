@@ -3,7 +3,7 @@
     "target": "ESNEXT",
     "module": "esnext",
     "lib": [
-      "es6"
+      "es6","dom"
     ],
     "allowJs": true,
     "outDir": "build",

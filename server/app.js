@@ -30,7 +30,7 @@ app.use(passport.session()); // Used to persist login sessions
 
 
 //! Websocket
-const io = socketIo(server,{
+ const io = socketIo(server,{
     handlePreflightRequest: (req, res) => {
         const headers = {
             "Access-Control-Allow-Headers": "Content-Type, Authorization",

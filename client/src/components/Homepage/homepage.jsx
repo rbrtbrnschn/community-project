@@ -8,11 +8,6 @@ const Home = (props) => {
 	const socket = SocketIOClient("/todo-hub");
 	const socketIDS = state.player.sockets;
 	
-	const handleOnClick = (socketID) =>{
-		const room = socketID + "";
-		socket.emit("onSendToRoom",{socketID:room,data:"Have I Arrived?"});
-	}
-	
 	useEffect(()=>{
 		socket.on("onConnection",data =>{
 			if(socketIDS.length === 0)return;
@@ -23,7 +18,7 @@ const Home = (props) => {
 		socket.on("onSendToRoom",(data)=>{
 			console.log("Data Arrived:",data);
 		})
-	},[state])
+	},[state.matches])
 	
    	return (
       	<div>

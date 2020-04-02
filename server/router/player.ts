@@ -22,11 +22,25 @@ router.get("/find/:key/:value", async (req, res) => {
       break;
   }
   const _player = await Player.findOne({ [key]: value });
+  console.log(_player._doc);
   if (!_player) {
     return res.json({ status: 404, msg: "player not found", ok: true });
   } else {
     return res.json({ ..._player._doc, ok: true });
   }
+  res.end();
+});
+
+//! get current player
+router.get("/", async (req: any, res: any) => {
+  const id = req.user.userID;
+  const _player = await Player.findOne({ playerID: id });
+  if (_player) {
+    return res.json({ ..._player._doc, ok: true });
+  } else {
+    return res.json({ status: 404, msg: "not logged in", ok: false });
+  }
+  return res.end();
 });
 
 // create new player
@@ -97,29 +111,28 @@ router.get("/invited", async (req, res) => {
           "and",
           _opponent.username,
           "are now opponents."
-	);
-			
-	// Create Match
-	const url = uri.hostname+"/api/match/new"
-	const matchOptions = {
-		method: "POST",
-		headers: {
-			"Content-Type":"application/json"
-		},
-		body: JSON.stringify({user:user,opponent:opponent})
-	}
-	const response = await fetch(url,matchOptions);
-	const data = await response.json();
-	// check data for socket id
-	console.log(data);
-	const { socketID } = data;
-	
-	_player.sockets.push(socketID)
-	_opponent.sockets.push(socketID)
-	_player.save();
+        );
+
+        // Create Match
+        const url = uri.hostname + "/api/match/new";
+        const matchOptions = {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ user: user, opponent: opponent })
+        };
+        const response = await fetch(url, matchOptions);
+        const data = await response.json();
+        // check data for socket id
+        console.log(data);
+        const { socketID } = data;
+
+        _player.sockets.push(socketID);
+        _opponent.sockets.push(socketID);
+        _player.save();
         _opponent.save();
 
-	
         return res.json({ status: 200, msg: "invite accepted", ok: true });
       } else {
         console.log("Already opponents");
