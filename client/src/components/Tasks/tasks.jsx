@@ -128,7 +128,7 @@ const Tasks = props => {
       body: JSON.stringify({ task: { ...newTasks[index] }, index: index })
     };
     const response = await fetch(url, options);
-    const data = await response.json();
+    await response.json();
 
     setState({
       ...oldState,
@@ -141,11 +141,10 @@ const Tasks = props => {
     handleOnCancle(id);
   };
 
-  const handleOnNewDay = async task => {
-    const { timestamps, id } = task;
+  const handleOnNewDay = task => {
+    const { timestamps } = task;
     const { key } = timestamps[timestamps.length - 1];
-    //const yesterDay = new Date(key).getDate();
-    const yesterDay = new Date(0).getDate();
+    const yesterDay = new Date(key).getDate();
     const toDay = new Date().getDate();
 
     if (yesterDay === toDay) return;
@@ -204,7 +203,7 @@ const Tasks = props => {
   };
   return (
     <div>
-      <h1 className="title is-3"></h1>
+      <p className="title is-3"></p>
       {tasks.map(t => handleOnReturn(t)
       )}
     </div>

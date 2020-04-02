@@ -61,7 +61,7 @@ const Login = () => {
           </div>
 
           <p></p>
-          <h6 className="title"></h6>
+          <p className="title"></p>
           <input
             type="submit"
             className="button is-danger"
@@ -72,7 +72,7 @@ const Login = () => {
       </div>
 
       <p></p>
-      <h6 className="title"></h6>
+      <p className="title"></p>
       <button onClick={()=>{window.location = "/api/auth/discord/login"}} className="button is-normal">
 	  <span className="icon is-left">
 	  <FontAwesomeIcon icon={faDiscord} />
@@ -92,7 +92,7 @@ const Login = () => {
 	  </span>
         
       </button>
-      <h2 className="title is-2"></h2>
+      <p className="title is-2"></p>
       <p></p>
       <a href="/createAccount" className="button is-normal">
         Create Account

@@ -4,10 +4,7 @@ import "../../css/Homepage/homepage.css";
 
 function Info(props){
 	const context = useContext(UserContext);
-	const {state, setState} = context;
-	const handleOnClick = () =>{
-		setState({status:404,msg:"testing"});
-	}
+	const {state} = context;
 
 	return( <div className="info-tab">
 		<h2>Info Tab</h2>

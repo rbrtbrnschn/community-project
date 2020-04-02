@@ -66,7 +66,7 @@ class Task {
         body: JSON.stringify(task)
       };
       fetch("http://localhost:3000/api/task/archive", options);
-      const { addTask, deleteTask, setTasks, setTask } = helpers;
+      const { deleteTask } = helpers;
       deleteTask(task);
     }
     return task;
@@ -103,7 +103,7 @@ class Streak extends Task {
       task.completedAt = new Date().toLocaleDateString();
       task.streak = task.streak + 1;
       if (helpers) {
-        const { addTask, deleteTask, setTasks, setTask } = helpers;
+        const { setTask } = helpers;
         setTask(task);
       }
     }

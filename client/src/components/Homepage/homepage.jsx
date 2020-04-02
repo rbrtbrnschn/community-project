@@ -4,7 +4,7 @@ import UserContext from "../../contexts/UserContext";
 const Home = (props) => {
 
 	const context = React.useContext(UserContext);
-	const { state,setState } = context;
+	const { state } = context;
 	const socket = SocketIOClient("/todo-hub");
 	const socketIDS = state.player.sockets;
 	
@@ -18,6 +18,7 @@ const Home = (props) => {
 		socket.on("onSendToRoom",(data)=>{
 			console.log("Data Arrived:",data);
 		})
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	},[state.matches])
 	
    	return (

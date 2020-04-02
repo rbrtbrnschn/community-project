@@ -101,6 +101,7 @@ const UserProvider = props => {
 
       return;
     }
+	  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tasks]);
 
   return (

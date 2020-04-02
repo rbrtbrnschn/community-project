@@ -8,6 +8,7 @@ const Streak = (props) => {
 
 	useEffect(()=>{
 		onNewDay(task);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	},[])
 
 	return(<div className="task">

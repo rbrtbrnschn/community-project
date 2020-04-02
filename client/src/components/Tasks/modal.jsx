@@ -4,10 +4,14 @@ const Modal = (props) => {
 	const { task } = props;
 	const { id, title, notes, payload } = props.task;
 	const { onCancle, onSaveChanges, onArchive } = props;
-	
-	const [values,setValues] = useState({
+	const isStreak = task.payload === "Streak";
+	let _initialValues = {
 		title:title,
-		notes:notes});
+		notes:notes,
+	}
+	if(isStreak)_initialValues.streak = task.streak;
+	const [values,setValues] = useState(_initialValues)
+
 
 	const handleOnChangeTitle = (event) => {
 		setValues({...values,title:event.target.value});
@@ -15,6 +19,10 @@ const Modal = (props) => {
 	const handleOnChangeNotes = (event) => {
 		setValues({...values,notes:event.target.value});
 	}
+	const handleOnChangeStreak = (event) => {
+		setValues({...values,streak:event.target.value})
+	}
+
 	return(
 	
 	<div id={id+"-modal"} className="modal">
@@ -27,9 +35,12 @@ const Modal = (props) => {
     <section className="modal-card-body">
 		<input className="input" value={values.title} onChange={handleOnChangeTitle}/>
 		<textarea className="textarea" value={values.notes} onChange={handleOnChangeNotes}></textarea>
+		{isStreak && <input className="input" value={values.streak} onChange={handleOnChangeStreak}/> }
     </section>
     <footer className="modal-card-foot">
-      <button className="button is-success" onClick={()=>{onSaveChanges({...task,title:values.title,notes:values.notes})}}>Save changes</button>
+      <button className="button is-success" onClick={()=>{
+	      onSaveChanges({...task,...values})
+      }}>Save changes</button>
       <button className="button is-warning" onClick={()=>{onArchive(id)}}>Archive</button>    
       <button className="button" onClick={onCancle}>Cancel</button>
 	
