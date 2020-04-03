@@ -17,22 +17,25 @@ const UserProvider = props => {
         timestamps: []
       }
     ],
+    opponents: [
+    ],
     ok: false
   });
   const { children } = props;
-  const { player } = state;
+  const { player, lastLogin } = state;
   const { tasks } = player;
 
   useEffect(() => {
-    let _user, _player, _matches;
+    let _user, _player, _matches,_opponents;
     // Init
     init();
     async function init() {
       _user = await getUser();
       _player = await getPlayer();
       _matches = await getMatches(_player);
+      _opponents = await getOpponents(_player);
       if (_user.ok && _player.ok) {
-        setState({ user: _user, player: _player, matches: _matches });
+        setState({ user: _user, player: _player, matches: _matches,opponents:_opponents });
       }
     }
 
@@ -54,7 +57,7 @@ const UserProvider = props => {
     async function getMatches(player) {
       const errMessage = { status: 404, msg: "player not found", ok: false };
       if (!player.sockets) {
-        console.log("matches:", errMessage);
+        console.log(errMessage);
         return errMessage;
       }
 
@@ -70,6 +73,36 @@ const UserProvider = props => {
       //console.log("Matches:",data);
       return data;
     }
+    // Get Opponents
+    async function getOpponents(player){
+      const errMessage = { status: 404, msg: "player not found", ok: false };
+      if (!player.sockets) {
+        console.log(errMessage);
+        return errMessage;
+      }
+      const { opponents } = player;
+      let requests = []
+      opponents.forEach(o=>{
+      	requests.push(getOpponent(o))
+      })
+	    // Get Single Opponent
+	    async function getOpponent(id){
+		    const url = "http://localhost:3000/api/player/find/playerID/"+id;
+		    return new Promise((resolve,reject)=>{
+		      fetch(url)
+		      .then((resp)=> resp.json())
+		      .then((data)=> {
+		       	resolve(data);
+		      })
+		    
+		    })
+	    }
+      
+      return Promise.all(requests)
+      .then(allData=>{return allData})
+
+    }
+
   }, []);
 
   useEffect(() => {
@@ -79,9 +112,9 @@ const UserProvider = props => {
   }, [state]);
 
 	//WHY? You ask?
+  const x = state.ok;
 	//IT WORKS OKAY!
 	//LEAVE IT PLEASE!!!
-  const x = state.ok;
 
   useEffect(() => {
     function updateTasks(newTasks) {
@@ -103,6 +136,13 @@ const UserProvider = props => {
     }
 	  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tasks]);
+
+  useEffect(()=> {
+	  if(lastLogin === undefined)return;
+    const url = "/api/player/update/lastlogin"
+	  fetch(url);
+	  return;
+  },[lastLogin])
 
   return (
     <UserContext.Provider value={{ state, setState }}>

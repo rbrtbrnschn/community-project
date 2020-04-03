@@ -4,10 +4,13 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTimes,faCheck} from "@fortawesome/free-solid-svg-icons"
 const Streak = (props) => {
 	const { all } = props;
-	const { task, onDelete, onComplete, onEdit, onCancle, onSaveChanges, onArchive, onNewDay } = all;
+	const { task, onDelete, onComplete, onEdit, onCancle, onSaveChanges, onArchive, onNewDay, isNewDay } = all;
 
 	useEffect(()=>{
-		onNewDay(task);
+		//const isNew = isNewDay();
+		//if(isNew){
+		//onNewDay(task);
+		//}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	},[])
 

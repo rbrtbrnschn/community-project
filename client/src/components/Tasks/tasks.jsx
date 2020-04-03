@@ -1,6 +1,7 @@
 import React from "react";
 import TaskComponent from "./task";
 import StreakComponent from "./streak";
+import NewDayCheck from "./newDayCheck";
 
 import { Task, Habit, Daily, Streak, Goal, Dream, Challenge } from "./classes";
 import UserContext from "../../contexts/UserContext";
@@ -42,7 +43,7 @@ const Tasks = props => {
     _tasks.splice(index, 1);
     setTasks(_tasks);
   };
-
+  
   const stateHelpers = {
     deleteTask,
     addTask,
@@ -82,10 +83,15 @@ const Tasks = props => {
     return _task;
   }
   //! Task Helpers
-  const handleOnComplete = async _id => {
+  const handleOnComplete = _id => {
     const task = tasks.find(t => t.id === _id);
     switchForPayload(task)._complete(task, stateHelpers);
   };
+
+  const handleOnCompleteYesterday = _id => {
+    const task = tasks.find(t => t.id === _id);
+    switchForPayload(task)._completeYesterday(task,stateHelpers);
+  }
 
   const handleOnDelete = async _id => {
     const task = tasks.find(t => t.id === _id);
@@ -106,10 +112,12 @@ const Tasks = props => {
   };
 
   const handleOnCancle = _id => {
-    const modal = document.getElementById(_id + "-modal");
+    const modals = document.querySelectorAll("div.modal");
+    modals.forEach(m => {
+    	m.classList.remove("is-active")
+    })
     const html = document.querySelector("html");
     html.classList.remove("is-clipped");
-    modal.classList.remove("is-active");
   };
   const handleOnSaveChanges = async task => {
     const { id } = task;
@@ -138,25 +146,74 @@ const Tasks = props => {
       }
     });
 
-    handleOnCancle(id);
+    handleOnCancle();
   };
 
+
+  const handleIsNewDay = () => {
+  	const lastKey = player.lastLogin;
+	const lastDay = new Date(lastKey)
+	const lastDate = lastDay.getDate();
+	const currentKey = Date.now()
+	const currentDay = new Date(currentKey);
+	const currentDate = currentDay.getDate();
+
+	if(lastKey === undefined){
+		return false};  
+	if(lastDate !== currentDate){
+		setState({...state,player:{...player,lastLogin:currentKey}})
+	  return true;
+	}
+	else{
+	  return false;
+	}
+  }
+
   const handleOnNewDay = task => {
+    
     const { timestamps } = task;
     const { key } = timestamps[timestamps.length - 1];
     const yesterDay = new Date(key).getDate();
     const toDay = new Date().getDate();
-
+	console.log("handleOnNewDay");
     if (yesterDay === toDay) return;
-	
     switchForPayload(task)._reset(task,stateHelpers);
   };
+
+  const handleOnCheckYesterday = (ids) => {
+  	const _tasks = []
+	ids.forEach(i=>{
+   	  const id = parseInt(i);
+	  const _task = tasks.find(t=> t.id === id);
+	  _tasks.push(_task);
+	})
+	_tasks.forEach(t=>{
+	  switchForPayload(t)._completeYesterday(t,stateHelpers);
+	})
+	
+
+	const nonCompleted = tasks.filter(t=>!_tasks.includes(t));
+	  console.log(nonCompleted)
+
+ 	nonCompleted.forEach(t=>{
+	  handleOnNewDay(t);
+	})
+	  
+	/*tasks.forEach(t=>{
+		//check only for the ones that arent in _tasks but in tasks
+	  handleOnNewDay(t);
+	})*/
+	handleOnCancle()
+  }
 
   const handleOnReturn = task => {
     const _props = {
       task: task,
       onComplete: () => {
         handleOnComplete(task.id);
+      },
+      onCompleteYesterday: () => {
+        handleOnCompleteYesterday(task.id);
       },
       onDelete: () => {
         handleOnDelete(task.id);
@@ -169,7 +226,9 @@ const Tasks = props => {
       },
       onSaveChanges: handleOnSaveChanges,
       onArchive: handleOnArchive,
-      onNewDay: handleOnNewDay
+      onCheckYesterday: handleOnCheckYesterday,
+      onNewDay: handleOnNewDay,
+      isNewDay: handleIsNewDay
     };
     const { payload, id } = task;
     let _task;
@@ -206,6 +265,8 @@ const Tasks = props => {
       <p className="title is-3"></p>
       {tasks.map(t => handleOnReturn(t)
       )}
+
+      <NewDayCheck tasks={tasks} onComplete={handleOnComplete} onCancle={handleOnCancle} onCheckYesterday={handleOnCheckYesterday} onCompleteYesterday={handleOnCompleteYesterday} onNewDay={handleOnNewDay} isNewDay={handleIsNewDay}/>
     </div>
   );
 };

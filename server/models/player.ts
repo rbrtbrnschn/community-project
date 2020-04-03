@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+require('mongoose-long')(mongoose);
+var SchemaTypes = mongoose.Schema.Types;
 const { db } = require("../config");
 
 const Schema = mongoose.Schema;
@@ -24,7 +26,8 @@ const playerSchema = new Schema({
   opponents: Array,
   sockets: Array,
   tasks: Array,
-  locale: String
+  locale: String,
+  lastLogin : { type : Date, default: Date.now }
 });
 
 module.exports = {

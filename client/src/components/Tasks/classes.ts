@@ -109,21 +109,56 @@ class Streak extends Task {
     }
     return task;
   }
-  _fail(task: Streak, helpers?: any) {
-      const stamp = {
-        payload: "onFail",
-        key: Date.now(),
-        isComplete: false
+  _completeYesterday(task: Streak, helpers?: any) {
+    if (!task.isComplete) {
+      const dayInMs = 86400000;
+      const yesterKey = Date.now() - dayInMs;
+      const yesterDay = new Date(yesterKey);
+      const yesterDate = yesterDay.getDate();
+
+      const lastStamp = task.timestamps[task.timestamps.length - 1];
+      const lastKey = lastStamp.key;
+      const lastDay = new Date(lastKey);
+      const lastDate = lastDay.getDate();
+
+      const now = Date.now();
+      const toDay = new Date(now);
+      const toDate = toDay.getDate();
+
+      if (lastDate === toDate) return;
+
+      const yesterdayStamp = {
+        payload: "onComplete",
+        key: yesterKey,
+        isComplete: true
       };
+      task.timestamps.push(yesterdayStamp);
       task.isComplete = false;
-      task.timestamps.push(stamp);
-      task.strikes = task.strikes + 1;
-      task.streak = 0;
+      task.completedAt = yesterDay.toLocaleDateString();
+      task.streak = task.streak + 1;
       if (helpers) {
         const { setTask } = helpers;
-        return setTask(task);
+        setTask(task);
       }
-      return task;
+    }
+
+    return task;
+  }
+  _fail(task: Streak, helpers?: any) {
+    const stamp = {
+      payload: "onFail",
+      key: Date.now(),
+      isComplete: false
+    };
+    task.isComplete = false;
+    task.timestamps.push(stamp);
+    task.strikes = task.strikes + 1;
+    task.streak = 0;
+    if (helpers) {
+      const { setTask } = helpers;
+      return setTask(task);
+    }
+    return task;
   }
   _reset(task: Streak, helpers?: any) {
     const lastStamp = task.timestamps[task.timestamps.length - 1];
@@ -143,7 +178,7 @@ class Streak extends Task {
         if (task.isComplete) {
           task.isComplete = false;
           console.log("has been completed yesterday, reset");
-	  return setTask(task);
+          return setTask(task);
         } else {
           console.log("has been failed yesterday, reset");
           return this._fail(task, helpers);

@@ -22,7 +22,6 @@ router.get("/find/:key/:value", async (req, res) => {
       break;
   }
   const _player = await Player.findOne({ [key]: value });
-  console.log(_player._doc);
   if (!_player) {
     return res.json({ status: 404, msg: "player not found", ok: true });
   } else {
@@ -32,19 +31,21 @@ router.get("/find/:key/:value", async (req, res) => {
 });
 
 //! get current player
-router.get("/", async (req: any, res: any) => {
+router.get("/", isAuth, async (req: any, res: any) => {
   const id = req.user.userID;
+
   const _player = await Player.findOne({ playerID: id });
   if (_player) {
     return res.json({ ..._player._doc, ok: true });
   } else {
     return res.json({ status: 404, msg: "not logged in", ok: false });
   }
+
   return res.end();
 });
 
 // create new player
-router.post("/new", async (req, res) => {
+router.post("/new", async (req: any, res: any) => {
   const { userID, username } = req.body;
   const player = new Player({
     playerID: userID,
@@ -54,7 +55,7 @@ router.post("/new", async (req, res) => {
     sockets: [],
     tasks: [],
     locale: "en"
-  }).save(savedPlayer => {
+  }).save((savedPlayer: any) => {
     return res.json(savedPlayer);
   });
 });
@@ -62,8 +63,9 @@ router.post("/new", async (req, res) => {
 // invite player
 router.get("/invite/:queryValue", isAuth, async (req, res) => {
   const queryValue = req.params.queryValue.toLowerCase();
-  const queryKey = !queryValue.includes("@") ? "username_lower" : "email_lower";
-  const isUsername = queryKey === "username_lower" ? true : false;
+  const queryKey = !queryValue.includes("@") ? "username_lower" : "email";
+  const isUsername = queryKey === "username_lower" ? true 
+  : queryKey === "email" ? false : "ERROR"
   const _user = req.user;
   let _opponentPlayer = {};
   let _opponentUser = {};
@@ -151,5 +153,18 @@ router.get("/invited", async (req, res) => {
       matchup: { user: user, opponent: opponent }
     });
   }
+});
+
+router.get("/update/lastlogin", async (req: any, res: any) => {
+  const key = Date.now();
+  const player = await Player.findOne({ playerID: req.user.userID });
+
+  if (player) {
+    player.lastLogin = key;
+    player.markModified("lastLogin");
+    player.save();
+    return res.json(player);
+  }
+  return res.end();
 });
 module.exports = router;

@@ -22,6 +22,20 @@ const Modal = (props) => {
 	const handleOnChangeStreak = (event) => {
 		setValues({...values,streak:event.target.value})
 	}
+	const processValues = values => {
+		let keys = Object.keys(values);
+		let vals = Object.values(values);
+		 
+		for(let v in vals){
+		  const parsed = parseInt(vals[v]);
+		  if(parsed === parsed){
+		    console.log(parsed,"is a Number");
+		    values[keys[v]] = parsed;
+		  }
+
+		}
+		return values;
+	}
 
 	return(
 	
@@ -39,7 +53,8 @@ const Modal = (props) => {
     </section>
     <footer className="modal-card-foot">
       <button className="button is-success" onClick={()=>{
-	      onSaveChanges({...task,...values})
+	      const _values = processValues(values);
+	      onSaveChanges({...task,..._values})
       }}>Save changes</button>
       <button className="button is-warning" onClick={()=>{onArchive(id)}}>Archive</button>    
       <button className="button" onClick={onCancle}>Cancel</button>
