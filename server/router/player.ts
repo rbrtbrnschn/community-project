@@ -54,7 +54,7 @@ router.post("/new", async (req: any, res: any) => {
     opponents: [],
     sockets: [],
     tasks: [],
-    locale: "en"
+    locale: "en",
   }).save((savedPlayer: any) => {
     return res.json(savedPlayer);
   });
@@ -158,7 +158,7 @@ router.get("/invited", async (req, res) => {
 router.get("/update/lastlogin", async (req: any, res: any) => {
   const key = Date.now();
   const player = await Player.findOne({ playerID: req.user.userID });
-
+  console.log(new Date(key)," updated.")
   if (player) {
     player.lastLogin = key;
     player.markModified("lastLogin");
@@ -167,4 +167,5 @@ router.get("/update/lastlogin", async (req: any, res: any) => {
   }
   return res.end();
 });
+
 module.exports = router;

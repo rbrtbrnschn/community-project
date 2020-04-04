@@ -2,7 +2,9 @@ import React from "react";
 import TaskComponent from "./task";
 import StreakComponent from "./streak";
 import NewDayCheck from "./newDayCheck";
+import CreateModal from "./createModal";
 
+import Fab from "./fab";
 import { Task, Habit, Daily, Streak, Goal, Dream, Challenge } from "./classes";
 import UserContext from "../../contexts/UserContext";
 
@@ -56,25 +58,25 @@ const Tasks = props => {
     let _task;
     switch (payload) {
       case "Task":
-        _task = new Task();
+        _task = new Task(task);
         break;
       case "Daily":
-        _task = new Daily();
+        _task = new Daily(task);
         break;
       case "Habit":
-        _task = new Habit();
+        _task = new Habit(task);
         break;
       case "Streak":
-        _task = new Streak();
+        _task = new Streak(task);
         break;
       case "Goal":
-        _task = new Goal();
+        _task = new Goal(task);
         break;
       case "Dream":
-        _task = new Dream();
+        _task = new Dream(task);
         break;
       case "Challenge":
-        _task = new Challenge();
+        _task = new Challenge(task);
         break;
 
       default:
@@ -83,6 +85,13 @@ const Tasks = props => {
     return _task;
   }
   //! Task Helpers
+  const handleOnAdd = (setup) => {
+  	const task = switchForPayload(setup);
+	console.log(setup.payload,"created:",task);
+	return addTask(task);
+	
+  }
+
   const handleOnComplete = _id => {
     const task = tasks.find(t => t.id === _id);
     switchForPayload(task)._complete(task, stateHelpers);
@@ -158,10 +167,9 @@ const Tasks = props => {
 	const currentDay = new Date(currentKey);
 	const currentDate = currentDay.getDate();
 
-	if(lastKey === undefined){
+	if(lastKey === 0){
 		return false};  
 	if(lastDate !== currentDate){
-		setState({...state,player:{...player,lastLogin:currentKey}})
 	  return true;
 	}
 	else{
@@ -175,7 +183,6 @@ const Tasks = props => {
     const { key } = timestamps[timestamps.length - 1];
     const yesterDay = new Date(key).getDate();
     const toDay = new Date().getDate();
-	console.log("handleOnNewDay");
     if (yesterDay === toDay) return;
     switchForPayload(task)._reset(task,stateHelpers);
   };
@@ -193,17 +200,13 @@ const Tasks = props => {
 	
 
 	const nonCompleted = tasks.filter(t=>!_tasks.includes(t));
-	  console.log(nonCompleted)
 
  	nonCompleted.forEach(t=>{
 	  handleOnNewDay(t);
 	})
 	  
-	/*tasks.forEach(t=>{
-		//check only for the ones that arent in _tasks but in tasks
-	  handleOnNewDay(t);
-	})*/
 	handleOnCancle()
+	setState({...state,player:{...player,newLogin:true}});
   }
 
   const handleOnReturn = task => {
@@ -265,7 +268,8 @@ const Tasks = props => {
       <p className="title is-3"></p>
       {tasks.map(t => handleOnReturn(t)
       )}
-
+	<CreateModal onAdd={handleOnAdd}/>
+	<Fab  aria-label="Add" />
       <NewDayCheck tasks={tasks} onComplete={handleOnComplete} onCancle={handleOnCancle} onCheckYesterday={handleOnCheckYesterday} onCompleteYesterday={handleOnCompleteYesterday} onNewDay={handleOnNewDay} isNewDay={handleIsNewDay}/>
     </div>
   );

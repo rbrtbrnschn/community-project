@@ -1,0 +1,15 @@
+$diameter: 50px;
+.fab {
+	width:$diameter;
+	height:$diameter;
+	position: absolute;
+	bottom: 5vh;
+	right: 5vh;
+	border-radius: calc(#{$diameter} / 2);
+	display: flex;
+	justify-content: center;
+	background-color: #f14668;
+	text-decoration: none;
+	color: white;
+	align-items: center;
+}

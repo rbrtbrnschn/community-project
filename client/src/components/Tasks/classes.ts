@@ -170,21 +170,18 @@ class Streak extends Task {
     if (helpers) {
       const { setTask } = helpers;
       if (
-        Math.abs(toDay - lastDay) === 1 ||
-        (lastDay === 28 && toDay === 1) ||
-        (lastDay === 30 && toDay === 1) ||
-        (lastDay === 31 && toDay === 1)
+        Math.abs(toDay - lastDay) === 1
       ) {
         if (task.isComplete) {
           task.isComplete = false;
-          console.log("has been completed yesterday, reset");
+          console.log("Completed Yesterday:",task.title);
           return setTask(task);
         } else {
-          console.log("has been failed yesterday, reset");
+          console.log("RESET:",task.title);
           return this._fail(task, helpers);
         }
       } else if (toDay !== lastDay) {
-        console.log("failed streak");
+        console.log("failed streak NOT SURE WHAT DIS IS");
         return this._fail(task, helpers);
       }
     }

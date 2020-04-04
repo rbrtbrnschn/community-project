@@ -27,7 +27,7 @@ const playerSchema = new Schema({
   sockets: Array,
   tasks: Array,
   locale: String,
-  lastLogin : { type : Date, default: Date.now }
+  lastLogin : { type : Date, default: Date.now },
 });
 
 module.exports = {

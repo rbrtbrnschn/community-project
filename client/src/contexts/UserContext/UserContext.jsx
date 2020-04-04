@@ -9,7 +9,8 @@ const UserProvider = props => {
     player: {
       tasks: [],
       opponents: [],
-      sockets: []
+      sockets: [],
+      lastLogin:0,
     },
     matches: [
       {
@@ -22,8 +23,8 @@ const UserProvider = props => {
     ok: false
   });
   const { children } = props;
-  const { player, lastLogin } = state;
-  const { tasks } = player;
+  const { player } = state;
+  const { tasks, lastLogin } = player;
 
   useEffect(() => {
     let _user, _player, _matches,_opponents;
@@ -138,11 +139,14 @@ const UserProvider = props => {
   }, [tasks]);
 
   useEffect(()=> {
-	  if(lastLogin === undefined)return;
-    const url = "/api/player/update/lastlogin"
-	  fetch(url);
+	  if(player.newLogin){
+	const url = "/api/player/update/lastlogin"
+	fetch(url)
+
 	  return;
-  },[lastLogin])
+	  }
+	  return
+  },[player.newLogin])
 
   return (
     <UserContext.Provider value={{ state, setState }}>
