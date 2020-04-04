@@ -29,7 +29,6 @@ const Modal = (props) => {
 		for(let v in vals){
 		  const parsed = parseInt(vals[v]);
 		  if(parsed === parsed){
-		    console.log(parsed,"is a Number");
 		    values[keys[v]] = parsed;
 		  }
 

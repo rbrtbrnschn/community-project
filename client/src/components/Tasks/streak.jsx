@@ -1,18 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {Modal} from "./modal";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTimes,faCheck} from "@fortawesome/free-solid-svg-icons"
 const Streak = (props) => {
 	const { all } = props;
-	const { task, onDelete, onComplete, onEdit, onCancle, onSaveChanges, onArchive, onNewDay, isNewDay } = all;
-
-	useEffect(()=>{
-		//const isNew = isNewDay();
-		//if(isNew){
-		//onNewDay(task);
-		//}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	},[])
+	const { task, onDelete, onComplete, onEdit, onCancle, onSaveChanges, onArchive } = all;
 
 	return(<div className="task">
 		<div className="card" id={task.id}>

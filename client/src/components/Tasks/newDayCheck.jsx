@@ -4,11 +4,11 @@ import UserContext from "../../contexts/UserContext"
 const NewDayCheck = props => {
   
   const context = React.useContext(UserContext);	
-  const {state,setState} = context;
+  const {state} = context;
   const {player} = state;
   const {lastLogin} = player;
 
-  const {tasks, onComplete, onCancle, onCheckYesterday, isNewDay, onNewDay } = props; 
+  const {tasks, onCancle, onCheckYesterday, isNewDay } = props; 
   const [checks,setChecks] = useState([]);
   
   useEffect(()=>{
@@ -20,7 +20,7 @@ const NewDayCheck = props => {
 	  const html = document.querySelector("html");
 	  html.classList.add("is-clipped")
 	}
-
+// eslint-disable-next-line
   },[lastLogin])
 
   const handleOnChange = (event) => {

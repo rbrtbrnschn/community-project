@@ -24,7 +24,7 @@ const UserProvider = props => {
   });
   const { children } = props;
   const { player } = state;
-  const { tasks, lastLogin } = player;
+  const { tasks } = player;
 
   useEffect(() => {
     let _user, _player, _matches,_opponents;

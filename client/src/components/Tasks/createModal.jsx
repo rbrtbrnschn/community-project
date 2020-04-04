@@ -1,11 +1,11 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const CreateModal = (props) => {
   const { onAdd } = props;
   const initialState = {
     title:"",
-    notes:notesRef.current = "",
+    notes:"",
     payload: "Task"
   }
   const [state,setState] = useState(initialState);
