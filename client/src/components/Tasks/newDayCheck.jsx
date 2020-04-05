@@ -6,12 +6,13 @@ const NewDayCheck = props => {
   const context = React.useContext(UserContext);	
   const {state} = context;
   const {player} = state;
-  const {lastLogin} = player;
+  const { lastLogin, tasks } = player;
 
-  const {tasks, onCancle, onCheckYesterday, isNewDay } = props; 
+  const { onCancle, onCheckYesterday, isNewDay } = props; 
   const [checks,setChecks] = useState([]);
   
   useEffect(()=>{
+	
   	const isNew = isNewDay();
   	//const isNew = true;
 	if(isNew){
@@ -53,7 +54,7 @@ const NewDayCheck = props => {
 	  }
         </section>
         <footer className="modal-card-foot">
-          <button className="button is-success" onClick={()=>{onCheckYesterday(checks)}}>Done</button>
+          <button id="submit-button" className="button is-success" onClick={()=>{onCheckYesterday(checks)}}>Done</button>
         </footer>
       </div>
     </div>

@@ -8,9 +8,9 @@ router.post("/login",
   function(req, res) {
     //Issue Token
     const id = req.user.userID;
+    console.log(id, "has logged in");
     const payload = { id }
     const token = jwt.sign(payload,config.jwt.secret,{expiresIn: "1d"});
-    console.log("shouldve been logged in by now") 
     res.cookie("token",token,{httpOnly: true}).status(200).json({ok:true, token:{key:"token",value:token,options:{httpOnly: true}}})
     
 

@@ -2,7 +2,6 @@ const jwt = require("jsonwebtoken");
 const config = require("../../config");
 function withAuth(req,res,next){
   const token = req.cookies.token;
-
   if(!token){
     return res.json({status:401,msg:"not logged in",ok:false})
   }     

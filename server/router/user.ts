@@ -7,6 +7,8 @@ const { UserDB, userSchema } = require("../models/user");
 const User = UserDB.model("user", userSchema);
 
 import { getUser } from "../services/snippets";
+//import { withAuth, setUser } from "../services/middleware";
+
 
 // get user by key/value
 router.get("/find/:key/:value", async (req, res) => {

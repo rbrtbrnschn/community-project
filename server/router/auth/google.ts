@@ -20,7 +20,6 @@ router.get("/redirect", passport.authenticate("google"), (req, res) => {
   const id = req.user.userID;
   const payload = { id }
   const token = jwt.sign(payload,config.jwt.secret,{expiresIn: "1h"});
-  console.log("token issued:",token);
   res.cookie("token",token,{httpOnly: true})
 
   res.redirect("/");

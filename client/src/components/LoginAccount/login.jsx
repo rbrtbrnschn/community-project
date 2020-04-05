@@ -2,8 +2,8 @@ import React, { useRef } from "react";
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faDiscord,faGoogle } from "@fortawesome/free-brands-svg-icons"
-import cookie from "universal-cookie";
-
+import { config } from "../../config";
+const { uri } = config;
 const Login = () => {
   const usernameRef = useRef();
   const passwordRef = useRef();
@@ -23,7 +23,7 @@ const Login = () => {
         password: passwordRef.current.value
       })
     };
-    const response = await fetch("http://localhost:5000/api/auth/local/login", options);
+    const response = await fetch(uri.domain+"/api/auth/local/login", options);
     const data = await response.json();
     if (!data) throw new Error("Bad Login");
     if (data.ok) {

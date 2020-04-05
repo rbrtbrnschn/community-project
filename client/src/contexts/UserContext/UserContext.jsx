@@ -19,6 +19,7 @@ const UserProvider = (props) => {
       },
     ],
     opponents: [],
+    newLogin: false,
     ok: false,
   });
   const { children } = props;
@@ -142,7 +143,7 @@ const UserProvider = (props) => {
   }, [tasks]);
 
   useEffect(() => {
-    if (state.newLogin) {
+    if (state.newLogin === true) {
       const url = "/api/player/update/lastlogin";
       fetch(url);
 

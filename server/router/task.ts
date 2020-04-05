@@ -2,6 +2,10 @@ const router = require("express").Router();
 const { PlayerDB, playerSchema } = require("../models/player");
 const Player = PlayerDB.model("player", playerSchema);
 import { exists, read, write } from "../services/snippets";
+import { withAuth, setUser } from "../services/middleware";
+
+router.use(withAuth);
+router.use(setUser);
 
 interface taskCreation {
   title: String;
@@ -265,7 +269,7 @@ router.post("/archive", (req: any, res: any) => {
 });
 
 //! Update All
-router.post("/update", async (req: any, res: any) => {
+router.post("/update",async (req: any, res: any) => {
   const tasks = req.body;
   const player = await Player.findOne({ playerID: req.user.userID });
   player.tasks = tasks;

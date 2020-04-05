@@ -3,6 +3,10 @@ const { uuid } = require("uuidv4");
 
 const { MatchDB, matchSchema } = require("../models/match");
 const Match = MatchDB.model("match", matchSchema);
+//import { withAuth, setUser } from "../services/middleware";
+
+//router.use(withAuth);
+//router.use(setUser);
 
 
 router.post("/new",async (req,res)=>{

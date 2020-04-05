@@ -11,6 +11,9 @@ const { UserDB, userSchema } = require("../models/user");
 const User = UserDB.model("user", userSchema);
 import { withAuth, setUser } from "../services/middleware";
 
+router.use(withAuth);
+router.use(setUser);
+
 // get player by username
 router.get("/find/:key/:value", async (req, res) => {
   let { key, value } = req.params;
@@ -32,13 +35,13 @@ router.get("/find/:key/:value", async (req, res) => {
 });
 
 //! get current player
-router.get("/", withAuth, setUser, async (req, res) => {
+router.get("/", async (req, res) => {
   if(req.user){
     const player = await Player.findOne({playerID:req.user.userID})
     return res.json({...player._doc,ok:true});
   }
   else{
-    return res.json({status:404,msg:"not logged in", ok:false})
+    return res.json({status:401,msg:"not logged in", ok:false})
   }
 });
 
