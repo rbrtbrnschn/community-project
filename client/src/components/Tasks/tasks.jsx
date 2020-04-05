@@ -206,7 +206,7 @@ const Tasks = props => {
 	})
 	  
 	handleOnCancle()
-	console.log("DID NOT SET STATE")
+	console.log("SET STATE.NEWLOGIN")
 	setState({...state,newLogin:true});
   }
 
