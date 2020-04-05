@@ -9,6 +9,7 @@ const { PlayerDB, playerSchema } = require("../models/player");
 const Player = PlayerDB.model("player", playerSchema);
 const { UserDB, userSchema } = require("../models/user");
 const User = UserDB.model("user", userSchema);
+import { withAuth, setUser } from "../services/middleware";
 
 // get player by username
 router.get("/find/:key/:value", async (req, res) => {
@@ -31,17 +32,14 @@ router.get("/find/:key/:value", async (req, res) => {
 });
 
 //! get current player
-router.get("/", isAuth, async (req: any, res: any) => {
-  const id = req.user.userID;
-
-  const _player = await Player.findOne({ playerID: id });
-  if (_player) {
-    return res.json({ ..._player._doc, ok: true });
-  } else {
-    return res.json({ status: 404, msg: "not logged in", ok: false });
+router.get("/", withAuth, setUser, async (req, res) => {
+  if(req.user){
+    const player = await Player.findOne({playerID:req.user.userID})
+    return res.json({...player._doc,ok:true});
   }
-
-  return res.end();
+  else{
+    return res.json({status:404,msg:"not logged in", ok:false})
+  }
 });
 
 // create new player

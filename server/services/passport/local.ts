@@ -6,6 +6,9 @@ const User = UserDB.model("user", userSchema);
 const passport = require("passport");
 const LocalStrategy = require('passport-local').Strategy;
 
+const jwt = require("jsonwebtoken");
+const config = require("../../config");
+
 passport.use(new LocalStrategy(
   function(username, password, done) {
       const isEmail = username.includes("@") ? true : false;
@@ -21,7 +24,7 @@ passport.use(new LocalStrategy(
         }
         if (user.oAuth.providerPassword != password) {  
 	return done(null, false);
-        }
+	}
         return done(null, user);
       });
   }

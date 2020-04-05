@@ -166,7 +166,7 @@ const Tasks = props => {
 	const currentKey = Date.now()
 	const currentDay = new Date(currentKey);
 	const currentDate = currentDay.getDate();
-
+	
 	if(lastKey === 0){
 		return false};  
 	if(lastDate !== currentDate){
@@ -206,7 +206,8 @@ const Tasks = props => {
 	})
 	  
 	handleOnCancle()
-	setState({...state,player:{...player,newLogin:true}});
+	  console.log("DID NOT set newlogin to true")
+	//setState({...state,player:{...player,newLogin:true}});
   }
 
   const handleOnReturn = task => {

@@ -7,6 +7,7 @@ const http = require("http");
 const cors = require("cors");
 const passport = require("passport");
 const cookieSession = require("cookie-session");
+const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const socketIo = require("socket.io");
 const app = express();
@@ -22,6 +23,8 @@ app.use(
     keys: ["randomstringhere"]
   })
 );
+// cookie-parser
+app.use(cookieParser());
 // body-parser
 app.use(bodyParser.urlencoded({ extended: false }));
 // passport

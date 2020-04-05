@@ -1,33 +1,32 @@
 import React, { useEffect } from "react";
 const UserContext = React.createContext({});
 
-const UserProvider = props => {
+const UserProvider = (props) => {
   const [state, setState] = React.useState({
     user: {
-      oAuth: {}
+      oAuth: {},
     },
     player: {
       tasks: [],
       opponents: [],
       sockets: [],
-      lastLogin:0,
+      lastLogin: 0,
     },
     matches: [
       {
         scores: [],
-        timestamps: []
-      }
+        timestamps: [],
+      },
     ],
-    opponents: [
-    ],
-    ok: false
+    opponents: [],
+    ok: false,
   });
   const { children } = props;
   const { player } = state;
   const { tasks } = player;
 
   useEffect(() => {
-    let _user, _player, _matches,_opponents;
+    let _user, _player, _matches, _opponents;
     // Init
     init();
     async function init() {
@@ -36,7 +35,12 @@ const UserProvider = props => {
       _matches = await getMatches(_player);
       _opponents = await getOpponents(_player);
       if (_user.ok && _player.ok) {
-        setState({ user: _user, player: _player, matches: _matches,opponents:_opponents });
+        setState({
+          user: _user,
+          player: _player,
+          matches: _matches,
+          opponents: _opponents,
+        });
       }
     }
 
@@ -45,6 +49,7 @@ const UserProvider = props => {
       const response = await fetch("/api/auth");
       const data = await response.json();
       //console.log("User:",data);
+      if (!data) return { ok: false };
       return data;
     }
     // Get Player
@@ -65,9 +70,9 @@ const UserProvider = props => {
       const options = {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify([..._player.sockets])
+        body: JSON.stringify([..._player.sockets]),
       };
       const response = await fetch("/api/match", options);
       const data = await response.json();
@@ -75,35 +80,33 @@ const UserProvider = props => {
       return data;
     }
     // Get Opponents
-    async function getOpponents(player){
+    async function getOpponents(player) {
       const errMessage = { status: 404, msg: "player not found", ok: false };
       if (!player.sockets) {
         console.log(errMessage);
         return errMessage;
       }
       const { opponents } = player;
-      let requests = []
-      opponents.forEach(o=>{
-      	requests.push(getOpponent(o))
-      })
-	    // Get Single Opponent
-	    async function getOpponent(id){
-		    const url = "http://localhost:3000/api/player/find/playerID/"+id;
-		    return new Promise((resolve,reject)=>{
-		      fetch(url)
-		      .then((resp)=> resp.json())
-		      .then((data)=> {
-		       	resolve(data);
-		      })
-		    
-		    })
-	    }
-      
-      return Promise.all(requests)
-      .then(allData=>{return allData})
+      let requests = [];
+      opponents.forEach((o) => {
+        requests.push(getOpponent(o));
+      });
+      // Get Single Opponent
+      async function getOpponent(id) {
+        const url = "http://localhost:3000/api/player/find/playerID/" + id;
+        return new Promise((resolve, reject) => {
+          fetch(url)
+            .then((resp) => resp.json())
+            .then((data) => {
+              resolve(data);
+            });
+        });
+      }
 
+      return Promise.all(requests).then((allData) => {
+        return allData;
+      });
     }
-
   }, []);
 
   useEffect(() => {
@@ -112,10 +115,10 @@ const UserProvider = props => {
     console.log(state);
   }, [state]);
 
-	//WHY? You ask?
+  //WHY? You ask?
   const x = state.ok;
-	//IT WORKS OKAY!
-	//LEAVE IT PLEASE!!!
+  //IT WORKS OKAY!
+  //LEAVE IT PLEASE!!!
 
   useEffect(() => {
     function updateTasks(newTasks) {
@@ -124,7 +127,7 @@ const UserProvider = props => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(newTasks)
+        body: JSON.stringify(newTasks),
       };
       const url = "/api/task/update";
       fetch(url, options);
@@ -135,18 +138,18 @@ const UserProvider = props => {
 
       return;
     }
-	  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tasks]);
 
-  useEffect(()=> {
-	  if(player.newLogin){
-	const url = "/api/player/update/lastlogin"
-	fetch(url)
+  useEffect(() => {
+    if (state.newLogin) {
+      const url = "/api/player/update/lastlogin";
+      fetch(url);
 
-	  return;
-	  }
-	  return
-  },[player.newLogin])
+      return;
+    }
+    return;
+  }, [state.newLogin]);
 
   return (
     <UserContext.Provider value={{ state, setState }}>

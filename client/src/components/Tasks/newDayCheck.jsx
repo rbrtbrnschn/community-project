@@ -38,7 +38,7 @@ const NewDayCheck = props => {
       <div className="modal-card">
         <header className="modal-card-head">
           <p className="modal-card-title"></p>
-          <button className="delete" aria-label="close" onClick={onCancle}></button>
+          <button className="delete" aria-label="close" onClick={()=>{onCheckYesterday(checks)}}></button>
         </header>
         <section className="modal-card-body">
           <h2 className="title is-3">What Have You Done Yesterday?</h2>

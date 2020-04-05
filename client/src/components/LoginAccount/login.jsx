@@ -2,6 +2,8 @@ import React, { useRef } from "react";
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faDiscord,faGoogle } from "@fortawesome/free-brands-svg-icons"
+import cookie from "universal-cookie";
+
 const Login = () => {
   const usernameRef = useRef();
   const passwordRef = useRef();
@@ -13,17 +15,25 @@ const Login = () => {
     const options = {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+	"credentials": "include"
       },
       body: JSON.stringify({
         username: usernameRef.current.value,
         password: passwordRef.current.value
       })
     };
-    const response = await fetch("/api/auth/local/login", options);
+    const response = await fetch("http://localhost:5000/api/auth/local/login", options);
     const data = await response.json();
     if (!data) throw new Error("Bad Login");
-    if (data.ok) history.push("/");
+    if (data.ok) {
+	    console.log(data);
+	    const { token } = data;
+	    const {key,value,options} = token;
+	    document.cookie = `${key}=${value};max-age=3600;domain=localhost`
+	    history.push("/");
+	    window.location = "/"
+	    }
   };
   return (
     <div>
@@ -62,11 +72,10 @@ const Login = () => {
 
           <p></p>
           <p className="title"></p>
-          <input
-            type="submit"
+          <button
             className="button is-danger"
-            onClick={handleOnSubmit}
-          ></input>
+            onClick={()=>{handleOnSubmit();}}
+          >Submit</button>
         </div>
         <div className="column is-third"></div>
       </div>

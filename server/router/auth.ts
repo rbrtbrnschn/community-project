@@ -6,13 +6,15 @@ const discord = require("./auth/discord");
 const google = require("./auth/google");
 const local = require("./auth/local");
 
+import { getUser } from "../services/snippets";
+import { withAuth, setUser } from "../services/middleware";
 router.use("/discord", discord);
 router.use("/google", google);
 router.use("/local",local);
 
 // Logout route
 router.get("/logout",(req, res) => {
-  res.cookie("__matchID", "", {
+  res.cookie("token", "", {
     expires: new Date(0),
     domain: "localhost",
     path: "/"
@@ -22,14 +24,13 @@ router.get("/logout",(req, res) => {
   res.redirect("/");
 });
 // Test Route
-router.get("/", (req, res) => {
+router.get("/", withAuth, setUser, async (req, res) => {
   if(req.user){
-	return res.json({...req.user, ok:true});
+    return res.json(req.user);
   }
   else{
-  	return res.json({status:404,msg:"not logged in",ok:false})
+    return res.json({status:404,msg:"not logged in", ok:false})
   }
-  
 });
 
 module.exports = router;

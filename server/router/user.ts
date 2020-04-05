@@ -6,6 +6,8 @@ const { uri } = require("../config");
 const { UserDB, userSchema } = require("../models/user");
 const User = UserDB.model("user", userSchema);
 
+import { getUser } from "../services/snippets";
+
 // get user by key/value
 router.get("/find/:key/:value", async (req, res) => {
   let { key, value } = req.params;
