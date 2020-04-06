@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
+import { config } from "../../config"
 const UserContext = React.createContext({});
+const { uri } = config;
 
 const UserProvider = (props) => {
   const [state, setState] = React.useState({
@@ -47,15 +49,21 @@ const UserProvider = (props) => {
 
     // Get User
     async function getUser() {
-      const response = await fetch("/api/auth");
+      const options = {
+        method: "GET",
+	credentials: "include",
+	"Access-Control-Allow-Credentials": true,
+	"Access-Control-Allow-Origin": "http://localhost:3000"
+      }
+      const response = await fetch(`${uri.domain}/api/auth`);
       const data = await response.json();
-      //console.log("User:",data);
+      console.log("User:",data);
       if (!data) return { ok: false };
       return data;
     }
     // Get Player
     async function getPlayer() {
-      const response = await fetch("/api/player");
+      const response = await fetch(`${uri.domain}/api/player`);
       const data = await response.json();
       //console.log("Player:",data);
       return data;
@@ -75,7 +83,7 @@ const UserProvider = (props) => {
         },
         body: JSON.stringify([..._player.sockets]),
       };
-      const response = await fetch("/api/match", options);
+      const response = await fetch(`${uri.domain}/api/match`, options);
       const data = await response.json();
       //console.log("Matches:",data);
       return data;
@@ -94,7 +102,7 @@ const UserProvider = (props) => {
       });
       // Get Single Opponent
       async function getOpponent(id) {
-        const url = "http://localhost:3000/api/player/find/playerID/" + id;
+        const url = `${uri.domain}/api/player/find/playerID/` + id;
         return new Promise((resolve, reject) => {
           fetch(url)
             .then((resp) => resp.json())
@@ -121,7 +129,6 @@ const UserProvider = (props) => {
   //IT WORKS OKAY!
   //LEAVE IT PLEASE!!!
 
-  useEffect(() => {
     function updateTasks(newTasks) {
       const options = {
         method: "POST",
@@ -130,9 +137,11 @@ const UserProvider = (props) => {
         },
         body: JSON.stringify(newTasks),
       };
-      const url = "/api/task/update";
+      const url = `${uri.domain}/api/task/update`;
       fetch(url, options);
     }
+
+  useEffect(() => {
 
     if (x) {
       updateTasks(tasks);
@@ -144,8 +153,10 @@ const UserProvider = (props) => {
 
   useEffect(() => {
     if (state.newLogin === true) {
-      const url = "/api/player/update/lastlogin";
-      fetch(url);
+      const url = `${uri.domain}/api/player/update/lastlogin`;
+      fetch(url)
+      .then(res=>res.json())
+      .then(something => updateTasks(tasks))
 
       return;
     }

@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-
+import { config } from "../../config";
+const { uri } = config;
 const Create = () => {
   const fullNameRef = useRef();
   const usernameRef = useRef();
@@ -47,9 +48,9 @@ const Create = () => {
           errs.push("Username cannot have spaces.");
         }
         if (errs.length > 0) return;
-        const response = await fetch("/api/player/find/username/" + username);
+	      const url = uri.domain+"/api/player/find/username/" + username;
+        const response = await fetch(url);
         const data = await response.json();
-        console.log("data:", data);
         if (data.status === 404) {
           return username;
         } else {
@@ -79,9 +80,8 @@ const Create = () => {
           errs.push("Too short.");
         }
         if (errs.length > 0) return;
-        const response = await fetch(
-          "/api/user/find/email/" + email.toLowerCase()
-        );
+	      const url = uri.domain + "/api/user/find/email/" + email.toLowerCase();
+        const response = await fetch(url);
         const data = await response.json();
         if (data.status === 404) {
           return email;
@@ -125,7 +125,8 @@ const Create = () => {
         console.log("Input was wrong");
         return;
       }
-      const response = await fetch("/api/user/new", options);
+      const url = uri.domain + "/api/user/new"
+      const response = await fetch(url, options);
       const data = await response.json();
       return data;
     }

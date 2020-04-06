@@ -1,4 +1,6 @@
 import React, { useEffect } from "react"
+import { config } from "../../config";
+const { uri } = config;
 
 const TestPage = () => {
   useEffect(()=>{
@@ -9,7 +11,7 @@ const TestPage = () => {
       },
       body: JSON.stringify({username:"test",password:"test"})
     }
-    const url = "http://192.168.2.116:5000/api/auth/local/login"
+    const url = `${uri.domain}/api/auth/local/login`
     fetch(url,options)
     .then(res=>res.json())
     .then(docs=>{

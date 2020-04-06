@@ -4,9 +4,11 @@ import StreakComponent from "./streak";
 import NewDayCheck from "./newDayCheck";
 import CreateModal from "./createModal";
 
+import { config } from "../../config"
 import Fab from "./fab";
 import { Task, Habit, Daily, Streak, Goal, Dream, Challenge } from "./classes";
 import UserContext from "../../contexts/UserContext";
+const { uri } = config;
 
 const Tasks = props => {
   const context = React.useContext(UserContext);
@@ -136,7 +138,7 @@ const Tasks = props => {
     const index = newTasks.findIndex(t => t.id === id);
     newTasks[index] = task;
 
-    const url = "http://localhost:3000/api/task/edit";
+    const url = `${uri.domain}/api/task/edit`;
     const options = {
       method: "POST",
       headers: {
@@ -204,10 +206,9 @@ const Tasks = props => {
  	nonCompleted.forEach(t=>{
 	  handleOnNewDay(t);
 	})
-	  
 	handleOnCancle()
-	console.log("SET STATE.NEWLOGIN")
-	setState({...state,newLogin:true});
+	const _state = {...state,newLogin:true, ok:true}  
+	setState(_state);
   }
 
   const handleOnReturn = task => {

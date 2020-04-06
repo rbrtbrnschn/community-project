@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const config = require("../config");
 
 const passport = require("passport");
 const passportSetup = require("../services/passport/index");
@@ -19,13 +20,12 @@ router.get("/logout",(req, res) => {
     domain: "localhost",
     path: "/"
   });
-
   req.logout();
-  res.redirect("/");
+  res.redirect(config.uri.client);
 });
 // Test Route
 router.get("/", withAuth, setUser, async (req, res) => {
-  if(req.user){
+   if(req.user){
     return res.json(req.user);
   }
   else{

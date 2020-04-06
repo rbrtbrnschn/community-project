@@ -16,6 +16,10 @@ const NewDayCheck = props => {
   	const isNew = isNewDay();
   	//const isNew = true;
 	if(isNew){
+	  if(tasks.length === 0){
+	    onCheckYesterday(checks);
+	    return false;
+	  }
 	  const modal = document.getElementById("new-day-check");
 	  modal.classList.add("is-active")
 	  const html = document.querySelector("html");

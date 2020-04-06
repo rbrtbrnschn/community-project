@@ -6,7 +6,6 @@ import CreateAccountPage from "./components/CreateAccount"
 import LoginPage from "./components/LoginAccount"
 import TestPage from "./components/Test";
 import TasksPage from "./components/Tasks";
-import CreateTask from "./components/CreateTask";
 import Navbar from "./components/navbar";
 import "./App.css";
 
@@ -31,7 +30,6 @@ function App() {
             <Route path="/login" exact render={props => <LoginPage {...props} />}></Route>
 	  <Route path="/test" exact render={props => <TestPage {...props} />}></Route>
 	<Route path="/tasks" exact render={props => <TasksPage {...props} />}></Route>
-	<Route path="/createTask" exact render={props => <CreateTask {...props} />}></Route>
 	  </Switch>
 	</UserProvider>
       </Router>

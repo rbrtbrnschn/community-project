@@ -2,6 +2,8 @@ import React from "react";
 import {BasicNavItem, DropdownNavItem} from "./item"
 import Hamburger from "./hamburger"
 import "../../css/navbar/navbar.css";
+import { config } from "../../config";
+const { uri } = config;
 const Navbar = (props) => {
 	/**
 	 * @BasicNavItem takes in: title,link
@@ -31,7 +33,7 @@ const Navbar = (props) => {
 		children:[
 			{title: "Login",link:"/login"},
 			{title: "Register",link:"/createAccount"},
-			{title: "Logout",link:"/api/auth/logout"},
+			{title: "Logout",link:`${uri.domain}/api/auth/logout`},
 		]
 	}
 

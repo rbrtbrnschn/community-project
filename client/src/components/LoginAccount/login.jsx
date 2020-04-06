@@ -16,21 +16,19 @@ const Login = () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-	"credentials": "include"
       },
       body: JSON.stringify({
         username: usernameRef.current.value,
         password: passwordRef.current.value
       })
     };
-    const response = await fetch(uri.domain+"/api/auth/local/login", options);
-    const data = await response.json();
-    if (!data) throw new Error("Bad Login");
-    if (data.ok) {
-	    console.log(data);
-	    const { token } = data;
-	    const {key,value,options} = token;
-	    document.cookie = `${key}=${value};max-age=3600;domain=localhost`
+    const response = await fetch(uri.domain+"/api/test/auth", options);
+    //const data = await response.json();
+    if (response.status === 401) throw new Error("Bad Login");
+    if (response.status === 200) {
+	    //const { token } = data;
+	    //const {key,value,options} = token;
+	    //document.cookie = `${key}=${value};max-age=3600;domain=localhost;path=/;`
 	    history.push("/");
 	    window.location = "/"
 	    }

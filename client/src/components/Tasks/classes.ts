@@ -28,7 +28,7 @@ class Task {
       this.id = hash();
       this.createdAt = new Date().toLocaleDateString();
       this.timestamps = [
-        { payload: "onCreate", key: Date.now(), isComplete: false }
+        { payload: "onCreate", key: Date.now(), isComplete: false },
       ];
       this.isComplete = false;
       return this;
@@ -43,9 +43,9 @@ class Task {
       const options = {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(task)
+        body: JSON.stringify(task),
       };
       fetch("http://localhost:3000/api/task/complete", options);
       const { deleteTask } = helpers;
@@ -61,15 +61,18 @@ class Task {
       const options = {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(task)
+        body: JSON.stringify(task),
       };
       fetch("http://localhost:3000/api/task/archive", options);
       const { deleteTask } = helpers;
       deleteTask(task);
     }
     return task;
+  }
+  _reset(task?: any) {
+    return;
   }
 }
 
@@ -91,12 +94,12 @@ class Streak extends Task {
     this.streak = 0;
     this.strikes = 0;
   }
-  _complete(task: Streak, helpers?: any) {
+  _complete(task: any, helpers?: any) {
     if (!task.isComplete) {
       const stamp = {
         payload: "onComplete",
         key: Date.now(),
-        isComplete: true
+        isComplete: true,
       };
       task.timestamps.push(stamp);
       task.isComplete = true;
@@ -130,7 +133,7 @@ class Streak extends Task {
       const yesterdayStamp = {
         payload: "onComplete",
         key: yesterKey,
-        isComplete: true
+        isComplete: true,
       };
       task.timestamps.push(yesterdayStamp);
       task.isComplete = false;
@@ -148,7 +151,7 @@ class Streak extends Task {
     const stamp = {
       payload: "onFail",
       key: Date.now(),
-      isComplete: false
+      isComplete: false,
     };
     task.isComplete = false;
     task.timestamps.push(stamp);
@@ -160,7 +163,7 @@ class Streak extends Task {
     }
     return task;
   }
-  _reset(task: Streak, helpers?: any) {
+  _reset(task: any, helpers?: any) {
     const lastStamp = task.timestamps[task.timestamps.length - 1];
     const { key } = lastStamp;
     const lastDate = new Date(key);
@@ -169,15 +172,13 @@ class Streak extends Task {
     const toDay = toDate.getDate();
     if (helpers) {
       const { setTask } = helpers;
-      if (
-        Math.abs(toDay - lastDay) === 1
-      ) {
+      if (Math.abs(toDay - lastDay) === 1) {
         if (task.isComplete) {
           task.isComplete = false;
-          console.log("Completed Yesterday:",task.title);
+          console.log("Completed Yesterday:", task.title);
           return setTask(task);
         } else {
-          console.log("RESET:",task.title);
+          console.log("RESET:", task.title);
           return this._fail(task, helpers);
         }
       } else if (toDay !== lastDay) {
