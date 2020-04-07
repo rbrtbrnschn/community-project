@@ -32,7 +32,13 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "dev": "npm start"
+    "dev": "npm start",
+    "electron":"electron electron.js",
+    "package-linux":"electron-packager electron.js --out=release",
+    "package-mac":"electron-packager electron.js --out=release --platform=darwin arch=x64",
+    "package-win":"electron-packager electron.js --out=release --platform=windows arch=ia32",
+    "package":"npm run package-linux && npm run package-mac && npm run package-win"
+
   },
   "proxy": "http://localhost:5000",
   "eslintConfig": {
@@ -51,6 +57,8 @@
     ]
   },
   "devDependencies": {
+    "electron": "^8.2.0",
+    "electron-packager": "^14.2.1",
     "gulp": "^4.0.2",
     "gulp-sass": "^4.0.2"
   }

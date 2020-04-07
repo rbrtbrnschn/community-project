@@ -1,5 +1,5 @@
 const production = false;
-const domain = production ? "http://doesisaacbeat.me" : ""
+const domain = production ? "https://doesisaacbeat.me" : ""
 const port = production ? ":5000" : ""
 const config = {
 	uri: {
