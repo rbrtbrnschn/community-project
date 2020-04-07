@@ -16,6 +16,7 @@ router.use("/local",local);
 // Logout route
 router.get("/logout",(req, res) => {
   res.cookie("token", "", {
+    maxAge: 0,
     expires: new Date(0),
     domain: "localhost",
     path: "/"

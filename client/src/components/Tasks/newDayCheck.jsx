@@ -37,6 +37,12 @@ const NewDayCheck = props => {
 	  setChecks([..._checks])
   }
 
+  const checkAlreadyCompleted = (task) => {
+	  const isComplete =task.timestamps[task.timestamps.length - 1].isComplete;
+	  if(isComplete)return false;
+	  return true;
+  }
+
   return (
     <div className="modal" id="new-day-check">
       <div className="modal-background"></div>
@@ -47,7 +53,7 @@ const NewDayCheck = props => {
         </header>
         <section className="modal-card-body">
           <h2 className="title is-3">What Have You Done Yesterday?</h2>
-	  {tasks.map(t=>(
+	  {tasks.map(t=> checkAlreadyCompleted(t) && (
 	  <div key={t.id+"new-day-check"}>
 		  <label className="checkbox">
 		    <input value={t.id} onChange={handleOnChange} type="checkbox" />
