@@ -16,9 +16,9 @@ const TestPage = () => {
     .then(res=>res.json())
     .then(docs=>{
       if(docs.ok){
-      const { token } = docs;
-      const { key, value, options } = token;
-      document.cookie = `${key}=${value};max-age=3600;domain=localhost`
+      //const { token } = docs;
+      //const { key, value, options } = token;
+      //document.cookie = `${key}=${value};max-age=3600;domain=localhost`
       window.location = "/";
       //window.location = "/"
       }

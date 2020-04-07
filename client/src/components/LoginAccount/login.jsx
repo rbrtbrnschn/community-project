@@ -22,7 +22,7 @@ const Login = () => {
         password: passwordRef.current.value
       })
     };
-    const response = await fetch(uri.domain+"/api/test/auth", options);
+    const response = await fetch(uri.domain+"/api/auth/local/login", options);
     //const data = await response.json();
     if (response.status === 401) throw new Error("Bad Login");
     if (response.status === 200) {

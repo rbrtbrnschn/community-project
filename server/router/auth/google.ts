@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const passport = require("passport");
-const jwt = require("jsonwebtoken");
+const { signToken } = require("../../services/snippets");
 const config = require("../../config");
 
 // passport.authenticate middleware is used here to authenticate the request
@@ -18,9 +18,8 @@ router.get(
 router.get("/redirect", passport.authenticate("google"), (req, res) => {
   //Issue Token
   const id = req.user.userID;
-  const payload = { id }
-  const token = jwt.sign(payload,config.jwt.secret,{expiresIn: "1h"});
-  res.cookie("token",token,{httpOnly: true})
+  const token = signToken({ id });
+  res.cookie("token",token,{httpOnly: true, maxAge: config.cookies.token.maxAge}).status(200);
 
   res.redirect("/");
 });

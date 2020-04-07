@@ -21,7 +21,7 @@ router.get("/logout",(req, res) => {
     path: "/"
   });
   req.logout();
-  res.redirect(config.uri.client);
+  res.redirect("/");
 });
 // Test Route
 router.get("/", withAuth, setUser, async (req, res) => {

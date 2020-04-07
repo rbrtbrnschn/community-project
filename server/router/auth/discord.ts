@@ -1,22 +1,20 @@
 const passport = require("passport");
 const router = require("express").Router();
-const jwt = require("jsonwebtoken");
+const { signToken } = require("../../services/snippets");
 const config = require("../../config");
 
 router.get("/login", passport.authenticate("discord"));
 router.get(
   "/redirect",
   passport.authenticate("discord", {
-    failureRedirect: "/somethingwentwrong"
+    failureRedirect: "/error"
   }),
   function(req, res) {
     //issue token
     const id = req.user.userID;
-    const payload = { id }
-    const token = jwt.sign(payload,config.jwt.secret,{expiresIn: "1h"});
-    res.cookie("token",token,{httpOnly: true})
+    const token = signToken({ id })
+    res.cookie("token",token,{httpOnly: true, maxAge: config.cookies.token.maxAge})
     const redirect = "http://localhost:3000" 
-    console.log("TOKEN ISSUED:",token,"|| REDIRECTED TO",redirect)
     res.redirect(redirect); // Successful auth
   }
 );
