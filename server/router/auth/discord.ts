@@ -14,7 +14,7 @@ router.get(
     const id = req.user.userID;
     const token = signToken({ id })
     res.cookie("token",token,{httpOnly: true, maxAge: config.cookies.token.maxAge})
-    const redirect = "http://localhost:3000" 
+    const redirect = "/" 
     res.redirect(redirect); // Successful auth
   }
 );
