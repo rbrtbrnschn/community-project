@@ -27,6 +27,6 @@ function createHomeWindow(){
     homeWindow = null;
   })
   
-  homeWindow.loadFile("build/index.html");
+  homeWindow.loadFile(`${__dirname}/build/index.html`);
 }
 

@@ -59,6 +59,7 @@ nsp.on("connection",(client)=>{
 	// On Send Data To Room
 	client.on("onSendToRoom",({socketID, data})=>{
 		const room = socketID+"";
+		console.log("send data:",data,"to:",socketID)
 		nsp.to(room).emit("onSendToRoom",data);
 	})
 })

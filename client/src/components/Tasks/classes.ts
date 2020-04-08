@@ -148,9 +148,13 @@ class Streak extends Task {
     return task;
   }
   _fail(task: Streak, helpers?: any) {
+    const toDay = new Date();
+    const yesterDay = new Date();
+    yesterDay.setDate(toDay.getDate() - 1);
+
     const stamp = {
       payload: "onFail",
-      key: Date.now(),
+      key: yesterDay.getTime(),
       isComplete: false,
     };
     task.isComplete = false;

@@ -8,8 +8,8 @@ const Home = (props) => {
 	//const socket = SocketIOClient("/todo-hub");
 	const socketIDS = state.player.sockets;
 	
-	/*useEffect(()=>{
-		socket.on("onConnection",data =>{
+	useEffect(()=>{
+		/*socket.on("onConnection",data =>{
 			if(socketIDS.length === 0)return;
 			socket.emit("onJoinRooms",socketIDS);
 			
@@ -18,8 +18,11 @@ const Home = (props) => {
 		socket.on("onSendToRoom",(data)=>{
 			console.log("Data Arrived:",data);
 		})
+		if(socketIDS.length === 0)return;
+		socket.emit("onSendToRoom",{socketID:socketIDS[0],data:"Hello"})
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	},[state.matches]) */
+		*/
+	},[state.matches])
 	
    	return (
       	<div>
