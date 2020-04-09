@@ -279,11 +279,10 @@ const Tasks = props => {
       default:
         break;
     }
-    return _task;
+    return (<div className="">{_task}</div>);
   };
   return (
-    <div>
-      <p className="title is-3"></p>
+    <div className="container is-widescreen">
       {tasks.map(t => handleOnReturn(t)
       )}
 	<CreateModal onAdd={handleOnAdd}/>

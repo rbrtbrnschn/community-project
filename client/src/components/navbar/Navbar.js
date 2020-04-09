@@ -23,9 +23,9 @@ const Navbar = (props) => {
 		title:"Tasks",
 		link:"/tasks"
 	}
-	const test = {
-		title:"Test",
-		link:"/test"
+	const profile = {
+		title:"Profile",
+		link:"/profile"
 	}
 	const account = {
 		title: "Account",
@@ -39,18 +39,17 @@ const Navbar = (props) => {
 	}
 
 	return(
-	<nav className="navbar is-spaced is-danger is-fixed-top" role="navigation" aria-label="main navigation">
+	<nav className="navbar has-shadow is-spaced is-fixed-top" role="navigation" aria-label="main navigation">
+		<div className="container">
 		<input type="checkbox" id="toggler" className="toggler" />
 		<div className="navbar-brand">
-			<a className="navbar-item" href="/">
-				<img src="https://doesisaacbeat.me/static/logo.png" width="128" height="28"></img>
-			</a>
+			<a className="navbar-item" style={{fontFamily:"aliseo"}} href="/">TodoHub</a>
 			<Hamburger />
 		</div>
 		<div id="navbarBasicExample" className="navbar-menu">
 			<div className="navbar-start">
 			<BasicNavItem item={tasks} />
-			<BasicNavItem item={test} />
+			<BasicNavItem item={profile} />
 			</div>
 			<div className="navbar-end">
 			  
@@ -58,6 +57,7 @@ const Navbar = (props) => {
 			
 			</div>
 		</div>
+	</div>
 	</nav>
 	);
 }

@@ -34,6 +34,22 @@ const Profile = (props) => {
 	else{return;}
 	
 	},[])
+	
+	const hero = {
+		title: "Last Online On",
+		sub: new Date(Date.parse(profile.lastLogin)).toLocaleDateString(),
+		color: "is-link"
+	}
+	const hero2 = {
+		title: "Something Else On",
+		sub: new Date(Date.parse(profile.lastLogin)).toLocaleDateString(),
+		color: "is-info"
+	}
+	const hero3 = {
+		title: "Something Totaly Different",
+		sub: new Date(Date.parse(profile.lastLogin)).toLocaleDateString(),
+		color: "is-primary"
+	}
 
 	useEffect(()=>{
 	  if(isParam)return;
@@ -68,7 +84,11 @@ const Profile = (props) => {
 			: profile.page === 1 ?
 			<Stats profile={profile}/>
 				: profile.page === 2 ?
-				<Hero />
+				<div>
+					<Hero hero={hero} />
+					<Hero hero={hero2} />
+					<Hero hero={hero3} />
+				</div>
 				: <div></div>
 
 		}
