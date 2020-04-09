@@ -16,7 +16,7 @@ const Navbar = (props) => {
 	 *@param {childrne} Array Of @BasicNavItem s
 	 */
 	const homepage = {
-		title:"Home",
+		title:"TodoHub",
 		link:"/"
 	}
 	const tasks = {
@@ -31,6 +31,7 @@ const Navbar = (props) => {
 		title: "Account",
 		pos:1,
 		children:[
+			{title: "Profile",link:"/profile"},
 			{title: "Login",link:"/login"},
 			{title: "Register",link:"/createAccount"},
 			{title: "Logout",link:`${uri.domain}/api/auth/logout`},
@@ -38,10 +39,12 @@ const Navbar = (props) => {
 	}
 
 	return(
-	<nav className="navbar is-danger is-fixed-top" role="navigation" aria-label="main navigation">
+	<nav className="navbar is-spaced is-danger is-fixed-top" role="navigation" aria-label="main navigation">
 		<input type="checkbox" id="toggler" className="toggler" />
 		<div className="navbar-brand">
-			<BasicNavItem item={homepage} />
+			<a className="navbar-item" href="/">
+				<img src="https://doesisaacbeat.me/static/logo.png" width="128" height="28"></img>
+			</a>
 			<Hamburger />
 		</div>
 		<div id="navbarBasicExample" className="navbar-menu">

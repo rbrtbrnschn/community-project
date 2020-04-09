@@ -4,6 +4,10 @@ interface taskCreation {
   notes: String;
   payload: String;
 }
+interface challengeCreation extends taskCreation {
+  start: Date;
+  end: Date;
+}
 
 class Task {
   title: any;
@@ -148,6 +152,27 @@ class Streak extends Task {
     return task;
   }
   _fail(task: Streak, helpers?: any) {
+    if(!task.isComplete){
+    const stamp = {
+      payload:"onFail",
+      key: Date.now(),
+      isComplete:false
+    }
+    task.isComplete = true;
+    //task.isComplete only notifies handlers, that it cannot be manipulated anymore - no more completing, no failing
+    //since u can only ever fail OR complete a task on the same day
+    task.timestamps.push(stamp);
+    task.strikes = task.strikes + 1;
+    task.streak = 0;
+    if(helpers){
+      const { setTask } = helpers;
+      return setTask(task);
+    }
+  }
+  return task;
+  }
+  
+  _failYesterday(task: Streak, helpers?: any){
     const toDay = new Date();
     const yesterDay = new Date();
     yesterDay.setDate(toDay.getDate() - 1);
@@ -166,6 +191,7 @@ class Streak extends Task {
       return setTask(task);
     }
     return task;
+  
   }
   _reset(task: any, helpers?: any) {
     const lastStamp = task.timestamps[task.timestamps.length - 1];
@@ -177,17 +203,17 @@ class Streak extends Task {
     if (helpers) {
       const { setTask } = helpers;
       if (Math.abs(toDay - lastDay) === 1) {
-        if (task.isComplete) {
+        if (task.timestamps[task.timestamps.length -1 ].isComplete) {
           task.isComplete = false;
           console.log("Completed Yesterday:", task.title);
           return setTask(task);
         } else {
-          console.log("RESET:", task.title);
-          return this._fail(task, helpers);
+          console.log("Failed yesterday:", task.title);
+          return this._failYesterday(task, helpers);
         }
       } else if (toDay !== lastDay) {
         console.log("failed streak NOT SURE WHAT DIS IS");
-        return this._fail(task, helpers);
+        return this._failYesterday(task, helpers);
       }
     }
     return task;
@@ -203,9 +229,13 @@ class Dream extends Task {
     super(task);
   }
 }
-class Challenge extends Task {
-  constructor(task?: taskCreation) {
+class Challenge extends Streak {
+  start: Date;
+  end: Date;
+  constructor(task?: challengeCreation) {
     super(task);
+    this.start = task ? task.start : new Date();
+    this.end = task ? task.end : new Date(this.start.getTime() + 86400000 * 30);
   }
 }
 

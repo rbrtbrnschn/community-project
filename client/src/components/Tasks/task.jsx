@@ -25,10 +25,10 @@ const Task = (props) => {
 	 	 </button>
 		</p>
 		<p className="card-footer-item">
-		<button className="button is-danger is-outlined"
+		<button className="button is-danger"
 			onClick={onDelete}
 		>
-  		  <span>Delete</span>
+  		  <span>Fail</span>
   		  <span className="icon is-small">
   		    <FontAwesomeIcon icon={faTimes} />
   		  </span>

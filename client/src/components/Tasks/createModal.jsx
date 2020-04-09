@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import bulmaCalendar from 'bulma-calendar/dist/js/bulma-calendar.min.js';
+import 'bulma-calendar/dist/css/bulma-calendar.min.css';
 
 const CreateModal = (props) => {
   const { onAdd } = props;
@@ -38,6 +40,37 @@ const CreateModal = (props) => {
     html.classList.remove("is-clipped");
 	  return;
   }
+
+
+  React.useEffect(()=> {
+var calendars = bulmaCalendar.attach('[type="date"]', {
+	color: "danger",
+	isRange: true,
+	allowSameDayRange: false,
+	showButtons: true,
+	displayMode: "dialog",
+	labelFrom:"From",
+	labelTo:"To"
+
+});
+  calendars.forEach(calendar => {
+    // Add listener to date:selected event
+    calendar.on("date:selected", date => {
+      console.log(date);
+    });
+  });
+
+  // To access to bulmaCalendar instance of an element
+  const element = document.querySelector("#date-picker");
+  if (element) {
+    // bulmaCalendar instance is available as element.bulmaCalendar
+    element.bulmaCalendar.on("select", datepicker => {
+      const datesStr = datepicker.data.value();
+      const dates = datesStr.split(" - ");
+      setState({...state,start:dates[0],end:dates[1]})
+    });
+  }
+  },[state.payload])
   return (
     <div id={"create-modal"} className="modal">
       <div className="modal-background"></div>
@@ -98,6 +131,12 @@ const CreateModal = (props) => {
               </div>
             </div>
           </div>
+	  {state.payload === "Challenge" ? 	
+          	<div className="field">
+		      <input id="date-picker" type="date" />
+              </div>
+		  : ""
+	  }
 
         </section>
         <footer className="modal-card-foot">

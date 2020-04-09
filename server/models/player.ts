@@ -28,6 +28,7 @@ const playerSchema = new Schema({
   tasks: Array,
   locale: String,
   lastLogin : { type : Date, default: Date.now },
+  highscore : { type: Number, default: 0 }
 });
 
 module.exports = {

@@ -1,6 +1,7 @@
 import React from "react";
 import TaskComponent from "./task";
 import StreakComponent from "./streak";
+import ChallengeComponent from "./challenge";
 import NewDayCheck from "./newDayCheck";
 import CreateModal from "./createModal";
 
@@ -99,6 +100,11 @@ const Tasks = props => {
     switchForPayload(task)._complete(task, stateHelpers);
   };
 
+  const handleOnFail = _id => {
+    const task = tasks.find(t => t.id === _id);
+    switchForPayload(task)._fail(task,stateHelpers);
+  }
+
   const handleOnCompleteYesterday = _id => {
     const task = tasks.find(t => t.id === _id);
     switchForPayload(task)._completeYesterday(task,stateHelpers);
@@ -186,7 +192,13 @@ const Tasks = props => {
     const yesterDay = new Date(key).getDate();
     const toDay = new Date().getDate();
     if (yesterDay === toDay) return;
-    switchForPayload(task)._reset(task,stateHelpers);
+    const cb = (task) => {
+    if(task.streak > player.highscore){
+      setState({...state,player:{...player,highscore:task.streak}})
+	    console.log("shouldve set state:",{...state,player:{...player,highscore:task.streak}})
+    }
+    }
+    switchForPayload(task)._reset(task,stateHelpers,cb);
   };
 
   const handleOnCheckYesterday = (ids) => {
@@ -211,6 +223,7 @@ const Tasks = props => {
 	setState(_state);
   }
 
+
   const handleOnReturn = task => {
     const _props = {
       task: task,
@@ -228,6 +241,9 @@ const Tasks = props => {
       },
       onCancle: () => {
         handleOnCancle(task.id);
+      },
+      onFail: () => {
+        handleOnFail(task.id);
       },
       onSaveChanges: handleOnSaveChanges,
       onArchive: handleOnArchive,
@@ -257,7 +273,7 @@ const Tasks = props => {
         _task = <TaskComponent key={id} all={_props} />;
         break;
       case "Challenge":
-        _task = <TaskComponent key={id} all={_props} />;
+        _task = <ChallengeComponent key={id} all={_props} />;
         break;
 
       default:

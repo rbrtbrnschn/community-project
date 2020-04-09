@@ -4,7 +4,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTimes,faCheck} from "@fortawesome/free-solid-svg-icons"
 const Streak = (props) => {
 	const { all } = props;
-	const { task, onDelete, onComplete, onEdit, onCancle, onSaveChanges, onArchive } = all;
+	const { task, onDelete, onComplete, onEdit, onCancle, onSaveChanges, onArchive, onFail } = all;
 
 	return(<div className="task">
 		<div className="card" id={task.id}>
@@ -26,10 +26,10 @@ const Streak = (props) => {
 	 	 </button>
 		</p>
 		<p className="card-footer-item">
-		<button className="button is-danger is-outlined"
-			onClick={onDelete}
+		<button className="button is-danger"
+			onClick={onFail}
 		>
-  		  <span>Delete</span>
+  		  <span> Fail </span>
   		  <span className="icon is-small">
   		    <FontAwesomeIcon icon={faTimes} />
   		  </span>

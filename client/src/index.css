@@ -1,3 +1,11 @@
+@font-face {
+  font-family: 'aliseo';
+  font-style: normal;
+  font-weight: bold;
+  src:
+    local('aliseo'),
+    url(./assets/aliseo.otf) format('opentype');
+}
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -11,3 +19,4 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+

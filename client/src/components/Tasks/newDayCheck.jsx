@@ -43,7 +43,6 @@ const NewDayCheck = props => {
 	const {key, isComplete} = lastStamp;
 	const lastDay = new Date(key);
 	const lastDate = lastDay.getDate();
-	console.log(lastDate);
 	const toDay = new Date();
 	const toDate = toDay.getDate();
 	const yesterDate = toDate - 1;
