@@ -34,6 +34,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "dev": "npm start",
+    "bs":"npm run build && serve -l 3000 -s build",
     "electron": "electron electron.js",
     "package-linux": "electron-packager electron.js --out=release",
     "package-mac": "electron-packager electron.js --out=release --platform=darwin arch=x64",
