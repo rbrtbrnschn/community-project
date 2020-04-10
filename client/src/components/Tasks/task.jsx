@@ -15,7 +15,7 @@ const Task = (props) => {
 
 		<footer className="card-footer">
 		<p className="card-footer-item">
-		<button className="button is-success"
+		<button className="button is-link is-outlined"
 			onClick={onComplete}
 		>
     		<span className="icon is-small">
@@ -25,7 +25,7 @@ const Task = (props) => {
 	 	 </button>
 		</p>
 		<p className="card-footer-item">
-		<button className="button is-danger"
+		<button className="button is-info is-outlined"
 			onClick={onDelete}
 		>
   		  <span>Fail</span>

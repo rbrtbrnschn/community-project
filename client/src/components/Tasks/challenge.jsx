@@ -12,12 +12,12 @@ const ChallengeComponent = (props) => {
                 <div className="card-content" onClick={onEdit}>     
                 <p className="title is-3">{task.title}</p>
                 <p className="subtitle">{task.notes}</p>
-                <p className="tag is-primary is-success is-rounded is-light is-large">{task.streak}</p>
+                <p className="tag is-primary is-link is-rounded is-large">{task.streak}</p>
                 </div>
 
                 <footer className="card-footer">
                 <p className="card-footer-item">
-                <button className="button is-success"
+                <button className="button is-link is-outlined"
                         onClick={onComplete}
                 >
                 <span className="icon is-small">
@@ -27,7 +27,7 @@ const ChallengeComponent = (props) => {
                  </button>
                 </p>
                 <p className="card-footer-item">
-                <button className="button is-danger"
+                <button className="button is-info is-outlined"
                         onClick={onFail}
                 >
                   <span>Fail</span>
@@ -37,7 +37,7 @@ const ChallengeComponent = (props) => {
                 </button>
                 </p>
                 <p className="card-footer-item">
-                <button className="button is-primary"
+                <button className="button is-primary is-outlined"
                         onClick={()=>{
 			const modal = document.getElementById(`${task.id}-invite-modal`);
 				const html = document.querySelector("html");

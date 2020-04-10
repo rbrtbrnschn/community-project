@@ -11,12 +11,13 @@ const Streak = (props) => {
 		<div className="card-content" onClick={onEdit}>		
 		<p className="title is-3">{task.title}</p>
 		<p className="subtitle">{task.notes}</p>
-		<p className="subtitle">{task.streak}</p>
+		<p className="tag is-link is-primary is-rounded is-large">{task.streak}</p>
+
 		</div>
 
 		<footer className="card-footer">
 		<p className="card-footer-item">
-		<button className="button is-success"
+		<button className="button is-link is-outlined"
 			onClick={onComplete}
 		>
     		<span className="icon is-small">
@@ -26,7 +27,7 @@ const Streak = (props) => {
 	 	 </button>
 		</p>
 		<p className="card-footer-item">
-		<button className="button is-danger"
+		<button className="button is-info is-outlined"
 			onClick={onFail}
 		>
   		  <span> Fail </span>
