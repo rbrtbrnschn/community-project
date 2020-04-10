@@ -38,7 +38,7 @@ const Streak = (props) => {
 		</p>
 		</footer>
 		</div>
-		<Modal task={task} onCancle={onCancle} onSaveChanges={onSaveChanges} onArchive={onArchive} />
+		<Modal task={task} onCancle={onCancle} onSaveChanges={onSaveChanges} onArchive={onArchive} onDelete={onDelete} />
 		
 	</div>)
 }

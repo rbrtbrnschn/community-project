@@ -3,7 +3,7 @@ import React, { useState } from "react"
 const Modal = (props) => {
 	const { task } = props;
 	const { id, title, notes, payload } = props.task;
-	const { onCancle, onSaveChanges, onArchive } = props;
+	const { onCancle, onSaveChanges, onArchive, onDelete } = props;
 	const isStreak = task.payload === "Streak" || "Challenge";
 	let _initialValues = {
 		title:title,
@@ -51,11 +51,11 @@ const Modal = (props) => {
 		{isStreak && <input className="input" value={values.streak} onChange={handleOnChangeStreak}/> }
     </section>
     <footer className="modal-card-foot">
-      <button className="button is-success" onClick={()=>{
+      <button className="button is-link" onClick={()=>{
 	      const _values = processValues(values);
 	      onSaveChanges({...task,..._values})
       }}>Save changes</button>
-      <button className="button is-warning" onClick={()=>{onArchive(id)}}>Archive</button>    
+      <button className="button is-info" onClick={()=>{onDelete(id)}}>Delete</button>    
       <button className="button" onClick={onCancle}>Cancel</button>
 	
 	

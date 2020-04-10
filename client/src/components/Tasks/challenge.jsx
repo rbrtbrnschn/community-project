@@ -53,7 +53,7 @@ const ChallengeComponent = (props) => {
                 </p>
                 </footer>
                 </div>
-                <Modal task={task} onCancle={onCancle} onSaveChanges={onSaveChanges} onArchive={onArchive} />
+                <Modal task={task} onCancle={onCancle} onSaveChanges={onSaveChanges} onArchive={onArchive} onDelete={onDelete} />
 		<InviteModal task={task} onCancle={onCancle}/>
 
         </div>)
