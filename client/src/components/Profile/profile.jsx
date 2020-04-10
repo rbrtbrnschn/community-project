@@ -51,6 +51,8 @@ const Profile = (props) => {
 		color: "is-primary"
 	}
 
+	const heros = [hero,hero2,hero3];
+
 	useEffect(()=>{
 	  if(isParam)return;
 	  setProfile({...profile,...state.player})
@@ -62,33 +64,45 @@ const Profile = (props) => {
 		return data;
 	}
 
-	const goLeft = () => {
-		const currentPage = profile.page;
-		const newPage = currentPage - 1;
-		if(newPage < 0)return;
-		setProfile({...profile,page:newPage});
+	const handleOnClickTab = e => {
+                try{
+                const lis = document.querySelectorAll("li.is-active");
+                lis.forEach(l=>l.classList.remove("is-active"));
+
+                const button = e.target.classList[0]
+                const li = document.querySelector(`li#${button}`);
+                li.classList.add("is-active");
+                }
+                catch(err){}
+        }
+
+	const goLeft = e => {
+		handleOnClickTab(e);
+		const page = 0;
+		setProfile({...profile,page:page});
 	}
 
-	const goRight = () => {
-		const currentPage = profile.page;
-		const newPage = currentPage + 1;
-		if(newPage > 2)return;
-		setProfile({...profile,page:newPage});
+	const goMiddle = e => {
+		handleOnClickTab(e);
+		const page = 1;
+		setProfile({...profile,page:page});
+	}
+
+	const goRight = e => {
+		handleOnClickTab(e);
+		const page = 2;
+		setProfile({...profile,page:page});
 	}
 	const { tasks } = profile;
 	return (
 		<div>
-		<Tabs profile={profile} navHelpers={{left:goLeft,right:goRight}}/>
+		<Tabs profile={profile} navHelpers={{left:goLeft,middle:goMiddle,right:goRight}}/>
 		{profile.page === 0 ?
 			tasks.map(t=>(<Task key={t.id} task={t}/>))
 			: profile.page === 1 ?
 			<Stats profile={profile}/>
 				: profile.page === 2 ?
-				<div>
-					<Hero hero={hero} />
-					<Hero hero={hero2} />
-					<Hero hero={hero3} />
-				</div>
+				heros.map(h=>(<Hero key={h.title} hero={h} />))
 				: <div></div>
 
 		}

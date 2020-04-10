@@ -4,13 +4,13 @@ const Hero = (props) => {
 	let {title,sub,color} = props.hero;
 	if(!color || color === undefined)color= "is-primary"
 	return(
-		<section class={"hero is-fullheight "+color}>
-		  <div class="hero-body">
-		    <div class="container">
-		      <h1 class="title">
+		<section className={"hero is-fullheight "+color}>
+		  <div className="hero-body">
+		    <div className="container">
+		      <h1 className="title">
 			{title}
 		      </h1>
-	      	<h2 class="subtitle">
+	      	<h2 className="subtitle">
 			{sub}
 		      </h2>
 		    </div>

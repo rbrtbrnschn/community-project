@@ -1,10 +1,27 @@
-import React from "react";
-import {BasicNavItem, DropdownNavItem} from "./item"
-import Hamburger from "./hamburger"
+import React, {useEffect, useState, useContext} from "react";
+import {BasicNavItem, DropdownNavItem} from "./item";
+import Hamburger from "./hamburger";
 import "../../css/navbar/navbar.css";
 import { config } from "../../config";
 const { uri } = config;
-const Navbar = (props) => {
+const Navbar = props => {
+	const [logged,setLogged] = useState(true)
+	useEffect(()=>{
+		console.log("CHANGE",logged)
+	},[logged])
+
+	useEffect(()=>{
+	  fetch(uri.domain+"/api/auth")
+		.then(res=>res.json())
+		.then(user=>{
+		if(user.ok === false){
+		setLogged(false)
+		}
+		else{
+		setLogged(true)
+		}
+		})
+	})
 	/**
 	 * @BasicNavItem takes in: title,link
 	 * @param {title} Name Of The Link
@@ -32,8 +49,6 @@ const Navbar = (props) => {
 		pos:1,
 		children:[
 			{title: "Profile",link:"/profile"},
-			{title: "Login",link:"/login"},
-			{title: "Register",link:"/createAccount"},
 			{title: "Logout",link:`${uri.domain}/api/auth/logout`},
 		]
 	}
@@ -52,9 +67,12 @@ const Navbar = (props) => {
 			<BasicNavItem item={profile} />
 			</div>
 			<div className="navbar-end">
-			  
-			  <DropdownNavItem item={account} />	
-			
+			{logged ?
+			  <DropdownNavItem item={account} /> :
+			  <button className="button" onClick={()=>{
+			    window.location = "/login"
+			  }}>Login</button>
+			}	
 			</div>
 		</div>
 	</div>

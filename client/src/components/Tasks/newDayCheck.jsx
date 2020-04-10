@@ -40,13 +40,13 @@ const NewDayCheck = props => {
   const checkAlreadyCompleted = (task) => {
 	if(task.payload === "Task")return false;
 	const lastStamp = task.timestamps[task.timestamps.length - 1];
-	const {key, isComplete} = lastStamp;
+	const {key, payload, isComplete} = lastStamp;
 	const lastDay = new Date(key);
 	const lastDate = lastDay.getDate();
 	const toDay = new Date();
 	const toDate = toDay.getDate();
 	const yesterDate = toDate - 1;
-	if(lastDate === yesterDate && isComplete)return false;
+	if(lastDate === yesterDate && isComplete || yesterDate && payload === "onFail" )return false;
 	if(lastDate !== toDate)return true;
   }
 

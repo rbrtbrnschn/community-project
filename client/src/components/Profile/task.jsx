@@ -16,7 +16,7 @@ const Task = (props) => {
 	  const latestDate = new Date(newest);
 	  return latestDate.toLocaleDateString();
 	}
-	return (<div className="task">
+	return (<div className="container is-fullwidth">
                 <div className="card" id={task.id}>
                 <div className="card-content">     
                 <p className="title is-3">{task.title}</p>

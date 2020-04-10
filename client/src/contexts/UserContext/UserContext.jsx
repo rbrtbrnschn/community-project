@@ -57,7 +57,7 @@ const UserProvider = (props) => {
       }
       const response = await fetch(`${uri.domain}/api/auth`);
       const data = await response.json();
-      console.log("User:",data);
+      //console.log("User:",data);
       if (!data) return { ok: false };
       return data;
     }

@@ -279,7 +279,7 @@ const Tasks = props => {
       default:
         break;
     }
-    return (<div className="">{_task}</div>);
+    return _task;
   };
   return (
     <div className="container is-widescreen">
