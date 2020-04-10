@@ -1,10 +1,10 @@
 .fab {
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   position: absolute;
   bottom: 5vh;
   right: 5vh;
-  border-radius: calc(50px / 2);
+  border-radius: calc(60px / 2);
   display: flex;
   justify-content: center;
   background-color: #f14668;
