@@ -98,7 +98,7 @@ const Profile = (props) => {
 		<div>
 		<Tabs profile={profile} navHelpers={{left:goLeft,middle:goMiddle,right:goRight}}/>
 		{profile.page === 0 ?
-			tasks.map(t=>(<Task key={t.id} task={t}/>))
+			tasks.map(t=>(<Task key={t.id} task={t} profile={profile}/>))
 			: profile.page === 1 ?
 			<Stats profile={profile}/>
 				: profile.page === 2 ?

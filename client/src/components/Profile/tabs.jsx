@@ -4,7 +4,7 @@ import { faAngleLeft,faAngleDown,faAngleRight } from "@fortawesome/free-solid-sv
 const Tabs =(props) => {
 	const { left, middle, right} = props.navHelpers;
 	return(
-		<div className="tabs is-boxed is-fullwidth">
+		<div className="tabs is-boxed is-fullwidth is-medium">
 		  <ul>
 		    <li id="tab-1" onClick={left}>
 		      <a className="tab-1">
