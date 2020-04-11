@@ -44,6 +44,10 @@ const UserProvider = (props) => {
           matches: _matches,
           opponents: _opponents,
         });
+      }else{
+      	if(window.location.pathname !== "/login"){
+		window.location = "/login"
+	}
       }
     }
 
