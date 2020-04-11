@@ -62,7 +62,7 @@ router.post("/new", async (req: any, res: any) => {
 });
 
 // invite player
-router.get("/invite/:queryValue", isAuth, async (req, res) => {
+router.get("/invite/:queryValue", withAuth, setUser, async (req, res) => {
   const queryValue = req.params.queryValue.toLowerCase();
   const queryKey = !queryValue.includes("@") ? "username_lower" : "email";
   const isUsername = queryKey === "username_lower" ? true 
@@ -82,11 +82,7 @@ router.get("/invite/:queryValue", isAuth, async (req, res) => {
     _opponentUser = await User.findOne({ [queryKey]: queryValue });
   }
   const link =
-    uri.hostname +
-    "/api/player/invited?user=" +
-    _user.userID +
-    "&opponent=" +
-    _opponentUser.userID;
+    `<a>${uri.client}/api/player/invited?user=${_user.userID}&opponent=${_opponentUser.userID}`
   const sendOptions = {
     to: _opponentUser.email,
     title: `${_opponentUser.name} invited you!`,
@@ -97,7 +93,7 @@ router.get("/invite/:queryValue", isAuth, async (req, res) => {
 });
 
 // accept invitation
-router.get("/invited", async (req, res) => {
+router.get("/invited",withAuth, setUser, async (req, res) => {
   const { user, opponent } = req.query;
   const _player = await Player.findOne({ playerID: user });
   const _opponent = await Player.findOne({ playerID: opponent });
@@ -136,7 +132,7 @@ router.get("/invited", async (req, res) => {
         _player.save();
         _opponent.save();
 
-        return res.json({ status: 200, msg: "invite accepted", ok: true });
+	    return res.redirect("/");
       } else {
         console.log("Already opponents");
         return res.json({

@@ -46,6 +46,7 @@ router.post("/",async (req,res)=>{
 	}
 	catch(err){
 	console.log(err);
+	res.end();
 	}
 	return res.json(matches);	
 		

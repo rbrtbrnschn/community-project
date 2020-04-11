@@ -9,7 +9,6 @@ class Homepage extends Component {
 	    <div>
 	    <Home />
 	    <Info />
-	    <Friends />
   	    </div>
     )}
 }

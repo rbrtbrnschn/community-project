@@ -8,7 +8,7 @@ const Home = (props) => {
 	//const socket = SocketIOClient("http://localhost:5000");
 	const socketIDS = state.player.sockets;
 	useEffect(()=>{
-	//	socket.emit("onConnection","test")
+		//socket.emit("onConnection","test")
 	})
 	useEffect(()=>{
 		//socket.emit("onConnection",socketIDS);
