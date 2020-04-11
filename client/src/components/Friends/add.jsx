@@ -11,6 +11,7 @@ const AddFriend = (props) => {
 	}
 	const handleOnSubmit = () => {
 		const url = uri.domain+"/api/player/invite/"+input;
+		console.log(url);
 		fetch(url)
 		.then(res=>res.json())
 		.then(docs=>
