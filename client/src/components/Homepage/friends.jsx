@@ -15,8 +15,11 @@ const Friends = (props) => {
 		<div>
 		<span className="subtitle">FRIENDS</span>
 		{opponents.map(o=>(
-			<div key={o.playerID}>
-		<span className={getRandomColor()}>{o.username}</span>
+			<div key={o.playerID} className="tags has-addons is-centered">
+		<span className="tag">{o.username}</span>
+		<a className="tag is-link" onClick={()=>{
+		window.location = "/profile/"+o.username;
+		}}>></a>
 			</div>
 		))}
 	</div>)

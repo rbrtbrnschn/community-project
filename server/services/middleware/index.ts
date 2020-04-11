@@ -1,5 +1,5 @@
 const isAuth = require("./isAuth");
-import { withAuth } from "./withAuth";
+import { withAuth, withAuthRedirect } from "./withAuth";
 import { setUser } from "./setUser";
-export {isAuth, withAuth, setUser };
+export {isAuth, withAuth, withAuthRedirect, setUser };
 

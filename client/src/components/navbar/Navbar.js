@@ -44,6 +44,10 @@ const Navbar = props => {
 		title:"Profile",
 		link:"/profile"
 	}
+	const friends = {
+		title:"Friends",
+		link:"/friends"
+	}
 	const account = {
 		title: "Account",
 		pos:1,
@@ -65,6 +69,7 @@ const Navbar = props => {
 			<div className="navbar-start">
 			<BasicNavItem item={tasks} />
 			<BasicNavItem item={profile} />
+			<BasicNavItem item={friends} />
 			</div>
 			<div className="navbar-end">
 			{logged ?

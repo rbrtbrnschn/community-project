@@ -16,4 +16,19 @@ function withAuth(req,res,next){
   }
 }
 
-export { withAuth }; 
+function withAuthRedirect(req,res,next){
+  const token = req.cookies.token;
+  if(!token){
+	return res.redirect("/login")
+  }     
+  else{
+    jwt.verify(token, config.jwt.secret, function(err,decoded){
+      if(err)res.status(401).send("Invalid Token");
+      else{
+        req.userID = decoded.id;
+        next()
+      }
+    })
+  }
+}
+export { withAuth, withAuthRedirect };

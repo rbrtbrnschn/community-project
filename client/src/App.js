@@ -7,6 +7,7 @@ import LoginPage from "./components/LoginAccount"
 import TestPage from "./components/Test";
 import TasksPage from "./components/Tasks";
 import ProfilePage from "./components/Profile";
+import FriendsPage from "./components/Friends";
 import Navbar from "./components/navbar";
 import "./App.css";
 
@@ -32,6 +33,7 @@ function App() {
 	  <Route path="/test" exact render={props => <TestPage {...props} />}></Route>
 	<Route path="/tasks" exact render={props => <TasksPage {...props} />}></Route>
 	<Route path="/profile" render={props => <ProfilePage {...props} />}></Route>
+	<Route path="/friends" render={props => <FriendsPage {...props} />}></Route>
 	  </Switch>
 	</UserProvider>
       </Router>
