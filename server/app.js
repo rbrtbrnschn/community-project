@@ -9,7 +9,6 @@ const passport = require("passport");
 const cookieSession = require("cookie-session");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
-const socketIo = require("socket.io");
 const app = express();
 const server = http.createServer(app);
 
@@ -33,7 +32,7 @@ app.use(passport.session()); // Used to persist login sessions
 
 
 //! Websocket
- const io = socketIo(server,{
+const options =	 {
     handlePreflightRequest: (req, res) => {
         const headers = {
             "Access-Control-Allow-Headers": "Content-Type, Authorization",
@@ -43,24 +42,12 @@ app.use(passport.session()); // Used to persist login sessions
         res.writeHead(200, headers);
         res.end();
     }
-});
-const nsp = io.of("/todo-hub");
-nsp.on("connection",(client)=>{
-	// On Connect
-	client.emit("onConnection","hi")
-	
-	// On Join Rooms // After 'onConnection'
-	client.on("onJoinRooms",socketIDS =>{
-		socketIDS.forEach(s=>{
-			client.join(s+"");
-		})
-	})
-
-	// On Send Data To Room
-	client.on("onSendToRoom",({socketID, data})=>{
-		const room = socketID+"";
-		console.log("send data:",data,"to:",socketID)
-		nsp.to(room).emit("onSendToRoom",data);
+};
+const io = require("socket.io")();
+io.on("connection",client=>{
+	console.log(client)
+	client.on("onConnection",data=>{
+		console.log(data);
 	})
 })
 

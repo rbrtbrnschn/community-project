@@ -8,7 +8,7 @@ const match = require("./match");
 const task = require("./task")
 const auth = require("./auth");
 const test = require("./test");
-
+const challenge = require("./challenge");
 
 api.use("/sample", sample);
 api.use("/", download);
@@ -18,6 +18,7 @@ api.use("/match",match);
 api.use("/task",task);
 api.use("/auth",auth);
 api.use("/test",test);
+api.use("/challenge",challenge);
 
 //! Export
 module.exports = api;

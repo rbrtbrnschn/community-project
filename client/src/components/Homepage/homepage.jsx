@@ -5,16 +5,15 @@ const Home = (props) => {
 
 	const context = React.useContext(UserContext);
 	const { state } = context;
-	//const socket = SocketIOClient("/todo-hub");
+	//const socket = SocketIOClient("http://localhost:5000");
 	const socketIDS = state.player.sockets;
-	
 	useEffect(()=>{
-		/*socket.on("onConnection",data =>{
-			if(socketIDS.length === 0)return;
-			socket.emit("onJoinRooms",socketIDS);
+	//	socket.emit("onConnection","test")
+	})
+	useEffect(()=>{
+		//socket.emit("onConnection",socketIDS);
 			
-		})
-
+		/*
 		socket.on("onSendToRoom",(data)=>{
 			console.log("Data Arrived:",data);
 		})
