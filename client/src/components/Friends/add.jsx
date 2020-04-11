@@ -16,6 +16,7 @@ const AddFriend = (props) => {
 		.then(res=>res.json())
 		.then(docs=>
 			{
+				console.log(docs);
 			if(docs.ok){setInput("")};
 			}
 		);
