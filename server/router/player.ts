@@ -108,7 +108,7 @@ router.get(
 // accept invitation
 router.get("/invited", withAuthRedirect, setUser, async (req, res) => {
   const { user, opponent } = req.query;
-  if(!req.user){
+  if(opponent === "undefined"){
     return res.redirect("/login");
     }
   const _player = await Player.findOne({ playerID: user });
@@ -127,8 +127,8 @@ router.get("/invited", withAuthRedirect, setUser, async (req, res) => {
           "are now opponents."
         );
 
-        // Create Match
-        const url = uri.hostname + "/api/match/new";
+// Create Match
+        const url = uri.client + "/api/match/new";
         const matchOptions = {
           method: "POST",
           headers: {
@@ -166,6 +166,7 @@ router.get("/invited", withAuthRedirect, setUser, async (req, res) => {
     });
   }
 });
+
 
 router.get("/update/lastlogin", async (req: any, res: any) => {
   const key = Date.now();
