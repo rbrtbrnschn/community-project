@@ -4,11 +4,13 @@ require("dotenv").config({ path: "../.env" });
 //! Imports
 const express = require("express");
 const http = require("http");
+const https = require("https")
 const cors = require("cors");
 const passport = require("passport");
 const cookieSession = require("cookie-session");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
+const fs = require("fs");
 const app = express();
 const server = http.createServer(app);
 
@@ -62,7 +64,15 @@ app.use(express.json());
 app.use("/api", api);
 
 //! Server
+const serverOptions = {
+	key: fs.readFileSync("key.pem"),
+	cert: fs.readFileSync("cert.pem")
+}
 const port = process.env.PORT || 5000;
+//https.createServer(serverOptions,app).listen(port,()=>{
+  //console.log("Listening On Port", port);
+//})
+
 server.listen(port, () => {
   console.log("Listening On Port", port);
 });

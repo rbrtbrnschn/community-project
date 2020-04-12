@@ -81,8 +81,7 @@ router.get("/invite/:queryValue", withAuth, setUser, async (req, res) => {
   } else {
     _opponentUser = await User.findOne({ [queryKey]: queryValue });
   }
-  const link =
-    `<a>${uri.client}/api/player/invited?user=${_user.userID}&opponent=${_opponentUser.userID}`
+  const link = `<a href=${uri.client}/api/player/invited?user=${_user.userID}&opponent=${_opponentUser.userID}>TodoHub Invite</a>`
   const sendOptions = {
     to: _opponentUser.email,
     title: `${_opponentUser.name} invited you!`,
