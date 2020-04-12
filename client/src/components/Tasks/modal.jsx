@@ -4,7 +4,8 @@ const Modal = (props) => {
 	const { task } = props;
 	const { id, title, notes, payload } = props.task;
 	const { onCancle, onSaveChanges, onArchive, onDelete } = props;
-	const isStreak = task.payload === "Streak" || "Challenge";
+	const isStreak = task.payload === "Streak" ? true : task.payload === "Challenge" ? true : false;
+	console.log(id,isStreak)
 	let _initialValues = {
 		title:title,
 		notes:notes,

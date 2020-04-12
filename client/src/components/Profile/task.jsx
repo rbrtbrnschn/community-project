@@ -11,23 +11,18 @@ const Task = (props) => {
 	const addTask = task => {
 		let tasks = [...state.player.tasks]
 		let _task = {...task};
-		_task.streak = 0;
+		_task.timestamps = [{key:Date.now(),payload:"onCreate",isComplete:false}]
+		_task.createdAt = new Date();
+		if(_task.payload !== "Task"){
+			_task.streak = 0;
 		_task.stikes = 0;
+		}
 		_task.notes = task.notes + " | @"+profile.username
 		tasks.push(_task)
 		setState({...state,player:{...state.player,tasks:tasks},ok:true})
 	}
 	const handleCopy = task => {
-		let tasks = [...state.player.tasks];
-		let _task = {...task};
-		_task.notes = _task.notes + " | @"+profile.username;
-		if(task.payload === "Streak"){
-		_task.streak = 0;
-		_task.strikes = 0;
-		}
-		tasks.push(_task);
-		console.log(tasks);
-		setState({...state,player:{...state.player,tasks:tasks},ok:true});
+		addTask(task);
 	}
 
 	const lastCompleted = (task) => {
