@@ -20,9 +20,10 @@ router.post("/invite/:email",withAuth, setUser, async (req,res)=>{
   const title = "TodoHub Challenge Invite"
   const body = `<div><h1>Do you accept?</h1><hr><h2>${task.title}</h2><h4>${task.notes}</h4><h4>@${user.name}</h4><hr><p>${uri.client}/api/challenge/accept?user=${req.user.userID}&id=${task.id}</p></div>`
 		  
-  sendMail({to:to,title:title,body:body})
 
   if(user){
+  const options = {to:to,title:title,body:body}
+		  sendMail(options)
   return res.json({email:user.email,ok:true});
   }
   else{

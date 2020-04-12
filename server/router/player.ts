@@ -81,11 +81,12 @@ router.get("/invite/:queryValue", withAuth, setUser, async (req, res) => {
   } else {
     _opponentUser = await User.findOne({ [queryKey]: queryValue });
   }
-  const link = `<a href=${uri.client}/api/player/invited?user=${_user.userID}&opponent=${_opponentUser.userID}>TodoHub Invite</a>`
+  const body = `<style>.body {display:flex;flex-direction:column;justify-content:center;align-items:center;font-family:"Arial"}.title {color: #363636;font-size: 2rem;font-weight: 600;line-height: 1.125;}.sub {color: #4a4a4a;font-size: 1.25rem;font-weight: 400;line-height: 1.25;}.button {background-color: white;border-color: #dbdbdb;border-width: 1px;color: #363636;cursor: pointer;justify-content: center;padding-bottom: calc(0.5em - 1px);padding-left: 1em;padding-right: 1em;padding-top: calc(0.5em - 1px);text-align: center;white-space: nowrap;}.link {text-decoration: none;color:black;}</style><div class="body"><h1 class="title">${_opponentUser.name} Invited You.</h1><h2 class="sub">Welcome to TodoHub - A Multiplayer TodoApp.</h2><button><a href=${uri.client}/api/player/invited?user=${_user.userID}&opponent=${_opponentUser.userID} class="link">Accept Invite.</a></button></div>`
+
   const sendOptions = {
     to: _opponentUser.email,
     title: `${_opponentUser.name} invited you!`,
-    body: link
+    body: body
   };
   sendMail(sendOptions);
   return res.json({ status: 200, msg: "Found & Invited", ok: true });

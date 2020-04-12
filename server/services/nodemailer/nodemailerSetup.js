@@ -2,22 +2,6 @@ const nodemailer = require("nodemailer");
 
 async function sendMail(params){
 	
-	const prodOptions = {
-		service: 'gmail',
- 		auth: {
-        		user: 'doesisaacbeat.me@gmail.com',
-        		pass: 'Manfred99'
-    		}
-	}
-	const newOptions = {
-		host: 'smtp.gmail.com',
-    		port: 465,
-    		secure: true, // use SSL
-    		auth: {
-        		user: 'doesisaacbeat.me@gmail.com',
-        		pass: 'Manfred99'
-    		}
-	}
 	const mailjetOptions = {
 		host: 'in-v3.mailjet.com',
 		port: 465,
@@ -35,14 +19,14 @@ async function sendMail(params){
 			pass: "13f2587ea1fa7c"
 		}
 	}
-	const {to,title,body} = params;
+	const {to,title,body,amp} = params;
 	
 	const transporter = nodemailer.createTransport(mailjetOptions);
 	let options = {
 		from: "TodoHub <doesisaacbeat.me@gmail.com>",
 		to: to,
 		subject: title,
-		html: body
+		html: body,
 	}
 
 	 await transporter.sendMail(options, (err,info)=>{
