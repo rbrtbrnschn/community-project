@@ -9,7 +9,7 @@ const { PlayerDB, playerSchema } = require("../models/player");
 const Player = PlayerDB.model("player", playerSchema);
 const { UserDB, userSchema } = require("../models/user");
 const User = UserDB.model("user", userSchema);
-import { withAuth, setUser } from "../services/middleware";
+import { withAuth,withAuthRedirect, setUser } from "../services/middleware";
 
 router.use(withAuth);
 router.use(setUser);
@@ -106,7 +106,7 @@ router.get(
 );
 
 // accept invitation
-router.get("/invited", withAuth, setUser, async (req, res) => {
+router.get("/invited", withAuthRedirect, setUser, async (req, res) => {
   const { user, opponent } = req.query;
   if(!req.user){
     return res.redirect("/login");
