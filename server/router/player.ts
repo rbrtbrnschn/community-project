@@ -15,7 +15,7 @@ router.use(withAuth);
 router.use(setUser);
 
 // get player by username
-router.get("/find/:key/:value", async (req, res) => {
+router.get("/find/:key/:value", async (req: any, res: any) => {
   let { key, value } = req.params;
   switch (key) {
     case "username":
@@ -35,13 +35,12 @@ router.get("/find/:key/:value", async (req, res) => {
 });
 
 //! get current player
-router.get("/", async (req, res) => {
-  if(req.user){
-    const player = await Player.findOne({playerID:req.user.userID})
-    return res.json({...player._doc,ok:true});
-  }
-  else{
-    return res.json({status:401,msg:"not logged in", ok:false})
+router.get("/", async (req: any, res: any) => {
+  if (req.user) {
+    const player = await Player.findOne({ playerID: req.user.userID });
+    return res.json({ ...player._doc, ok: true });
+  } else {
+    return res.json({ status: 401, msg: "not logged in", ok: false });
   }
 });
 
@@ -62,38 +61,52 @@ router.post("/new", async (req: any, res: any) => {
 });
 
 // invite player
-router.get("/invite/:queryValue", withAuth, setUser, async (req, res) => {
-  const queryValue = req.params.queryValue.toLowerCase();
-  const queryKey = !queryValue.includes("@") ? "username_lower" : "email";
-  const isUsername = queryKey === "username_lower" ? true 
-  : queryKey === "email" ? false : "ERROR"
-  const _user = req.user;
-  let _opponentPlayer = {};
-  let _opponentUser = {};
+router.get(
+  "/invite/:queryValue",
+  withAuth,
+  setUser,
+  async (req: any, res: any) => {
+    const queryValue = req.params.queryValue.toLowerCase();
+    const queryKey = !queryValue.includes("@") ? "username_lower" : "email";
+    const isUsername =
+      queryKey === "username_lower"
+        ? true
+        : queryKey === "email"
+        ? false
+        : "ERROR";
+    const _user = req.user;
+    let _opponentPlayer = {};
+    let _opponentUser = {};
+    if (isUsername) {
+      _opponentPlayer = await Player.findOne({ [queryKey]: queryValue });
+      if (!_opponentPlayer)
+        return res.json({ status: 404, msg: "player not found", ok: false });
+      _opponentUser = await User.findOne({
+        userID: _opponentPlayer.playerID,
+      });
+    } else {
+      _opponentUser = await User.findOne({ [queryKey]: queryValue });
+      if (!_opponentUser) {
+        console.log("no existing user");
+        _opponentUser = {};
+        _opponentUser.email = queryValue;
+      }
+    }
 
-  if (isUsername) {
-    _opponentPlayer = await Player.findOne({ [queryKey]: queryValue });
-    if (!_opponentPlayer)
-      return res.json({ status: 404, msg: "player not found", ok: false });
-    _opponentUser = await User.findOne({
-      userID: _opponentPlayer.playerID
-    });
-  } else {
-    _opponentUser = await User.findOne({ [queryKey]: queryValue });
+    const body = `<style>.body {display:flex;flex-direction:column;justify-content:center;align-items:center;font-family:"Arial"}.title {color: #363636;font-size: 2rem;font-weight: 600;line-height: 1.125;}.sub {color: #4a4a4a;font-size: 1.25rem;font-weight: 400;line-height: 1.25;}.button {background-color: white;border-color: #dbdbdb;border-width: 1px;color: #363636;cursor: pointer;justify-content: center;padding-bottom: calc(0.5em - 1px);padding-left: 1em;padding-right: 1em;padding-top: calc(0.5em - 1px);text-align: center;white-space: nowrap;}.link {text-decoration: none;color:black;}</style><div class="body"><h1 class="title">${_user.name} Invited You.</h1><h2 class="sub">Welcome to TodoHub - A Multiplayer TodoApp.</h2><button><a href=${uri.client}/api/player/invited?user=${_user.userID}&opponent=${_opponentUser.userID} class="link">Accept Invite.</a></button></div>`;
+
+    const sendOptions = {
+      to: _opponentUser.email,
+      title: `${_user.name} invited you!`,
+      body: body,
+    };
+    sendMail(sendOptions);
+    return res.json({ status: 200, msg: "Found & Invited", ok: true });
   }
-  const body = `<style>.body {display:flex;flex-direction:column;justify-content:center;align-items:center;font-family:"Arial"}.title {color: #363636;font-size: 2rem;font-weight: 600;line-height: 1.125;}.sub {color: #4a4a4a;font-size: 1.25rem;font-weight: 400;line-height: 1.25;}.button {background-color: white;border-color: #dbdbdb;border-width: 1px;color: #363636;cursor: pointer;justify-content: center;padding-bottom: calc(0.5em - 1px);padding-left: 1em;padding-right: 1em;padding-top: calc(0.5em - 1px);text-align: center;white-space: nowrap;}.link {text-decoration: none;color:black;}</style><div class="body"><h1 class="title">${_opponentUser.name} Invited You.</h1><h2 class="sub">Welcome to TodoHub - A Multiplayer TodoApp.</h2><button><a href=${uri.client}/api/player/invited?user=${_user.userID}&opponent=${_opponentUser.userID} class="link">Accept Invite.</a></button></div>`
-
-  const sendOptions = {
-    to: _opponentUser.email,
-    title: `${_opponentUser.name} invited you!`,
-    body: body
-  };
-  sendMail(sendOptions);
-  return res.json({ status: 200, msg: "Found & Invited", ok: true });
-});
+);
 
 // accept invitation
-router.get("/invited",withAuth, setUser, async (req, res) => {
+router.get("/invited", withAuth, setUser, async (req, res) => {
   const { user, opponent } = req.query;
   const _player = await Player.findOne({ playerID: user });
   const _opponent = await Player.findOne({ playerID: opponent });
@@ -117,9 +130,9 @@ router.get("/invited",withAuth, setUser, async (req, res) => {
         const matchOptions = {
           method: "POST",
           headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
           },
-          body: JSON.stringify({ user: user, opponent: opponent })
+          body: JSON.stringify({ user: user, opponent: opponent }),
         };
         const response = await fetch(url, matchOptions);
         const data = await response.json();
@@ -132,13 +145,13 @@ router.get("/invited",withAuth, setUser, async (req, res) => {
         _player.save();
         _opponent.save();
 
-	    return res.redirect("/");
+        return res.redirect("/");
       } else {
         console.log("Already opponents");
         return res.json({
           status: 404,
           msg: "already opponents",
-          ok: false
+          ok: false,
         });
       }
     }
@@ -147,7 +160,7 @@ router.get("/invited",withAuth, setUser, async (req, res) => {
       status: 404,
       msg: "not logged in",
       ok: true,
-      matchup: { user: user, opponent: opponent }
+      matchup: { user: user, opponent: opponent },
     });
   }
 });
@@ -155,7 +168,7 @@ router.get("/invited",withAuth, setUser, async (req, res) => {
 router.get("/update/lastlogin", async (req: any, res: any) => {
   const key = Date.now();
   const player = await Player.findOne({ playerID: req.user.userID });
-  console.log(new Date(key)," updated.")
+  console.log(new Date(key), " updated.");
   if (player) {
     player.lastLogin = key;
     player.markModified("lastLogin");
