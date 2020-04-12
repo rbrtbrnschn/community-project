@@ -11,11 +11,9 @@ const { UserDB, userSchema } = require("../models/user");
 const User = UserDB.model("user", userSchema);
 import { withAuth,withAuthRedirect, setUser } from "../services/middleware";
 
-router.use(withAuth);
-router.use(setUser);
 
 // get player by username
-router.get("/find/:key/:value", async (req: any, res: any) => {
+router.get("/find/:key/:value",withAuth,setUser, async (req: any, res: any) => {
   let { key, value } = req.params;
   switch (key) {
     case "username":
@@ -35,7 +33,7 @@ router.get("/find/:key/:value", async (req: any, res: any) => {
 });
 
 //! get current player
-router.get("/", async (req: any, res: any) => {
+router.get("/", withAuth,setUser, async (req: any, res: any) => {
   if (req.user) {
     const player = await Player.findOne({ playerID: req.user.userID });
     return res.json({ ...player._doc, ok: true });
@@ -45,7 +43,7 @@ router.get("/", async (req: any, res: any) => {
 });
 
 // create new player
-router.post("/new", async (req: any, res: any) => {
+router.post("/new", withAuth, setUser, async (req: any, res: any) => {
   const { userID, username } = req.body;
   const player = new Player({
     playerID: userID,
@@ -108,6 +106,7 @@ router.get(
 // accept invitation
 router.get("/invited", withAuthRedirect, setUser, async (req, res) => {
   const { user, opponent } = req.query;
+    console.log("reached endpoint")
   if(opponent === "undefined"){
     return res.redirect("/login");
     }
