@@ -55,7 +55,7 @@ const NewDayCheck = props => {
       <div className="modal-background"></div>
       <div className="modal-card">
         <header className="modal-card-head">
-	  Welcome back!
+	  <p className="title">Welcome back!</p>
           <p className="modal-card-title"></p>
           <button className="delete" aria-label="close" onClick={()=>{onCheckYesterday(checks)}}></button>
         </header>
