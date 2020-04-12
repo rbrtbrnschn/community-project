@@ -13,7 +13,7 @@ const Task = (props) => {
 		let _task = {...task};
 		_task.streak = 0;
 		_task.stikes = 0;
-		_task.notes = task.notes + " |@"+profile.username
+		_task.notes = task.notes + " | @"+profile.username
 		tasks.push(_task)
 		setState({...state,player:{...state.player,tasks:tasks},ok:true})
 	}
@@ -40,6 +40,7 @@ const Task = (props) => {
 		}
 		console.log("added")
 		addTask(task);
+		window.location = "/tasks"
 	}
 	const isChallenge = task.payload === "Challenge";
 	return (<div className="container is-fullwidth">
@@ -72,11 +73,18 @@ const Task = (props) => {
                 <p className="card-footer-item">
 		<button className="button is-primary" onClick={()=>{handleOnJoin(task)}}>  
 		<span className="icon is-small">
-		<FontAwesomeIcon icon={faCheckDouble} />
+		<FontAwesomeIcon icon="copy" />
 		</span>
 		<span>Join</span>
 		  </button>
-                </p> : ""
+                </p> : 
+			<p className="card-footer-item">
+			<button className="button is-primary" onClick={()=>{handleOnJoin(task)}}>
+			<span className="icon is-small">
+			<FontAwesomeIcon icon="copy" />
+			</span>
+			<span>Copy</span>
+			</button></p>
 		}
                 </footer>
                 </div>
