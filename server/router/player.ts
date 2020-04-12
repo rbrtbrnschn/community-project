@@ -108,11 +108,11 @@ router.get(
 // accept invitation
 router.get("/invited", withAuth, setUser, async (req, res) => {
   const { user, opponent } = req.query;
-  const _player = await Player.findOne({ playerID: user });
-  const _opponent = await Player.findOne({ playerID: opponent });
   if(!req.user){
     return res.redirect("/login");
     }
+  const _player = await Player.findOne({ playerID: user });
+  const _opponent = await Player.findOne({ playerID: opponent });
   if (req.user) {
     if (_player && _opponent) {
       const hasOpponent = _player.opponents.includes(opponent);
