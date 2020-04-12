@@ -172,3 +172,5 @@ tags
 .env
 server/config.js
 server/archive/*.json
+server/key.pem
+server/cert.pem
