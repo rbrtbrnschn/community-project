@@ -17,6 +17,18 @@ const Task = (props) => {
 		tasks.push(_task)
 		setState({...state,player:{...state.player,tasks:tasks},ok:true})
 	}
+	const handleCopy = task => {
+		let tasks = [...state.player.tasks];
+		let _task = {...task};
+		_task.notes = _task.notes + " | @"+profile.username;
+		if(task.payload === "Streak"){
+		_task.streak = 0;
+		_task.strikes = 0;
+		}
+		tasks.push(_task);
+		console.log(tasks);
+		setState({...state,player:{...state.player,tasks:tasks},ok:true});
+	}
 
 	const lastCompleted = (task) => {
 	  const { timestamps } = task;
@@ -79,7 +91,7 @@ const Task = (props) => {
 		  </button>
                 </p> : 
 			<p className="card-footer-item">
-			<button className="button is-primary" onClick={()=>{handleOnJoin(task)}}>
+			<button className="button is-primary" onClick={()=>{handleCopy(task)}}>
 			<span className="icon is-small">
 			<FontAwesomeIcon icon="copy" />
 			</span>
