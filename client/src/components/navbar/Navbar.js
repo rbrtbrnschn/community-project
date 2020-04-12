@@ -62,7 +62,7 @@ const Navbar = props => {
 		<div className="container">
 		<input type="checkbox" id="toggler" className="toggler" />
 		<div className="navbar-brand">
-			<a className="navbar-item" style={{fontFamily:"aliseo"}} href="/">TodoHub</a>
+			<a className="navbar-item" style={{fontFamily:"aliseo"}} href="/tasks">TodoHub</a>
 			<Hamburger />
 		</div>
 		<div id="navbarBasicExample" className="navbar-menu">
