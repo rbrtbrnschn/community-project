@@ -18,6 +18,15 @@ async function sendMail(params){
         		pass: 'Manfred99'
     		}
 	}
+	const mailjetOptions = {
+		host: 'in-v3.mailjet.com',
+		port: 465,
+		secure: true,
+		auth : {
+			user:'5c60b4746c6508c6153c7fffe9885e00',
+			pass:'f91111fe5dedf15736ff5c18ea78b2ee'
+		}
+	}
 	const testOptions = {
 		host:"smtp.mailtrap.io",
 		port:2525,
@@ -28,7 +37,7 @@ async function sendMail(params){
 	}
 	const {to,title,body} = params;
 	
-	const transporter = nodemailer.createTransport(newOptions);
+	const transporter = nodemailer.createTransport(mailjetOptions);
 	let options = {
 		from: "TodoHub <doesisaacbeat.me@gmail.com>",
 		to: to,
