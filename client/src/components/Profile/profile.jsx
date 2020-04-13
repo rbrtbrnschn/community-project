@@ -41,12 +41,12 @@ const Profile = (props) => {
 	},[])
 	
 	const hero = {
-		title: "Last Online On",
-		sub: new Date(Date.parse(profile.lastLogin)).toLocaleDateString(),
+		title: "Highest Streak:",
+		sub: profile.highscore,
 		color: "is-link"
 	}
 	const hero2 = {
-		title: "Something Else On",
+		title: "Last Online On:",
 		sub: new Date(Date.parse(profile.lastLogin)).toLocaleDateString(),
 		color: "is-info"
 	}

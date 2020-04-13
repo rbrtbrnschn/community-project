@@ -118,7 +118,13 @@ class Streak extends Task {
       task.timestamps.push(stamp);
       task.isComplete = true;
       task.completedAt = new Date().toLocaleDateString();
-      task.streak = task.streak + 1;
+      if(task.streak < 0){
+	task.streak = 1;	
+      }
+      else{
+      task.streak++;
+
+      }
       if (helpers) {
         const { setTask } = helpers;
         setTask(task);
@@ -152,7 +158,13 @@ class Streak extends Task {
       task.timestamps.push(yesterdayStamp);
       task.isComplete = false;
       task.completedAt = yesterDay.toLocaleDateString();
-      task.streak = task.streak + 1;
+      if(task.streak < 0){
+	task.streak = 1;	
+      }
+      else{
+      task.streak++;
+
+      }
       if (helpers) {
         const { setTask } = helpers;
         setTask(task);

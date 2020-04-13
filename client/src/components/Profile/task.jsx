@@ -7,17 +7,20 @@ const Task = (props) => {
 	const context = React.useContext(UserContext);
 	const { state, setState } = context;
 	const { task, profile } = props;
-	
+	const { isOwner } = profile;
+
 	const addTask = task => {
 		let tasks = [...state.player.tasks]
 		let _task = {...task};
+		_task.isComplete = false;
 		_task.timestamps = [{key:Date.now(),payload:"onCreate",isComplete:false}]
 		_task.createdAt = new Date();
 		if(_task.payload !== "Task"){
-			_task.streak = 0;
-		_task.stikes = 0;
+		_task.streak = 0;
+		_task.strikes = 0;
 		}
 		_task.notes = task.notes + " | @"+profile.username
+		console.log(_task);
 		tasks.push(_task)
 		setState({...state,player:{...state.player,tasks:tasks},ok:true})
 	}
@@ -47,7 +50,6 @@ const Task = (props) => {
 		}
 		console.log("added")
 		addTask(task);
-		window.location = "/tasks"
 	}
 	const isChallenge = task.payload === "Challenge";
 	return (<div className="container is-fullwidth">
@@ -76,7 +78,7 @@ const Task = (props) => {
 		<span>{lastCompleted(task)} </span>
 		  </button>
                 </p>
-		{isChallenge ?
+		{!isOwner && isChallenge ?
                 <p className="card-footer-item">
 		<button className="button is-primary" onClick={()=>{handleOnJoin(task)}}>  
 		<span className="icon is-small">
@@ -84,14 +86,14 @@ const Task = (props) => {
 		</span>
 		<span>Join</span>
 		  </button>
-                </p> : 
+                </p> : !isOwner && !isChallenge ?
 			<p className="card-footer-item">
 			<button className="button is-primary" onClick={()=>{handleCopy(task)}}>
 			<span className="icon is-small">
 			<FontAwesomeIcon icon="copy" />
 			</span>
 			<span>Copy</span>
-			</button></p>
+			</button></p> : ""
 		}
                 </footer>
                 </div>
