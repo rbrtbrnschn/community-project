@@ -167,6 +167,21 @@ const UserProvider = (props) => {
     return;
   }, [state.newLogin]);
 
+  useEffect(()=>{
+	  if(state.highscoreIsOk){
+		  const url = `${uri.domain}/api/player/update/highscore`
+		  const options = {
+			  method: "POST",
+			  headers: {
+			  "Content-Type":"application/json"
+			  },
+			  body: JSON.stringify({highscore:player.highscore})
+		  }
+		  fetch(url,options)
+	  }else{
+		  return;
+	  }
+  },[player.highscore])
   return (
     <UserContext.Provider value={{ state, setState }}>
       {children}

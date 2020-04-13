@@ -8,10 +8,10 @@ const Stats = (props) => {
 		highscore:0
 	}
 	const [stats,setStats] = React.useState(initialState);
- 	const { profile } = props;
+ 	const { profile, onNewHighscore } = props;
 
 	useEffect(()=>{
-	const _stats = handleStats(profile);
+	const _stats = handleStats(profile, onNewHighscore);
 	if(_stats !== initialState)setStats({...stats,..._stats});
 	
 	},[profile])
@@ -46,10 +46,12 @@ const Stats = (props) => {
 };
 export default Stats;
 
-function handleStats(profile){
+function handleStats(profile,setNewHighscore){
+	const { isOwner } = profile; 
   	let completedCount = 0;
   	let failedCount = 0;
-	let highestCurrentStreak = 0 ;
+	let highestCurrentStreak = 0;
+	let hs = profile.highscore;
   	profile.tasks.forEach(t=>{
 		t.timestamps.forEach(s=>{
           		if(s.isComplete)completedCount++;
@@ -57,11 +59,15 @@ function handleStats(profile){
 			
 		})
 		if(t.streak > highestCurrentStreak)highestCurrentStreak = t.streak;
+		if(isOwner && highestCurrentStreak > hs){
+			setNewHighscore(highestCurrentStreak);
+		}
   })
  	const toBeReturned = {
 		completed:completedCount,
 		failed:failedCount,
-		currentStreak:highestCurrentStreak
+		currentStreak:highestCurrentStreak,
+		highscore:hs
 	} 
 	return toBeReturned;
 }

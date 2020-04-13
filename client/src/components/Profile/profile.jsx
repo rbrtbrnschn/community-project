@@ -17,17 +17,22 @@ const Profile = (props) => {
 	const isParam = param !== "profile";
 	const username = isParam ? "Loading..." : state.player.username;
 	const [ profile,setProfile ] = useState({username:username,isSearching: isParam, tasks:[],page:1})
+	
+	const handleOnNewHighscore = (hs) => {
+		setState({...state,player:{...state.player,highscore:hs},highscoreIsOk:true})
+	}
+
 	useEffect(()=>{
 	if(profile.isSearching){
 	  getPlayer(param)
 	  .then(data=>{
-		setProfile({...profile,...data,isSearching: false})
+		setProfile({...profile,...data,isOwner:false,isSearching: false})
 	  });
 	  }
 	else if(profile.isSearching === false){
 		getPlayer(param)
 		.then(player=>{
-	  	  setProfile({...profile,...player})
+	  	  setProfile({...profile,isOwner:true,...player})
 		
 		})
 	}
@@ -100,7 +105,7 @@ const Profile = (props) => {
 		{profile.page === 0 ?
 			tasks.map(t=>(<Task key={t.id} task={t} profile={profile}/>))
 			: profile.page === 1 ?
-			<Stats profile={profile}/>
+			<Stats onNewHighscore={handleOnNewHighscore} profile={profile}/>
 				: profile.page === 2 ?
 				heros.map(h=>(<Hero key={h.title} hero={h} />))
 				: <div></div>

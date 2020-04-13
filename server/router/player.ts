@@ -180,4 +180,17 @@ router.get("/update/lastlogin", async (req: any, res: any) => {
   return res.end();
 });
 
+    router.post("/update/highscore",async (req:any, res: any) => {
+    const highscore = req.body.highscore;
+    let player = await Player.findOne({playerID:req.user.userID});
+    if(player){
+        player.highscore = highscore;
+    	player.save()
+    	return res.json(player)
+    }
+    else{
+    	res.end().status(404);
+    }
+    })
+
 module.exports = router;

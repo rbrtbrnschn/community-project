@@ -17,16 +17,6 @@ const Streak = (props) => {
     onStreakColor
   } = all;
 
-  const handleStreakColor = (task) => {
-    	const s = task.streak;
-    	let color = "is-link";
-	if(s<0)color = "is-danger"
-	else if(s === 0){}
-	else if(s > 0 && s < 5)color = "is-primary"
-	else if(s >= 10){color = "is-success"}
-	  console.log(color)
-    	return color;
-  };
   return (
     <div className="task">
       <div className="card" id={task.id}>
