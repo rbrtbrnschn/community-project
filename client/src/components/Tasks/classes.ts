@@ -183,9 +183,16 @@ class Streak extends Task {
   }
 
   _failYesterday(task: Streak, helpers?: any) {
+    const {key, value, payload } = task.timestamps[task.timestamps - 1];
+    const lastDate = new Date(value).getDate();
     const toDay = new Date();
+    const toDate = toDay.getDate();
     const yesterDay = new Date();
     yesterDay.setDate(toDay.getDate() - 1);
+
+    if(payload === "onFail" && Math.abs(toDate - lastDate) === 1){
+    console.log("was failed manually yesterday");
+    return;}
 
     const stamp = {
       payload: "onFail",

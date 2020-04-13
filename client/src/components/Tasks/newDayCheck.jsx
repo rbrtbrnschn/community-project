@@ -20,6 +20,9 @@ const NewDayCheck = props => {
 	    onCheckYesterday(checks);
 	    return false;
 	  }
+	  const notCompleted = tasks.map(t=> t.timestamps[t.timestamps.length - 1].isComplete);
+	console.log(notCompleted);
+
 	  const modal = document.getElementById("new-day-check");
 	  modal.classList.add("is-active")
 	  const html = document.querySelector("html");
@@ -46,7 +49,8 @@ const NewDayCheck = props => {
 	const toDay = new Date();
 	const toDate = toDay.getDate();
 	const yesterDate = toDate - 1;
-	if(lastDate === yesterDate && isComplete || yesterDate && payload === "onFail" )return false;
+	if(lastDate === yesterDate && isComplete )return false;
+	if(lastDate === yesterDate && payload === "onFail")return false;	
 	if(lastDate !== toDate)return true;
   }
 
@@ -55,8 +59,8 @@ const NewDayCheck = props => {
       <div className="modal-background"></div>
       <div className="modal-card">
         <header className="modal-card-head">
-	  <p className="title">Welcome back!</p>
-          <p className="modal-card-title"></p>
+	  <p className="title"></p>
+          <p className="modal-card-title">Welcome Back!</p>
           <button className="delete" aria-label="close" onClick={()=>{onCheckYesterday(checks)}}></button>
         </header>
         <section className="modal-card-body">
