@@ -173,7 +173,12 @@ class Streak extends Task {
       //since u can only ever fail OR complete a task on the same day
       task.timestamps.push(stamp);
       task.strikes = task.strikes + 1;
+      if(task.streak > 0){
       task.streak = 0;
+      }
+      else{
+      task.streak= task.streak - 1;
+      }
       if (helpers) {
         const { setTask } = helpers;
         return setTask(task);
@@ -202,7 +207,12 @@ class Streak extends Task {
     task.isComplete = false;
     task.timestamps.push(stamp);
     task.strikes = task.strikes + 1;
+    if(task.streak > 0){
     task.streak = 0;
+    }
+    else{
+    task.streak--;
+    }
     if (helpers) {
       const { setTask } = helpers;
       return setTask(task);

@@ -5,14 +5,14 @@ import {faTimes,faCheck} from "@fortawesome/free-solid-svg-icons"
 import InviteModal from "./inviteModal";
 const ChallengeComponent = (props) => {
 	const { all } = props;
-	const { task, onDelete, onComplete, onEdit, onCancle, onSaveChanges, onArchive, onFail } = all;
+	const { task, onDelete, onComplete, onEdit, onCancle, onSaveChanges, onArchive, onFail, onStreakColor } = all;
 
         return(<div className="task">
                 <div className="card" id={task.id}>
                 <div className="card-content" onClick={onEdit}>     
                 <p className="title is-3">{task.title}</p>
                 <p className="subtitle">{task.notes}</p>
-                <p className="tag is-primary is-link is-rounded is-large">{task.streak}</p>
+                <p className={"tag is-link is-rounded is-large "+onStreakColor(task)}>{task.streak}</p>
                 </div>
 
                 <footer className="card-footer">

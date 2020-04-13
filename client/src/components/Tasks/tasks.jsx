@@ -222,6 +222,16 @@ const Tasks = props => {
 	const _state = {...state,newLogin:true, ok:true}  
 	setState(_state);
   }
+  
+  const handleOnStreakColor = (task) => {
+        const s = task.streak;
+        let color = "is-link";
+        if(s<0)color = "is-danger"
+        else if(s === 0){}
+        else if(s > 0 && s < 5)color = "is-primary"
+        else if(s >= 10){color = "is-success"}
+        return color;
+  };
 
 
   const handleOnReturn = task => {
@@ -249,7 +259,8 @@ const Tasks = props => {
       onArchive: handleOnArchive,
       onCheckYesterday: handleOnCheckYesterday,
       onNewDay: handleOnNewDay,
-      isNewDay: handleIsNewDay
+      isNewDay: handleIsNewDay,
+      onStreakColor: handleOnStreakColor
     };
     const { payload, id } = task;
     let _task;
