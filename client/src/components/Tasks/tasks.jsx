@@ -225,11 +225,10 @@ const Tasks = props => {
   
   const handleOnStreakColor = (task) => {
         const s = task.streak;
-        let color = "is-link";
-        if(s<0)color = "is-danger"
+        let color = "is-info";
+        if(s<0)color = "is-link"
         else if(s === 0){}
-        else if(s > 0 && s < 5)color = "is-primary"
-        else if(s >= 10){color = "is-success"}
+        else if(s >= 5)color = "is-primary"
         return color;
   };
 
