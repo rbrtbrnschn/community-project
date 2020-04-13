@@ -11,8 +11,10 @@ const Stats = (props) => {
  	const { profile, onNewHighscore } = props;
 
 	useEffect(()=>{
+		if(profile.ok){
 	const _stats = handleStats(profile, onNewHighscore);
 	if(_stats !== initialState)setStats({...stats,..._stats});
+		}
 	// eslint-disable-next-line
 	},[profile])
   return (

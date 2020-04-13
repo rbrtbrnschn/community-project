@@ -28,12 +28,10 @@ const Profile = (props) => {
 		setProfile({...profile,...data,isOwner:false,isSearching: false})
 	  });
 	  }
-	else if(profile.isSearching === false){
-		getPlayer(param)
-		.then(player=>{
-	  	  setProfile({...profile,isOwner:true,...player})
+	else if(profile.isSearching === false && state.player.ok){
 		
-		})
+	  	  setProfile({...profile,isOwner:true,...state.player,ok:true})
+		
 	}
 	else{return;}
 // eslint-disable-next-line	
@@ -59,7 +57,9 @@ const Profile = (props) => {
 
 	useEffect(()=>{
 	  if(isParam)return;
+		if(state.player.ok){
 	  setProfile({...profile,...state.player})
+		}
 		// eslint-disable-next-line
 	},[state.player])
 
