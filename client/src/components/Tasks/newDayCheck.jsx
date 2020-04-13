@@ -8,21 +8,21 @@ const NewDayCheck = props => {
   const {player} = state;
   const { lastLogin, tasks } = player;
 
-  const { onCancle, onCheckYesterday, isNewDay } = props; 
+  const { onCheckYesterday, isNewDay } = props; 
   const [checks,setChecks] = useState([]);
   
   useEffect(()=>{
 	
   	const isNew = isNewDay();
-  	//const isNew = true;
+	const checksDiv = document.getElementById("checks");
+	if(checksDiv.children.length < 1 && isNew){
+		return onCheckYesterday(checks);
+	}
 	if(isNew){
 	  if(tasks.length === 0){
 	    onCheckYesterday(checks);
 	    return false;
 	  }
-	  const notCompleted = tasks.map(t=> t.timestamps[t.timestamps.length - 1].isComplete);
-	console.log(notCompleted);
-
 	  const modal = document.getElementById("new-day-check");
 	  modal.classList.add("is-active")
 	  const html = document.querySelector("html");
@@ -65,6 +65,7 @@ const NewDayCheck = props => {
         </header>
         <section className="modal-card-body">
           <h2 className="title is-3">What Have You Done Yesterday?</h2>
+	  <div id="checks">
 	  {tasks.map(t=> checkAlreadyCompleted(t) && (
 	  <div key={t.id+"new-day-check"}>
 		  <label className="checkbox">
@@ -74,6 +75,7 @@ const NewDayCheck = props => {
 	  </div>
 	  ))
 	  }
+	  </div>
         </section>
         <footer className="modal-card-foot">
           <button id="submit-button" className="button is-success" onClick={()=>{onCheckYesterday(checks)}}>Done</button>

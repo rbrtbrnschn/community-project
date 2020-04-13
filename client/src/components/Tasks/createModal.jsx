@@ -70,6 +70,7 @@ var calendars = bulmaCalendar.attach('[type="date"]', {
       setState({...state,start:dates[0],end:dates[1]})
     });
   }
+// eslint-disable-next-line
   },[state.payload])
   return (
     <div id={"create-modal"} className="modal">

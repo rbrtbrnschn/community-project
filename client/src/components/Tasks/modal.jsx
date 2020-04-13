@@ -3,9 +3,8 @@ import React, { useState } from "react"
 const Modal = (props) => {
 	const { task } = props;
 	const { id, title, notes, payload } = props.task;
-	const { onCancle, onSaveChanges, onArchive, onDelete } = props;
+	const { onCancle, onSaveChanges, onDelete } = props;
 	const isStreak = task.payload === "Streak" ? true : task.payload === "Challenge" ? true : false;
-	console.log(id,isStreak)
 	let _initialValues = {
 		title:title,
 		notes:notes,
@@ -29,6 +28,7 @@ const Modal = (props) => {
 		 
 		for(let v in vals){
 		  const parsed = parseInt(vals[v]);
+			// eslint-disable-next-line
 		  if(parsed === parsed){
 		    values[keys[v]] = parsed;
 		  }

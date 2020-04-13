@@ -3,7 +3,6 @@ import { useLocation } from "react-router-dom";
 import Task from "./task";
 import Stats from "./stats";
 import Hero from "./hero";
-import Crumbs from "./crumbs";
 import Tabs from "./tabs";
 import UserContext from "../../contexts/UserContext";
 import config from "../../config";
@@ -37,7 +36,7 @@ const Profile = (props) => {
 		})
 	}
 	else{return;}
-	
+// eslint-disable-next-line	
 	},[])
 	
 	const hero = {
@@ -61,6 +60,7 @@ const Profile = (props) => {
 	useEffect(()=>{
 	  if(isParam)return;
 	  setProfile({...profile,...state.player})
+		// eslint-disable-next-line
 	},[state.player])
 
 	async function getPlayer(username){

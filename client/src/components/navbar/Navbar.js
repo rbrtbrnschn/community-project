@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useContext} from "react";
+import React, {useEffect, useState } from "react";
 import {BasicNavItem, DropdownNavItem} from "./item";
 import Hamburger from "./hamburger";
 import "../../css/navbar/navbar.css";
@@ -6,9 +6,6 @@ import { config } from "../../config";
 const { uri } = config;
 const Navbar = props => {
 	const [logged,setLogged] = useState(true)
-	useEffect(()=>{
-		console.log("CHANGE",logged)
-	},[logged])
 
 	useEffect(()=>{
 	  fetch(uri.domain+"/api/auth")
@@ -32,10 +29,6 @@ const Navbar = props => {
 	 * @param {pos} Number [1,2,3], x>3 || x<1 wont work on mobile
 	 *@param {childrne} Array Of @BasicNavItem s
 	 */
-	const homepage = {
-		title:"TodoHub",
-		link:"/"
-	}
 	const tasks = {
 		title:"Tasks",
 		link:"/tasks"

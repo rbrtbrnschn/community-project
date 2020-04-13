@@ -81,11 +81,13 @@ class Task {
 }
 
 class Habit extends Task {
+// eslint-disable-next-line
   constructor(task?: taskCreation) {
     super(task);
   }
 }
 class Daily extends Task {
+// eslint-disable-next-line
   constructor(task?: taskCreation) {
     super(task);
   }
@@ -137,7 +139,7 @@ class Streak extends Task {
       const dayInMs = 86400000;
       const yesterKey = Date.now() - dayInMs;
       const yesterDay = new Date(yesterKey);
-      const yesterDate = yesterDay.getDate();
+      //const yesterDate = yesterDay.getDate();
 
       const lastStamp = task.timestamps[task.timestamps.length - 1];
       const lastKey = lastStamp.key;
@@ -200,7 +202,7 @@ class Streak extends Task {
   }
 
   _failYesterday(task: Streak, helpers?: any) {
-    const {key, value, payload } = task.timestamps[task.timestamps - 1];
+    const { value, payload } = task.timestamps[task.timestamps - 1];
     const lastDate = new Date(value).getDate();
     const toDay = new Date();
     const toDate = toDay.getDate();
@@ -258,11 +260,13 @@ class Streak extends Task {
   }
 }
 class Goal extends Task {
+// eslint-disable-next-line
   constructor(task?: taskCreation) {
     super(task);
   }
 }
 class Dream extends Task {
+// eslint-disable-next-line
   constructor(task?: taskCreation) {
     super(task);
   }
@@ -282,7 +286,7 @@ class Challenge extends Streak {
   _reset(task: any, helpers: any) {
     const lastStamp = task.timestamps[task.timestamps.length - 1];
     const { key } = lastStamp;
-    const lastDay = new Date(key);
+    //const lastDay = new Date(key);
     if (helpers) {
       const { setTask } = helpers;
       if (task.over) {

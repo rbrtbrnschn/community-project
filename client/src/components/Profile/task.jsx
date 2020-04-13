@@ -46,7 +46,6 @@ const Task = (props) => {
 		if(exists){
 			console.log("exists")
 			throw new Error("TaskIdExists");
-			return;
 		}
 		console.log("added")
 		addTask(task);

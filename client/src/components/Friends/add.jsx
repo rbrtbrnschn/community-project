@@ -47,7 +47,7 @@ const AddFriend = (props) => {
 				</span>
 			</p>
 			<p className="control">
-				<a className={"button "+state.color} onClick={handleOnSubmit}>
+				<a href="#added" className={"button "+state.color} onClick={handleOnSubmit}>
 				      Invite
 				</a>
 			</p>

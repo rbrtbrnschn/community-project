@@ -6,13 +6,6 @@ const Friends = (props) => {
 	const context = React.useContext(UserContext);
         const {state} = context;
         const { opponents } = state;
-        const getRandomColor = () => {
-        const colors = ["is-black","is-dark","is-light","is-white","is-primary","is-link","is-info","is-success","is-danger","is-warning"]
-                const random = Math.round(Math.random(0,9)*10);
-                const tag = "tag "
-                const returnTag = colors[random]
-                return returnTag
-        }
 	const getColor =(i) => {
 		const colors = ["is-info","is-secondary"]
 		const isOdd = i % 2 !== 0;
@@ -58,10 +51,10 @@ const Friends = (props) => {
     <nav className="tabs">
       <div className="container">
         <ul>
-          <li className="is-active"><a onClick={()=>{handleOnClickProfile(o.username)}}>Profile</a></li>
-          <li><a>Achievements</a></li>
-          <li><a>Challenge</a></li>
-          <li><a>Remove</a></li>
+          <li className="is-active"><a href="#user" onClick={()=>{handleOnClickProfile(o.username)}}>Profile</a></li>
+          <li><a href="#achievements">Achievements</a></li>
+          <li><a href="#challenge">Challenge</a></li>
+          <li><a href="#remove">Remove</a></li>
         </ul>
       </div>
     </nav>

@@ -13,7 +13,7 @@ const Stats = (props) => {
 	useEffect(()=>{
 	const _stats = handleStats(profile, onNewHighscore);
 	if(_stats !== initialState)setStats({...stats,..._stats});
-	
+	// eslint-disable-next-line
 	},[profile])
   return (
     <nav className="level is-mobile">

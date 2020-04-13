@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
-import SocketIOClient from "socket.io-client";
+//import SocketIOClient from "socket.io-client";
 import UserContext from "../../contexts/UserContext";
 const Home = (props) => {
 
 	const context = React.useContext(UserContext);
 	const { state } = context;
 	//const socket = SocketIOClient("http://localhost:5000");
-	const socketIDS = state.player.sockets;
+	//const socketIDS = state.player.sockets;
 	useEffect(()=>{
 		//socket.emit("onConnection","test")
 	})

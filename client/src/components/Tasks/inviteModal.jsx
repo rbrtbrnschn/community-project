@@ -1,9 +1,8 @@
 import React, { useState } from "react"
-import config from "../../config";
 const InviteModal = (props) => {
 	const { task } = props;
-	const { id, title, notes, payload } = props.task;
-	const { onCancle, onSaveChanges, onArchive } = props;
+	const { id, payload } = props.task;
+	const { onCancle } = props;
 	let _initialState = {
 		input:"",
 		err:false,

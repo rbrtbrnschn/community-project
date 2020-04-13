@@ -2,7 +2,6 @@ import React from "react";
 import { Modal } from "./modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes, faCheck } from "@fortawesome/free-solid-svg-icons";
-import { cpus } from "os";
 const Streak = (props) => {
   const { all } = props;
   const {

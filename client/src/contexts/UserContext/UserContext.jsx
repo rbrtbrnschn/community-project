@@ -53,12 +53,6 @@ const UserProvider = (props) => {
 
     // Get User
     async function getUser() {
-      const options = {
-        method: "GET",
-	credentials: "include",
-	"Access-Control-Allow-Credentials": true,
-	"Access-Control-Allow-Origin": "http://localhost:3000"
-      }
       const response = await fetch(`${uri.domain}/api/auth`);
       const data = await response.json();
       //console.log("User:",data);
@@ -165,6 +159,7 @@ const UserProvider = (props) => {
       return;
     }
     return;
+	  // eslint-disable-next-line
   }, [state.newLogin]);
 
   useEffect(()=>{
@@ -181,6 +176,7 @@ const UserProvider = (props) => {
 	  }else{
 		  return;
 	  }
+	  // eslint-disable-next-line
   },[player.highscore])
   return (
     <UserContext.Provider value={{ state, setState }}>

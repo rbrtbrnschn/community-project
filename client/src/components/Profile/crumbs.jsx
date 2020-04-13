@@ -2,11 +2,10 @@ import React from "react";
 import {useLocation} from "react-router-dom";
 
 const Crumbs = (props) => {
-	const {profile} = props;
 	const location = useLocation();
 	const pathname = location.pathname.split("/")
 	pathname.splice(0,1);
-	const [path,setPath] = React.useState(pathname);
+	const [path] = React.useState(pathname);
 	const isLast = (name) => {
 		return path[path.length - 1] === name ? "is-active" : "";
 	}

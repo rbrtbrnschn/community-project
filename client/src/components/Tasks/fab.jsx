@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const Fab = (props) => {
 
 	return(
-	<a className="fab" style={{position:"fixed",backgroundColor:"#3273dc"}} onClick={()=>{
+	<a href="#fab" className="fab" style={{position:"fixed",backgroundColor:"#3273dc"}} onClick={()=>{
 	//window.location = "/createTask";
 	const modal = document.getElementById("create-modal");
 	modal.classList.add("is-active");

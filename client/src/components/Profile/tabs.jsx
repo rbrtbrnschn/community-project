@@ -7,7 +7,7 @@ const Tabs =(props) => {
 		<div className="tabs is-boxed is-fullwidth is-medium">
 		  <ul>
 		    <li id="tab-1" onClick={left}>
-		      <a className="tab-1">
+		      <a href="#tab-1" className="tab-1">
 		        <span className="tab-1 icon">
 		<FontAwesomeIcon icon={faAngleLeft} aria-hidden="true" className="tab-1"/>
 		</span>
@@ -15,7 +15,7 @@ const Tabs =(props) => {
 		      </a>
 		    </li>
 		    <li id="tab-2" className="is-active" onClick={middle}>
-		      <a className="tab-2">
+		      <a href="#tab-2" className="tab-2">
 		        <span className="tab-2 icon">
 		<FontAwesomeIcon icon={faAngleDown} aria-hidden="true" className="tab-2"/>
 		</span>
@@ -23,7 +23,7 @@ const Tabs =(props) => {
 		      </a>
 		    </li>
 		    <li id="tab-3"onClick={right}>
-		      <a className="tab-3">
+		      <a href="#tab-3" className="tab-3">
 		        <span className="tab-3">History</span>
 		        <span className="tab-3 icon">
 		<FontAwesomeIcon icon={faAngleRight} aria-hidden="true" className="tab-3"/>
