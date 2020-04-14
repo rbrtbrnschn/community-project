@@ -202,7 +202,7 @@ class Streak extends Task {
   }
 
   _failYesterday(task: Streak, helpers?: any) {
-    const { value, payload } = task.timestamps[task.timestamps - 1];
+    const { value, payload } = task.timestamps[task.timestamps.length - 1];
     const lastDate = new Date(value).getDate();
     const toDay = new Date();
     const toDate = toDay.getDate();
@@ -243,7 +243,9 @@ class Streak extends Task {
     if (helpers) {
       const { setTask } = helpers;
       if (Math.abs(toDay - lastDay) === 1) {
+console.log("yesterday")
         if (task.timestamps[task.timestamps.length - 1].isComplete) {
+console.log("was completed yesterday")
           task.isComplete = false;
           console.log("Completed Yesterday:", task.title);
           return setTask(task);

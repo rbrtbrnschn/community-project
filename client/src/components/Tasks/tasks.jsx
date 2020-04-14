@@ -203,12 +203,12 @@ const Tasks = props => {
 
   const handleOnCheckYesterday = (ids) => {
   	const _tasks = []
-	  if(_tasks.length === 0){
+	  /*if(_tasks.length === 0){
 		  handleOnCancle();
 		  const _state = {...state, newLogin:true,ok:true}
 		  setState(_state);
 		  return;
-	  }
+	  }*/
 	ids.forEach(i=>{
    	  const id = parseInt(i);
 	  const _task = tasks.find(t=> t.id === id);
