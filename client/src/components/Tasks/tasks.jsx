@@ -2,6 +2,7 @@ import React from "react";
 import TaskComponent from "./task";
 import StreakComponent from "./streak";
 import ChallengeComponent from "./challenge";
+import HabitComponent from "./habit";
 import NewDayCheck from "./newDayCheck";
 import CreateModal from "./createModal";
 
@@ -232,9 +233,11 @@ const Tasks = props => {
   const handleOnStreakColor = (task) => {
         const s = task.streak;
         let color = "is-info";
-        if(s<0)color = "is-link"
+	if(s <= -5)color = "is-danger"
+	else if(s < 0 && s > -5)color = "is-link"
         else if(s === 0){}
-        else if(s >= 5)color = "is-primary"
+        else if(s >= 5 && s < 10)color = "is-primary"
+	else if(s >= 10)color = "is-success"
         return color;
   };
   const handleCompleteColor = task => {
@@ -298,7 +301,7 @@ const Tasks = props => {
         _task = <TaskComponent key={id} all={_props} />;
         break;
       case "Habit":
-        _task = <TaskComponent key={id} all={_props} />;
+        _task = <HabitComponent key={id} all={_props} />;
         break;
       case "Daily":
         _task = <TaskComponent key={id} all={_props} />;

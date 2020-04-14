@@ -8,6 +8,10 @@ interface challengeCreation extends taskCreation {
   start: Date;
   end: Date;
 }
+interface habitCreation extends taskCreation {
+  isPositive: Boolean;
+  streak: number;
+}
 
 class Task {
   title: any;
@@ -81,13 +85,56 @@ class Task {
 }
 
 class Habit extends Task {
-  // eslint-disable-next-line
   streak: number;
   isPositive: Boolean;
-  constructor(task?: taskCreation) {
+  constructor(task?: habitCreation) {
     super(task);
-    this.streak = 0;
-    this.isPositive = true;
+    this.streak = task?.streak || 0;
+    this.isPositive = task?.isPositive || true;
+  }
+  _complete(task: Habit, helpers?: any) {
+    const stamp = {
+      key: Date.now(),
+      payload: "onComplete",
+      isComplete: true,
+      value: task.streak,
+    };
+
+    if (helpers) {
+      const { setTask } = helpers;
+      const _task = { ...task };
+      _task.streak++;
+      _task.timestamps.push(stamp);
+      return setTask(_task);
+    }
+    return task;
+  }
+  _completeYesterday(task: any, helpers?: any) {
+    return task;
+  }
+  _failYesterday(task: any, helpers?: any) {
+    return task;
+  }
+
+  _fail(task: Habit, helpers?: any) {
+    const stamp = {
+      key: Date.now(),
+      payload: "onFail",
+      isComplete: false,
+      value: task.streak,
+    };
+
+    if (helpers) {
+      const { setTask } = helpers;
+      const _task = { ...task };
+      _task.streak--;
+      _task.timestamps.push(stamp);
+      return setTask(_task);
+    }
+    return task;
+  }
+  _reset(task: any, helpers?: any) {
+    return task;
   }
 }
 class Daily extends Task {
