@@ -81,13 +81,17 @@ class Task {
 }
 
 class Habit extends Task {
-// eslint-disable-next-line
+  // eslint-disable-next-line
+  streak: number;
+  isPositive: Boolean;
   constructor(task?: taskCreation) {
     super(task);
+    this.streak = 0;
+    this.isPositive = true;
   }
 }
 class Daily extends Task {
-// eslint-disable-next-line
+  // eslint-disable-next-line
   constructor(task?: taskCreation) {
     super(task);
   }
@@ -120,12 +124,10 @@ class Streak extends Task {
       task.timestamps.push(stamp);
       task.isComplete = true;
       task.completedAt = new Date().toLocaleDateString();
-      if(task.streak < 0){
-	task.streak = 1;	
-      }
-      else{
-      task.streak++;
-
+      if (task.streak < 0) {
+        task.streak = 1;
+      } else {
+        task.streak++;
       }
       if (helpers) {
         const { setTask } = helpers;
@@ -160,12 +162,10 @@ class Streak extends Task {
       task.timestamps.push(yesterdayStamp);
       task.isComplete = false;
       task.completedAt = yesterDay.toLocaleDateString();
-      if(task.streak < 0){
-	task.streak = 1;	
-      }
-      else{
-      task.streak++;
-
+      if (task.streak < 0) {
+        task.streak = 1;
+      } else {
+        task.streak++;
       }
       if (helpers) {
         const { setTask } = helpers;
@@ -187,11 +187,10 @@ class Streak extends Task {
       //since u can only ever fail OR complete a task on the same day
       task.timestamps.push(stamp);
       task.strikes = task.strikes + 1;
-      if(task.streak > 0){
-      task.streak = 0;
-      }
-      else{
-      task.streak= task.streak - 1;
+      if (task.streak > 0) {
+        task.streak = 0;
+      } else {
+        task.streak = task.streak - 1;
       }
       if (helpers) {
         const { setTask } = helpers;
@@ -209,9 +208,10 @@ class Streak extends Task {
     const yesterDay = new Date();
     yesterDay.setDate(toDay.getDate() - 1);
 
-    if(payload === "onFail" && Math.abs(toDate - lastDate) === 1){
-    console.log("was failed manually yesterday");
-    return;}
+    if (payload === "onFail" && Math.abs(toDate - lastDate) === 1) {
+      console.log("was failed manually yesterday");
+      return;
+    }
 
     const stamp = {
       payload: "onFail",
@@ -221,11 +221,10 @@ class Streak extends Task {
     task.isComplete = false;
     task.timestamps.push(stamp);
     task.strikes = task.strikes + 1;
-    if(task.streak > 0){
-    task.streak = 0;
-    }
-    else{
-    task.streak--;
+    if (task.streak > 0) {
+      task.streak = 0;
+    } else {
+      task.streak--;
     }
     if (helpers) {
       const { setTask } = helpers;
@@ -243,9 +242,9 @@ class Streak extends Task {
     if (helpers) {
       const { setTask } = helpers;
       if (Math.abs(toDay - lastDay) === 1) {
-console.log("yesterday")
+        console.log("yesterday");
         if (task.timestamps[task.timestamps.length - 1].isComplete) {
-console.log("was completed yesterday")
+          console.log("was completed yesterday");
           task.isComplete = false;
           console.log("Completed Yesterday:", task.title);
           return setTask(task);
@@ -262,13 +261,13 @@ console.log("was completed yesterday")
   }
 }
 class Goal extends Task {
-// eslint-disable-next-line
+  // eslint-disable-next-line
   constructor(task?: taskCreation) {
     super(task);
   }
 }
 class Dream extends Task {
-// eslint-disable-next-line
+  // eslint-disable-next-line
   constructor(task?: taskCreation) {
     super(task);
   }
