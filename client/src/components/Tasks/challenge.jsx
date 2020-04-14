@@ -5,7 +5,7 @@ import {faTimes,faCheck} from "@fortawesome/free-solid-svg-icons"
 import InviteModal from "./inviteModal";
 const ChallengeComponent = (props) => {
 	const { all } = props;
-	const { task, onDelete, onComplete, onEdit, onCancle, onSaveChanges, onArchive, onFail, onStreakColor } = all;
+	const { task, onDelete, onComplete, onEdit, onCancle, onSaveChanges, onArchive, onFail, onStreakColor, onCompleteColor, onFailColor } = all;
 
         return(<div className="task">
                 <div className="card" id={task.id}>
@@ -17,7 +17,7 @@ const ChallengeComponent = (props) => {
 
                 <footer className="card-footer">
                 <p className="card-footer-item">
-                <button className="button is-link is-outlined"
+                <button className={"button is-link"+onCompleteColor(task)}
                         onClick={onComplete}
                 >
                 <span className="icon is-small">
@@ -27,7 +27,7 @@ const ChallengeComponent = (props) => {
                  </button>
                 </p>
                 <p className="card-footer-item">
-                <button className="button is-info is-outlined"
+                <button className={"button is-info"+onFailColor(task)}
                         onClick={onFail}
                 >
                   <span>Fail</span>

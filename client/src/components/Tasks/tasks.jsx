@@ -237,6 +237,27 @@ const Tasks = props => {
         else if(s >= 5)color = "is-primary"
         return color;
   };
+  const handleCompleteColor = task => {
+  	const { timestamps } = task;
+	const last = timestamps[timestamps.length - 1];
+	const {payload, key} = last;
+	if(new Date(key).getDate() === new Date().getDate() && payload === "onComplete"){
+		return ""	
+	}else{
+		return " is-outlined"
+	}
+	
+  }
+  const handleFailColor = task => {
+  	const { timestamps } = task;
+	const last = timestamps[timestamps.length - 1 ];
+	const { payload, key } = last;
+	if(new Date(key).getDate() === new Date().getDate() && payload === "onFail"){
+		return "";
+	}else{
+		return " is-outlined";
+	}
+  }
 
 
   const handleOnReturn = task => {
@@ -265,7 +286,10 @@ const Tasks = props => {
       onCheckYesterday: handleOnCheckYesterday,
       onNewDay: handleOnNewDay,
       isNewDay: handleIsNewDay,
-      onStreakColor: handleOnStreakColor
+      onStreakColor: handleOnStreakColor,
+      onCompleteColor: handleCompleteColor,
+      onFailColor: handleFailColor,
+
     };
     const { payload, id } = task;
     let _task;

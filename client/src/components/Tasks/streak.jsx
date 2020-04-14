@@ -13,7 +13,9 @@ const Streak = (props) => {
     onSaveChanges,
     onArchive,
     onFail,
-    onStreakColor
+    onStreakColor,
+    onCompleteColor,
+    onFailColor,
   } = all;
 
   return (
@@ -29,7 +31,7 @@ const Streak = (props) => {
 
         <footer className="card-footer">
           <p className="card-footer-item">
-            <button className="button is-link is-outlined" onClick={onComplete}>
+            <button className={"button is-link"+onCompleteColor(task)} onClick={onComplete}>
               <span className="icon is-small">
                 <FontAwesomeIcon icon={faCheck} />
               </span>
@@ -37,7 +39,7 @@ const Streak = (props) => {
             </button>
           </p>
           <p className="card-footer-item">
-            <button className="button is-info is-outlined" onClick={onFail}>
+            <button className={"button is-info"+onFailColor(task)} onClick={onFail}>
               <span> Fail </span>
               <span className="icon is-small">
                 <FontAwesomeIcon icon={faTimes} />
