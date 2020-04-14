@@ -28,12 +28,11 @@ const Profile = (props) => {
 		setProfile({...profile,...data,isOwner:false,isSearching: false})
 	  });
 	  }
-	else if(profile.isSearching === false && state.player.ok){
+	else{
 		
-	  	  setProfile({...profile,isOwner:true,...state.player,ok:true})
+	  	  setProfile({...profile,...state.player,isOwner:true,ok:true})
 		
 	}
-	else{return;}
 // eslint-disable-next-line	
 	},[])
 	
