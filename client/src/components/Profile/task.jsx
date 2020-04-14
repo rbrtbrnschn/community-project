@@ -51,11 +51,21 @@ const Task = (props) => {
 		addTask(task);
 	}
 	const isChallenge = task.payload === "Challenge";
+
+	const handleOnStreakColor = (task) => {
+        	const s = task.streak;
+        	let color = "is-info";
+        	if(s<0)color = "is-link"
+        	else if(s === 0){}
+        	else if(s >= 5)color = "is-primary"
+        	return color;
+  };
 	return (<div className="container is-fullwidth">
                 <div className="card" id={task.id}>
                 <div className="card-content">     
                 <p className="title is-3">{task.title}</p>
                 <p className="subtitle">{task.notes}</p>
+		<p className={"tag is-rounded is-large "+handleOnStreakColor(task)}>{task.streak}</p>
                 </div>
 
                 <footer className="card-footer">
@@ -64,18 +74,10 @@ const Task = (props) => {
                         
                 >
                 <span className="icon is-small">
-                 <FontAwesomeIcon icon={faCheck} />
+                 <FontAwesomeIcon icon={faCheckDouble} />
                     </span>
-                    <span>{new Date(task.timestamps[0].key).toLocaleDateString()}</span>
+                    <span>{lastCompleted(task)}</span>
                  </button>
-                </p>
-                <p className="card-footer-item">
-		<button className="button is-info">  
-		<span className="icon is-small">
-		<FontAwesomeIcon icon={faCheckDouble} />
-		</span>
-		<span>{lastCompleted(task)} </span>
-		  </button>
                 </p>
 		{!isOwner && isChallenge ?
                 <p className="card-footer-item">
