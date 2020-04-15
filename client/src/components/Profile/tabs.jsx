@@ -1,10 +1,13 @@
 import React from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleLeft,faAngleDown,faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import { faAngleLeft,faAngleUp,faAngleRight } from "@fortawesome/free-solid-svg-icons";
+
+const isMobile = window.innerWidth <= 700;
 const Tabs =(props) => {
 	const { left, middle, right} = props.navHelpers;
+	const base = "tabs is-boxed is-fullwidth is-medium"
 	return(
-		<div className="tabs is-boxed is-fullwidth is-medium">
+		<nav className={isMobile ? base+" navbar is-fixed-bottom is-marginless" : base} >
 		  <ul>
 		    <li id="tab-1" onClick={left}>
 		      <a href="#tab-1" className="tab-1">
@@ -17,7 +20,7 @@ const Tabs =(props) => {
 		    <li id="tab-2" className="is-active" onClick={middle}>
 		      <a href="#tab-2" className="tab-2">
 		        <span className="tab-2 icon">
-		<FontAwesomeIcon icon={faAngleDown} aria-hidden="true" className="tab-2"/>
+		<FontAwesomeIcon icon={faAngleUp} aria-hidden="true" className="tab-2"/>
 		</span>
 		        <span className="tab-2">Stats</span>
 		      </a>
@@ -31,7 +34,7 @@ const Tabs =(props) => {
 		      </a>
 		    </li>
 		  </ul>
-		</div>
+		</nav>
 	);
 }
 export default Tabs;

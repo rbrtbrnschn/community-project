@@ -5,6 +5,10 @@ const { UserDB, userSchema } = require("../models/user");
 const User = UserDB.model("user", userSchema);
 const { withAuth, setUser } = require("../services/middleware");
 
+router.get("/test",(req,res)=>{
+console.log("worked")
+return res.send("worked");
+})
 router.post("/auth",async (req,res)=>{
   let {username,password} = req.body;
   if(!username){

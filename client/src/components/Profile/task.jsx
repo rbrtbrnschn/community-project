@@ -1,7 +1,8 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck, faCheckDouble } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faCheckDouble, faShieldAlt, faEllipsisH } from "@fortawesome/free-solid-svg-icons";
 import UserContext from "../../contexts/UserContext"
+import OptionsModal from "./optionsModal";
 
 const Task = (props) => {
 	const context = React.useContext(UserContext);
@@ -60,8 +61,19 @@ const Task = (props) => {
         	else if(s >= 5)color = "is-primary"
         	return color;
   };
+	const handleOnOptions = (task) => {
+		const options = document.getElementById("options-modal");
+		options.classList.add("is-active")
+	}
+
+	const handleOnStats = () => {
+		handleOnOptions(task);
+	}
 	return (<div className="container is-fullwidth">
                 <div className="card" id={task.id}>
+		{!isOwner && <a className="icon is-pulled-right" style={{margin:"10px"}} onClick={()=>{handleOnOptions(task)}}>
+		<FontAwesomeIcon icon={faEllipsisH} />
+		</a>}
                 <div className="card-content">     
                 <p className="title is-3">{task.title}</p>
                 <p className="subtitle">{task.notes}</p>
@@ -79,6 +91,17 @@ const Task = (props) => {
                     <span>{lastCompleted(task)}</span>
                  </button>
                 </p>
+		{isOwner && <p className="card-footer-item">
+                	<button className="button is-link"
+			onClick={handleOnStats}
+			>
+                	<span className="icon is-small">
+                	<FontAwesomeIcon icon={faShieldAlt} />
+                	</span>
+             	 	<span>View Stats</span>
+                 	</button>
+				
+		</p>}
 		{!isOwner && isChallenge ?
                 <p className="card-footer-item">
 		<button className="button is-primary" onClick={()=>{handleOnJoin(task)}}>  
@@ -98,6 +121,7 @@ const Task = (props) => {
 		}
                 </footer>
                 </div>
+		<OptionsModal task={task} />
 
         </div>)
 

@@ -7,6 +7,7 @@ const Home = (props) => {
 	const { state } = context;
 	//const socket = SocketIOClient("http://localhost:5000");
 	//const socketIDS = state.player.sockets;
+
 	useEffect(()=>{
 		//socket.emit("onConnection","test")
 	})

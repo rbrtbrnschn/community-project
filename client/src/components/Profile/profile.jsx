@@ -20,7 +20,6 @@ const Profile = (props) => {
 	const handleOnNewHighscore = (hs) => {
 		setState({...state,player:{...state.player,highscore:hs},highscoreIsOk:true})
 	}
-
 	useEffect(()=>{
 	if(profile.isSearching){
 	  getPlayer(param)
