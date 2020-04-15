@@ -2,7 +2,8 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faCheckDouble, faShieldAlt, faEllipsisH } from "@fortawesome/free-solid-svg-icons";
 import UserContext from "../../contexts/UserContext"
-import OptionsModal from "./optionsModal";
+import OptionsDropdown from "./optionsDropdown";
+import StatsModal from "./statsModal";
 
 const Task = (props) => {
 	const context = React.useContext(UserContext);
@@ -71,13 +72,11 @@ const Task = (props) => {
 	}
 	return (<div className="container is-fullwidth">
                 <div className="card" id={task.id}>
-		{!isOwner && <a className="icon is-pulled-right" style={{margin:"10px"}} onClick={()=>{handleOnOptions(task)}}>
-		<FontAwesomeIcon icon={faEllipsisH} />
-		</a>}
+		{!isOwner && <OptionsDropdown task={task} />}
                 <div className="card-content">     
                 <p className="title is-3">{task.title}</p>
                 <p className="subtitle">{task.notes}</p>
-		<p className={"tag is-rounded is-large "+handleOnStreakColor(task)}>{task.streak}</p>
+		{task.streak !== undefined ? <p className={"tag is-rounded is-large "+handleOnStreakColor(task)}>{task.streak}</p> : ""}
                 </div>
 
                 <footer className="card-footer">
@@ -121,7 +120,7 @@ const Task = (props) => {
 		}
                 </footer>
                 </div>
-		<OptionsModal task={task} />
+		<StatsModal task={task} />
 
         </div>)
 

@@ -1,18 +1,19 @@
 import React from "react";
 
-const OptionsModal = props => {
+const StatsModal = props => {
 	const { task } = props;
 
 	const handleOnCancle = () => {
 		const modal = document.querySelector("#options-modal");
 		modal.classList.remove("is-active")
 	}
+
 	return(
 		<div id="options-modal" className="modal">
-  		<div className="modal-background"></div>
+  		<div className="modal-background" onClick={handleOnCancle}></div>
   		<div className="modal-card">
     		<header className="modal-card-head">
-      		<p className="modal-card-title">WIP</p>
+      		<p className="modal-card-title">Options</p>
       		<button className="delete" aria-label="close"
 		onClick={handleOnCancle}
 		></button>
@@ -32,4 +33,5 @@ const OptionsModal = props => {
 		</div>
 	);
 }
-export default OptionsModal;
+export default StatsModal;
+
