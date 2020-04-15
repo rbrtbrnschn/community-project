@@ -38,7 +38,7 @@ const Stats = (props) => {
   <div class="level-item has-text-centered">
     <div>
       <p class="heading">Failed</p>
-      <p class="title">{stats.completed}</p>
+      <p class="title">{stats.failed}</p>
     </div>
   </div>
   <div class="level-item has-text-centered">
