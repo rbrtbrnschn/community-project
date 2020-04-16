@@ -62,13 +62,15 @@ const Task = (props) => {
         	else if(s >= 5)color = "is-primary"
         	return color;
   };
-	const handleOnOptions = (task) => {
-		const options = document.getElementById("options-modal");
-		options.classList.add("is-active")
-	}
 
-	const handleOnStats = () => {
-		handleOnOptions(task);
+	const handleOnStats = e => {
+		const {currentTarget} = e;
+		const { id } = currentTarget;
+		console.log(id)
+		const _id = id.split("-")[0];
+
+		const stats = document.getElementById(_id+"-stats-modal")
+		stats.classList.add("is-active");
 	}
 	return (<div className="container is-fullwidth">
                 <div className="card" id={task.id}>
@@ -91,7 +93,7 @@ const Task = (props) => {
                  </button>
                 </p>
 		{isOwner && <p className="card-footer-item">
-                	<button className="button is-link"
+                	<button id={task.id+"-stats-button"} className="button is-link"
 			onClick={handleOnStats}
 			>
                 	<span className="icon is-small">

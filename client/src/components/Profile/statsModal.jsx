@@ -3,18 +3,21 @@ import React from "react";
 const StatsModal = props => {
 	const { task } = props;
 
-	const handleOnCancle = () => {
-		const modal = document.querySelector("#options-modal");
+	const handleOnCancle = e => {
+		const { currentTarget } = e;
+		const { id } = currentTarget;
+		const _id = id.split("-")[0]+"-stats-modal"
+		const modal = document.getElementById(_id);
 		modal.classList.remove("is-active")
 	}
 
 	return(
-		<div id="options-modal" className="modal">
-  		<div className="modal-background" onClick={handleOnCancle}></div>
+		<div id={task.id+"-stats-modal"} className="modal">
+  		<div id={task.id+"-stats-modal-background"} className="modal-background" onClick={handleOnCancle}></div>
   		<div className="modal-card">
     		<header className="modal-card-head">
       		<p className="modal-card-title">Options</p>
-      		<button className="delete" aria-label="close"
+      		<button id={task.id+"-stats-modal-button"} className="delete" aria-label="close"
 		onClick={handleOnCancle}
 		></button>
     		</header>
