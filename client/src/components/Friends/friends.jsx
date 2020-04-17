@@ -19,6 +19,28 @@ const Friends = (props) => {
 	const handleOnClickBody = username => {
 		handleOnClickProfile(username);
 	}
+	const handleOnClickChallenge = opponent =>{
+		/*const o = {...opponent};
+		let stamps = []
+		
+		o.tasks.forEach((t,i)=>{
+		const max = t.timestamps.length;
+		if(max < 3){
+			stamps.push([])
+			t.timestamps.forEach(s=>s.payload === "onFail" ? count);
+			return;
+		}
+		else{
+			stamps.push([])
+			t.timestamps.splice(0,[t.timestamps.length-3]);	
+			
+			stamps[i].push(t.timestamps);
+			
+			}
+		})
+		console.log(stamps)*/
+			//TODO
+	}
 
         return(
                 <div>
@@ -53,7 +75,10 @@ const Friends = (props) => {
         <ul>
           <li className="is-active"><a href="#user" onClick={()=>{handleOnClickProfile(o.username)}}>Profile</a></li>
           <li><a href="#achievements">Achievements</a></li>
-          <li><a href="#challenge">Challenge</a></li>
+          <li><a href="#challenge" onClick={
+	  ()=>{handleOnClickChallenge(o);
+	  }
+	  }>Challenge</a></li>
           <li><a href="#remove">Remove</a></li>
         </ul>
       </div>
