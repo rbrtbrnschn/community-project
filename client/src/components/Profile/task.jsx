@@ -72,6 +72,7 @@ const Task = (props) => {
 		const stats = document.getElementById(_id+"-stats-modal")
 		stats.classList.add("is-active");
 	}
+	if((task.isPrivate === undefined) || (task.isPrivate === false)){
 	return (<div className="container is-fullwidth">
                 <div className="card" id={task.id}>
 		{!isOwner && <OptionsDropdown task={task} />}
@@ -124,7 +125,13 @@ const Task = (props) => {
                 </div>
 		<StatsModal task={task} />
 
-        </div>)
+        </div>)}
+	else if(task.isPrivate === true){
+		return <div></div>;
+	}
+	else{
+		return(<p className="title is-1">ERROR</p>)
+	}
 
 }
 

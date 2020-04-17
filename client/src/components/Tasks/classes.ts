@@ -12,6 +12,9 @@ interface habitCreation extends taskCreation {
   isPositive: Boolean;
   streak: number;
 }
+interface dailyCreation extends taskCreation {
+  interval: number;
+}
 
 class Task {
   title: any;
@@ -23,6 +26,7 @@ class Task {
   archivedAt: any;
   timestamps: any;
   isComplete: any;
+  isPrivate?: Boolean;
 
   constructor(_task?: taskCreation) {
     this._create(_task);
@@ -35,6 +39,7 @@ class Task {
       this.payload = payload;
       this.id = hash();
       this.createdAt = new Date().toLocaleDateString();
+      this.isPrivate = false;
       this.timestamps = [
         { payload: "onCreate", key: Date.now(), isComplete: false },
       ];
@@ -81,6 +86,18 @@ class Task {
   }
   _reset(task?: any) {
     return;
+  }
+  _isNewDay(task?: any) {
+    // TODO method among all classes given to certain function to see if payload needs newDayCompletion
+    // ! handle checking if necessary
+    // * not necessary here
+    return false;
+  }
+  setPrivate(task?: any) {
+    task.isPrivate = true;
+  }
+  setPublic(task?: any) {
+    task.isPrivate = false;
   }
 }
 
@@ -138,9 +155,11 @@ class Habit extends Task {
   }
 }
 class Daily extends Task {
+  interval: number;
   // eslint-disable-next-line
-  constructor(task?: taskCreation) {
+  constructor(task?: dailyCreation) {
     super(task);
+    this.interval = task?.interval || 1;
   }
 }
 class Streak extends Task {

@@ -111,10 +111,6 @@ const Tasks = props => {
     switchForPayload(task)._completeYesterday(task,stateHelpers);
   }
 
-  const handleOnDelete = async _id => {
-    const task = tasks.find(t => t.id === _id);
-    deleteTask(task);
-  };
 
   const handleOnArchive = async _id => {
     const task = tasks.find(t => t.id === _id);
@@ -135,8 +131,17 @@ const Tasks = props => {
     	m.classList.remove("is-active")
     })
     const html = document.querySelector("html");
+    const body = document.querySelector("body");
     html.classList.remove("is-clipped");
+    body.classList.remove("is-clipped");
   };
+
+  const handleOnDelete = async _id => {
+    const task = tasks.find(t => t.id === _id);
+    deleteTask(task);
+    handleOnCancle();
+  };
+
   const handleOnSaveChanges = async task => {
     const { id } = task;
     const oldState = { ...state };
