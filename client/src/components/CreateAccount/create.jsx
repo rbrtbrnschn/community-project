@@ -10,19 +10,63 @@ const Create = () => {
 
   const [state, setState] = useState({
     errs: {
+      fullname: false,
       username: false,
       email: false,
       password: false,
     },
-    errMsg: {
+    msg: {
+      fullname: "",
       username: "",
       email: "",
       password: "",
     },
   });
-  useEffect(() => {
-    //
-  }, []);
+  const { errs, msg } = state;
+  function onFocus(input) {
+    setState({ ...state, errs: { ...errs, [input]: true } });
+  }
+  function onBlur(input) {
+    setState({ ...state, errs: { ...errs, [input]: false } });
+  }
+
+  const onChangeFullname = (e) => {
+    const { value } = e.target;
+    let message = "";
+    if (value.split("").length === 0) message = "Too Short";
+    else if (!value.includes(" ")) message = "Missing Lastname";
+    else if (value[value.length - 1] === " ") message = "Missing Lastname";
+    setState({ ...state, msg: { ...msg, fullname: message } });
+  };
+  const onChangeUsername = (e) => {
+    const { value } = e.target;
+    let message = "";
+    if (value.split("").length === 0) message = "Too Short";
+    if (value.includes(" ")) message = "No Spaces";
+    if (value.split("").length < 6) message = "Too Short";
+
+    setState({ ...state, msg: { ...msg, username: message } });
+  };
+  const onChangeEmail = (e) => {
+    const { value } = e.target;
+    let message = "";
+    if (value.includes(" ")) message = "No Spaces";
+    if (value.split("").length < 4) message = "Too Short";
+    if (!value.includes("@")) message = "Not A Valid Email Adress";
+    else if (!value.includes(".")) message = "Missing '.'";
+    if (value[value.length - 1] === ".") message = "Not A Valid Email Adress";
+
+    setState({ ...state, msg: { ...msg, email: message } });
+  };
+  const onChangePassword = (e) => {
+    const { value } = e.target;
+    let message = "";
+    if (value.split("").length === 0) message = "Too Short";
+    else if (value.split("").length < 6) message = "Too Short";
+    if (value.includes(" ")) message = "No Spaces";
+
+    setState({ ...state, msg: { ...msg, password: message } });
+  };
 
   const handleOnSubmit = () => {
     // Refs
@@ -161,12 +205,24 @@ const Create = () => {
                 className="input"
                 type="text"
                 placeholder="full name"
-                ref={fullNameRef}
+                onChange={onChangeFullname}
+                id="fullname-input"
+                onBlur={() => {
+                  onBlur("fullname");
+                }}
+                onFocus={() => {
+                  onFocus("fullname");
+                }}
               ></input>
               <span className="icon is-left">
                 <FontAwesomeIcon icon="user" />
               </span>
             </div>
+            {state.errs.fullname ? (
+              <p class="help is-success is-pulled-left">{state.msg.fullname}</p>
+            ) : (
+              ""
+            )}
           </div>
           <div className="field">
             <div className="control has-icons-left">
@@ -174,16 +230,21 @@ const Create = () => {
                 className="input"
                 type="username"
                 placeholder="username"
-                ref={usernameRef}
+                onChange={onChangeUsername}
+                id="username-input"
+                onBlur={() => {
+                  onBlur("username");
+                }}
+                onFocus={() => {
+                  onFocus("username");
+                }}
               ></input>
               <span className="icon is-left">
                 <FontAwesomeIcon icon="user" />
               </span>
             </div>
             {state.errs.username ? (
-              <p class="help is-success is-pulled-left">
-                This username is available
-              </p>
+              <p class="help is-success is-pulled-left">{state.msg.username}</p>
             ) : (
               ""
             )}
@@ -194,16 +255,21 @@ const Create = () => {
                 className="input"
                 type="email"
                 placeholder="email"
-                ref={emailRef}
+                onChange={onChangeEmail}
+                id="email-input"
+                onBlur={() => {
+                  onBlur("email");
+                }}
+                onFocus={() => {
+                  onFocus("email");
+                }}
               ></input>
               <span className="icon is-left">
                 <FontAwesomeIcon icon="envelope" />
               </span>
             </div>
             {state.errs.email ? (
-              <p class="help is-success is-pulled-left">
-                This email is available
-              </p>
+              <p class="help is-success is-pulled-left">{state.msg.email}</p>
             ) : (
               ""
             )}
@@ -214,16 +280,21 @@ const Create = () => {
                 className="input"
                 type="password"
                 placeholder="password"
-                ref={passwordRef}
+                onChange={onChangePassword}
+                id="password-input"
+                onBlur={() => {
+                  onBlur("password");
+                }}
+                onFocus={() => {
+                  onFocus("password");
+                }}
               ></input>
               <span className="icon is-left">
                 <FontAwesomeIcon icon="lock" />
               </span>
             </div>
             {state.errs.password ? (
-              <p class="help is-success is-pulled-left">
-                This password is available
-              </p>
+              <p class="help is-success is-pulled-left">{state.msg.password}</p>
             ) : (
               ""
             )}
