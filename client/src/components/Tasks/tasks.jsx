@@ -6,55 +6,63 @@ import HabitComponent from "./habit";
 import NewDayCheck from "./newDayCheck";
 import CreateModal from "./createModal";
 
-import { config } from "../../config"
+import { config } from "../../config";
 import Fab from "./fab";
 import { Task, Habit, Daily, Streak, Goal, Dream, Challenge } from "./classes";
 import UserContext from "../../contexts/UserContext";
+import { stat } from "fs";
 const { uri } = config;
 
-const Tasks = props => {
+const Tasks = (props) => {
   const context = React.useContext(UserContext);
   const { state, setState } = context;
   const { player } = state;
   const { tasks } = player;
 
   //! State Helpers
-  const setTasks = newTasks => {
+  const setTasks = (newTasks) => {
+    console.log("newTasks:", newTasks);
     const _state = {
       ...state,
       player: { ...state.player, tasks: newTasks },
-      ok: true
+      ok: true,
     };
+    console.log("new state:", _state);
     setState(_state);
   };
 
-  const setTask = task => {
+  const setTask = (task) => {
+    if (task.helpers) delete task.helpers;
+    console.log("setTask:", task);
     let _tasks = [...tasks];
     const { id } = task;
-    const index = _tasks.findIndex(t => t.id === id);
+    const index = _tasks.findIndex((t) => t.id === id);
     _tasks[index] = task;
+    console.log(_tasks);
     setTasks(_tasks);
   };
 
-  const addTask = task => {
+  const addTask = (task) => {
+    if (task.helpers) delete task.helpers;
     const _tasks = [...tasks];
     _tasks.push(task);
     setTasks(_tasks);
   };
 
-  const deleteTask = task => {
+  const deleteTask = (task) => {
+    if (task.helpers) delete task.helpers;
     const _tasks = [...tasks];
     const { id } = task;
-    const index = _tasks.findIndex(t => t.id === id);
+    const index = _tasks.findIndex((t) => t.id === id);
     _tasks.splice(index, 1);
     setTasks(_tasks);
   };
-  
+
   const stateHelpers = {
     deleteTask,
     addTask,
     setTask,
-    setTasks
+    setTasks,
   };
 
   function switchForPayload(task) {
@@ -62,25 +70,25 @@ const Tasks = props => {
     let _task;
     switch (payload) {
       case "Task":
-        _task = new Task(task);
+        _task = new Task(task).transform(task, stateHelpers);
         break;
       case "Daily":
-        _task = new Daily(task);
+        _task = new Daily(task).transform(task, stateHelpers);
         break;
       case "Habit":
-        _task = new Habit(task);
+        _task = new Habit(task).transform(task, stateHelpers);
         break;
       case "Streak":
-        _task = new Streak(task);
+        _task = new Streak(task).transform(task, stateHelpers);
         break;
       case "Goal":
-        _task = new Goal(task);
+        _task = new Goal(task).transform(task, stateHelpers);
         break;
       case "Dream":
-        _task = new Dream(task);
+        _task = new Dream(task).transform(task, stateHelpers);
         break;
       case "Challenge":
-        _task = new Challenge(task);
+        _task = new Challenge(task).transform(task, stateHelpers);
         break;
 
       default:
@@ -90,73 +98,72 @@ const Tasks = props => {
   }
   //! Task Helpers
   const handleOnAdd = (setup) => {
-  	const task = switchForPayload(setup);
-	console.log(setup.payload,"created:",task);
-	return addTask(task);
-	
-  }
-
-  const handleOnComplete = _id => {
-    const task = tasks.find(t => t.id === _id);
-    switchForPayload(task)._complete(task, stateHelpers);
+    const task = switchForPayload(setup);
+    console.log(setup.payload, "created:", task);
+    return addTask(task);
   };
 
-  const handleOnFail = _id => {
-    const task = tasks.find(t => t.id === _id);
-    switchForPayload(task)._fail(task,stateHelpers);
-  }
+  const handleOnComplete = (_id) => {
+    const task = tasks.find((t) => t.id === _id);
+    console.log("before completion:", switchForPayload(task));
+    switchForPayload(task).complete(task);
+  };
 
-  const handleOnCompleteYesterday = _id => {
-    const task = tasks.find(t => t.id === _id);
-    switchForPayload(task)._completeYesterday(task,stateHelpers);
-  }
+  const handleOnFail = (_id) => {
+    const task = tasks.find((t) => t.id === _id);
+    switchForPayload(task).fail(task);
+  };
 
+  const handleOnCompleteYesterday = (_id) => {
+    const task = tasks.find((t) => t.id === _id);
+    switchForPayload(task).completeYesterday(stateHelpers);
+  };
 
-  const handleOnArchive = async _id => {
-    const task = tasks.find(t => t.id === _id);
-    switchForPayload(task)._archive(task, stateHelpers);
+  const handleOnArchive = async (_id) => {
+    const task = tasks.find((t) => t.id === _id);
+    switchForPayload(task).archive(task);
     handleOnCancle(_id);
   };
 
-  const handleOnEdit = _id => {
+  const handleOnEdit = (_id) => {
     const modal = document.getElementById(_id + "-modal");
     const html = document.querySelector("html");
     html.classList.add("is-clipped");
     modal.classList.add("is-active");
   };
 
-  const handleOnCancle = _id => {
+  const handleOnCancle = (_id) => {
     const modals = document.querySelectorAll("div.modal");
-    modals.forEach(m => {
-    	m.classList.remove("is-active")
-    })
+    modals.forEach((m) => {
+      m.classList.remove("is-active");
+    });
     const html = document.querySelector("html");
     const body = document.querySelector("body");
     html.classList.remove("is-clipped");
     body.classList.remove("is-clipped");
   };
 
-  const handleOnDelete = async _id => {
-    const task = tasks.find(t => t.id === _id);
+  const handleOnDelete = async (_id) => {
+    const task = tasks.find((t) => t.id === _id);
     deleteTask(task);
     handleOnCancle();
   };
 
-  const handleOnSaveChanges = async task => {
+  const handleOnSaveChanges = async (task) => {
     const { id } = task;
     const oldState = { ...state };
     const oldPlayer = { ...oldState.player };
     const newTasks = [...oldPlayer.tasks];
-    const index = newTasks.findIndex(t => t.id === id);
+    const index = newTasks.findIndex((t) => t.id === id);
     newTasks[index] = task;
 
     const url = `${uri.domain}/api/task/edit`;
     const options = {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({ task: { ...newTasks[index] }, index: index })
+      body: JSON.stringify({ task: { ...newTasks[index] }, index: index }),
     };
     const response = await fetch(url, options);
     await response.json();
@@ -165,110 +172,109 @@ const Tasks = props => {
       ...oldState,
       player: {
         ...oldPlayer,
-        tasks: [...newTasks]
-      }
+        tasks: [...newTasks],
+      },
     });
 
     handleOnCancle();
   };
 
-
   const handleIsNewDay = () => {
-  	const lastKey = player.lastLogin;
-	const lastDay = new Date(lastKey)
-	const lastDate = lastDay.getDate();
-	const currentKey = Date.now()
-	const currentDay = new Date(currentKey);
-	const currentDate = currentDay.getDate();
-	
-	if(lastKey === 0){
-		return false};  
-	if(lastDate !== currentDate){
-	  return true;
-	}
-	else{
-	  return false;
-	}
-  }
+    const lastKey = player.lastLogin;
+    const lastDay = new Date(lastKey);
+    const lastDate = lastDay.getDate();
+    const currentKey = Date.now();
+    const currentDay = new Date(currentKey);
+    const currentDate = currentDay.getDate();
 
-  const handleOnNewDay = task => {
-    
-    const { timestamps } = task;
-    const { key } = timestamps[timestamps.length - 1];
-    const yesterDay = new Date(key).getDate();
-    const toDay = new Date().getDate();
-    if (yesterDay === toDay) return;
-    const cb = (task) => {
-    if(task.streak > player.highscore){
-      setState({...state,player:{...player,highscore:task.streak}})
-	    console.log("shouldve set state:",{...state,player:{...player,highscore:task.streak}})
+    if (lastKey === 0) {
+      return false;
     }
+    if (lastDate !== currentDate) {
+      return true;
+    } else {
+      return false;
     }
-    switchForPayload(task)._reset(task,stateHelpers,cb);
+  };
+
+  const handleOnNewDay = (task) => {
+    /*const cb = (task) => {
+      if (task.streak > player.highscore) {
+        setState({ ...state, player: { ...player, highscore: task.streak } });
+        console.log("shouldve set state:", {
+          ...state,
+          player: { ...player, highscore: task.streak },
+        });
+      }
+    };*/
+    // ! Deprecated 19/04/2020
   };
 
   const handleOnCheckYesterday = (ids) => {
-  	const _tasks = []
-	  /*if(_tasks.length === 0){
-		  handleOnCancle();
-		  const _state = {...state, newLogin:true,ok:true}
-		  setState(_state);
-		  return;
-	  }*/
-	ids.forEach(i=>{
-   	  const id = parseInt(i);
-	  const _task = tasks.find(t=> t.id === id);
-	  _tasks.push(_task);
-	})
-	_tasks.forEach(t=>{
-	  switchForPayload(t)._completeYesterday(t,stateHelpers);
-	})
-	
+    const _tasks = [];
 
-	const nonCompleted = tasks.filter(t=>!_tasks.includes(t));
+    ids.forEach((i) => {
+      const id = parseInt(i);
+      const _task = tasks.find((t) => t.id === id);
+      _tasks.push(_task);
+    });
+    _tasks.forEach((t) => {
+      switchForPayload(t).completeYesterday(stateHelpers);
+    });
 
- 	nonCompleted.forEach(t=>{
-	  handleOnNewDay(t);
-	})
-	handleOnCancle()
-	const _state = {...state,newLogin:true, ok:true}  
-	setState(_state);
-  }
-  
-  const handleOnStreakColor = (task) => {
-        const s = task.streak;
-        let color = "is-info";
-	if(s <= -5)color = "is-danger"
-	else if(s < 0 && s > -5)color = "is-link"
-        else if(s === 0){}
-        else if(s >= 5 && s < 10)color = "is-primary"
-	else if(s >= 10)color = "is-success"
-        return color;
+    const nonCompleted = tasks.filter((t) => !_tasks.includes(t));
+
+    // * Handles non-checked Tasks
+    nonCompleted.forEach((t) => {
+      switchForPayload(t).reset();
+    });
+    // * Removes Modal
+    handleOnCancle();
+
+    // * Update Last Login
+    fetch(`${uri.domain}/api/player/update/lastlogin`)
+      .then((res) => res.json())
+      .then((docs) => console.log(docs));
   };
-  const handleCompleteColor = task => {
-  	const { timestamps } = task;
-	const last = timestamps[timestamps.length - 1];
-	const {payload, key} = last;
-	if(new Date(key).getDate() === new Date().getDate() && payload === "onComplete"){
-		return ""	
-	}else{
-		return " is-outlined"
-	}
-	
-  }
-  const handleFailColor = task => {
-  	const { timestamps } = task;
-	const last = timestamps[timestamps.length - 1 ];
-	const { payload, key } = last;
-	if(new Date(key).getDate() === new Date().getDate() && payload === "onFail"){
-		return "";
-	}else{
-		return " is-outlined";
-	}
-  }
 
+  const handleOnStreakColor = (task) => {
+    const s = task.streak;
+    let color = "is-info";
+    if (s <= -5) color = "is-danger";
+    else if (s < 0 && s > -5) color = "is-link";
+    else if (s === 0) {
+    } else if (s >= 5 && s < 10) color = "is-primary";
+    else if (s >= 10) color = "is-success";
+    return color;
+  };
+  const handleCompleteColor = (task) => {
+    const { timestamps } = task;
+    const last = timestamps[timestamps.length - 1];
+    const { payload, key } = last;
+    if (
+      new Date(key).getDate() === new Date().getDate() &&
+      payload === "onComplete"
+    ) {
+      return "";
+    } else {
+      return " is-outlined";
+    }
+  };
+  const handleFailColor = (task) => {
+    const { timestamps } = task;
+    const last = timestamps[timestamps.length - 1];
+    const { payload, key } = last;
+    if (
+      new Date(key).getDate() === new Date().getDate() &&
+      payload === "onFail"
+    ) {
+      return "";
+    } else {
+      return " is-outlined";
+    }
+  };
 
-  const handleOnReturn = task => {
+  const handleOnReturn = (task) => {
     const _props = {
       task: task,
       onComplete: () => {
@@ -297,7 +303,6 @@ const Tasks = props => {
       onStreakColor: handleOnStreakColor,
       onCompleteColor: handleCompleteColor,
       onFailColor: handleFailColor,
-
     };
     const { payload, id } = task;
     let _task;
@@ -331,11 +336,18 @@ const Tasks = props => {
   };
   return (
     <div className="container is-widescreen">
-      {tasks.map(t => handleOnReturn(t)
-      )}
-	<CreateModal onAdd={handleOnAdd}/>
-	<Fab  aria-label="Add" />
-      <NewDayCheck tasks={tasks} onComplete={handleOnComplete} onCancle={handleOnCancle} onCheckYesterday={handleOnCheckYesterday} onCompleteYesterday={handleOnCompleteYesterday} onNewDay={handleOnNewDay} isNewDay={handleIsNewDay}/>
+      {tasks.map((t) => handleOnReturn(t))}
+      <CreateModal onAdd={handleOnAdd} />
+      <Fab aria-label="Add" />
+      <NewDayCheck
+        tasks={tasks}
+        onComplete={handleOnComplete}
+        onCancle={handleOnCancle}
+        onCheckYesterday={handleOnCheckYesterday}
+        onCompleteYesterday={handleOnCompleteYesterday}
+        onNewDay={handleOnNewDay}
+        isNewDay={handleIsNewDay}
+      />
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { config } from "../../config"
+import { config } from "../../config";
 const UserContext = React.createContext({});
 const { uri } = config;
 
@@ -44,10 +44,13 @@ const UserProvider = (props) => {
           matches: _matches,
           opponents: _opponents,
         });
-      }else{
-      	if(window.location.pathname !== "/login"){
-		window.location = "/login"
-	}
+      } else {
+        if (window.location.pathname !== "/login") {
+          if (window.location.pathname === "/createAccount") {
+          } else {
+            window.location = "/login";
+          }
+        }
       }
     }
 
@@ -127,57 +130,43 @@ const UserProvider = (props) => {
   //IT WORKS OKAY!
   //LEAVE IT PLEASE!!!
 
-    function updateTasks(newTasks) {
+  function updateTasks(newTasks) {
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newTasks),
+    };
+    const url = `${uri.domain}/api/task/update`;
+    fetch(url, options);
+  }
+
+  useEffect(() => {
+    if (x) {
+      updateTasks(state.player.tasks);
+
+      return;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.player.tasks]);
+
+  useEffect(() => {
+    if (state.highscoreIsOk) {
+      const url = `${uri.domain}/api/player/update/highscore`;
       const options = {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(newTasks),
+        body: JSON.stringify({ highscore: player.highscore }),
       };
-      const url = `${uri.domain}/api/task/update`;
       fetch(url, options);
-    }
-
-  useEffect(() => {
-
-    if (x) {
-      updateTasks(tasks);
-
+    } else {
       return;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tasks]);
-
-  useEffect(() => {
-    if (state.newLogin === true) {
-      const url = `${uri.domain}/api/player/update/lastlogin`;
-      fetch(url)
-      .then(res=>res.json())
-      .then(something => updateTasks(tasks))
-
-      return;
-    }
-    return;
-	  // eslint-disable-next-line
-  }, [state.newLogin]);
-
-  useEffect(()=>{
-	  if(state.highscoreIsOk){
-		  const url = `${uri.domain}/api/player/update/highscore`
-		  const options = {
-			  method: "POST",
-			  headers: {
-			  "Content-Type":"application/json"
-			  },
-			  body: JSON.stringify({highscore:player.highscore})
-		  }
-		  fetch(url,options)
-	  }else{
-		  return;
-	  }
-	  // eslint-disable-next-line
-  },[player.highscore])
+    // eslint-disable-next-line
+  }, [player.highscore]);
   return (
     <UserContext.Provider value={{ state, setState }}>
       {children}

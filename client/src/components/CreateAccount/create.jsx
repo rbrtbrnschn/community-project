@@ -1,5 +1,5 @@
-import React, { useRef } from "react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React, { useRef, useState, useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { config } from "../../config";
 const { uri } = config;
 const Create = () => {
@@ -7,6 +7,23 @@ const Create = () => {
   const usernameRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
+
+  const [state, setState] = useState({
+    errs: {
+      username: false,
+      email: false,
+      password: false,
+    },
+    errMsg: {
+      username: "",
+      email: "",
+      password: "",
+    },
+  });
+  useEffect(() => {
+    //
+  }, []);
+
   const handleOnSubmit = () => {
     // Refs
     const fullName = fullNameRef.current.value;
@@ -29,7 +46,7 @@ const Create = () => {
           fullName: fullName,
           username: validUsername,
           email: validEmail,
-          password: validPassword
+          password: validPassword,
         };
         createUser(user);
       } catch (err) {
@@ -48,7 +65,7 @@ const Create = () => {
           errs.push("Username cannot have spaces.");
         }
         if (errs.length > 0) return;
-	      const url = uri.domain+"/api/player/find/username/" + username;
+        const url = uri.domain + "/api/player/find/username/" + username;
         const response = await fetch(url);
         const data = await response.json();
         if (data.status === 404) {
@@ -80,7 +97,7 @@ const Create = () => {
           errs.push("Too short.");
         }
         if (errs.length > 0) return;
-	      const url = uri.domain + "/api/user/find/email/" + email.toLowerCase();
+        const url = uri.domain + "/api/user/find/email/" + email.toLowerCase();
         const response = await fetch(url);
         const data = await response.json();
         if (data.status === 404) {
@@ -109,7 +126,7 @@ const Create = () => {
     }
     async function createUser(user) {
       let err = false;
-      Object.values(user).forEach(stuff => {
+      Object.values(user).forEach((stuff) => {
         if (stuff === undefined) {
           err = true;
         }
@@ -117,15 +134,15 @@ const Create = () => {
       const options = {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(user)
+        body: JSON.stringify(user),
       };
       if (err) {
         console.log("Input was wrong");
         return;
       }
-      const url = uri.domain + "/api/user/new"
+      const url = uri.domain + "/api/user/new";
       const response = await fetch(url, options);
       const data = await response.json();
       return data;
@@ -146,9 +163,9 @@ const Create = () => {
                 placeholder="full name"
                 ref={fullNameRef}
               ></input>
-	      <span className="icon is-left">
-      		<FontAwesomeIcon icon="user" />	
-	      </span>
+              <span className="icon is-left">
+                <FontAwesomeIcon icon="user" />
+              </span>
             </div>
           </div>
           <div className="field">
@@ -159,10 +176,17 @@ const Create = () => {
                 placeholder="username"
                 ref={usernameRef}
               ></input>
-	      <span className="icon is-left">
-      		<FontAwesomeIcon icon="user" />	
-	      </span>
+              <span className="icon is-left">
+                <FontAwesomeIcon icon="user" />
+              </span>
             </div>
+            {state.errs.username ? (
+              <p class="help is-success is-pulled-left">
+                This username is available
+              </p>
+            ) : (
+              ""
+            )}
           </div>
           <div className="field">
             <div className="control has-icons-left">
@@ -172,10 +196,17 @@ const Create = () => {
                 placeholder="email"
                 ref={emailRef}
               ></input>
-	      <span className="icon is-left">
-      		<FontAwesomeIcon icon="envelope" />	
-	      </span>
+              <span className="icon is-left">
+                <FontAwesomeIcon icon="envelope" />
+              </span>
             </div>
+            {state.errs.email ? (
+              <p class="help is-success is-pulled-left">
+                This email is available
+              </p>
+            ) : (
+              ""
+            )}
           </div>
           <div className="field">
             <div className="control has-icons-left">
@@ -185,16 +216,27 @@ const Create = () => {
                 placeholder="password"
                 ref={passwordRef}
               ></input>
-	      <span className="icon is-left">
-      		<FontAwesomeIcon icon="lock" />	
-	      </span>
+              <span className="icon is-left">
+                <FontAwesomeIcon icon="lock" />
+              </span>
             </div>
+            {state.errs.password ? (
+              <p class="help is-success is-pulled-left">
+                This password is available
+              </p>
+            ) : (
+              ""
+            )}
           </div>
         </div>
         <div className="column is-third"></div>
       </div>
 
-      <input className="button is-danger" type="submit" onClick={handleOnSubmit}></input>
+      <input
+        className="button is-danger"
+        type="submit"
+        onClick={handleOnSubmit}
+      ></input>
     </div>
   );
 };
