@@ -122,6 +122,9 @@ class Streak extends Task {
     stamp.streak = this.streak;
     return stamp;
   }
+  _cleanUp() {
+    delete this.helpers;
+  }
   reset() {
     const { key, payload } = this.timestamps
       ? this.timestamps[this.timestamps.length - 1]
@@ -145,11 +148,7 @@ class Streak extends Task {
         this.failYesterday();
       }
     }
-    if (this.helpers) {
-      console.log("has helpers");
-      this.helpers.setTask(this);
-    }
-    console.log("its a streak:", this);
+
     return this;
   }
   create(setup: streakCreation) {
@@ -171,6 +170,7 @@ class Streak extends Task {
       if (this.helpers) {
         this.helpers.setTask(this);
       }
+      this._cleanUp();
       return this;
     }
   }
@@ -183,34 +183,35 @@ class Streak extends Task {
     }
     this.isComplete = false;
     this._stamp("onFail", false, Date.now() - 86400000);
-    if (this.helpers) {
-      this.helpers.setTask(this);
-    }
+    this._cleanUp();
     return this;
   }
   complete(helpers?: any) {
     if (!this.isComplete) {
-      this.streak++;
+      if (this.streak < 0) {
+        this.streak = 1;
+      } else {
+        this.streak++;
+      }
       // ! Typescript Error
       this.isComplete = true;
       this._stamp("onComplete", true);
       if (this.helpers) {
         this.helpers.setTask(this);
       }
+      this._cleanUp();
       return this;
     }
   }
   completeYesterday(helpers?: any) {
-    this.streak++;
+    if (this.streak < 0) {
+      this.streak = 1;
+    } else {
+      this.streak++;
+    }
     this.isComplete = false;
     this._stamp("onComplete", true, Date.now() - 86400000);
-    if (helpers) {
-      console.log("helpers", helpers);
-      helpers.setTask(this);
-    } else if (this.helpers) {
-      console.log("this.helpers", this.helpers);
-      this.helpers.setTask(this);
-    }
+    this._cleanUp();
     return this;
   }
 }

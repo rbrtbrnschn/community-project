@@ -21,24 +21,22 @@ const Tasks = (props) => {
 
   //! State Helpers
   const setTasks = (newTasks) => {
-    console.log("newTasks:", newTasks);
     const _state = {
       ...state,
       player: { ...state.player, tasks: newTasks },
       ok: true,
     };
-    console.log("new state:", _state);
+    //console.log("new state:", _state);
     setState(_state);
   };
 
   const setTask = (task) => {
     if (task.helpers) delete task.helpers;
-    console.log("setTask:", task);
+    //console.log("setTask:", task);
     let _tasks = [...tasks];
     const { id } = task;
     const index = _tasks.findIndex((t) => t.id === id);
     _tasks[index] = task;
-    console.log(_tasks);
     setTasks(_tasks);
   };
 
@@ -211,23 +209,38 @@ const Tasks = (props) => {
   };
 
   const handleOnCheckYesterday = (ids) => {
+    const _order = tasks.map((t) => t.id);
+    const toBeReturned = [];
     const _tasks = [];
-
+    const handledTasks = [];
     ids.forEach((i) => {
       const id = parseInt(i);
       const _task = tasks.find((t) => t.id === id);
       _tasks.push(_task);
     });
     _tasks.forEach((t) => {
-      switchForPayload(t).completeYesterday(stateHelpers);
+      const handledTask = switchForPayload(t).completeYesterday();
+      handledTasks.push(handledTask);
     });
 
     const nonCompleted = tasks.filter((t) => !_tasks.includes(t));
 
     // * Handles non-checked Tasks
     nonCompleted.forEach((t) => {
-      switchForPayload(t).reset();
+      const handledTask = switchForPayload(t).reset();
+      handledTasks.push(handledTask);
     });
+
+    // * Rearrange To Prior Order
+    handledTasks.map((t) => {
+      var index = _order.findIndex((o) => o === t.id);
+      toBeReturned[index] = t;
+    });
+
+    // * Set State
+    //console.log(toBeReturned);
+    setTasks(toBeReturned);
+
     // * Removes Modal
     handleOnCancle();
 
