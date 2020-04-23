@@ -3,6 +3,7 @@ import UserContext from "../../contexts/UserContext";
 
 const NewDayCheck = (props) => {
   const context = React.useContext(UserContext);
+  const { switchForPayload } = props;
   const { state } = context;
   const { player } = state;
   const { lastLogin, tasks } = player;
@@ -13,11 +14,25 @@ const NewDayCheck = (props) => {
   useEffect(() => {
     const isNew = isNewDay();
     if (isNew) {
-      const checksDiv = document.getElementById("checks");
+      //const checksDiv = document.getElementById("checks");
 
-      if (isNew && tasks.length === 0) {
-        onCheckYesterday(checks);
-        return false;
+      let needCheck = false;
+      tasks.forEach((t) => {
+        if (!needCheck) {
+          const isNeeded = switchForPayload(t)._needCheck();
+          needCheck = isNeeded;
+        } else {
+        }
+      });
+
+      //* If No Check Is Necessary
+      if (!needCheck) {
+        return onCheckYesterday(checks);
+      }
+
+      // * If No Tasks
+      if (tasks.length === 0) {
+        return onCheckYesterday(checks);
       }
       const modal = document.getElementById("new-day-check");
       modal.classList.add("is-active");
@@ -36,20 +51,6 @@ const NewDayCheck = (props) => {
       _checks.splice(_checks.indexOf(val), 1);
     }
     setChecks([..._checks]);
-  };
-
-  const checkAlreadyCompleted = (task) => {
-    if (task.payload === "Task") return false;
-    const lastStamp = task.timestamps[task.timestamps.length - 1];
-    const { key, payload, isComplete } = lastStamp;
-    const lastDay = new Date(key);
-    const lastDate = lastDay.getDate();
-    const toDay = new Date();
-    const toDate = toDay.getDate();
-    const yesterDate = toDate - 1;
-    if (lastDate === yesterDate && isComplete) return false;
-    if (lastDate === yesterDate && payload === "onFail") return false;
-    if (lastDate !== toDate) return true;
   };
 
   return (
@@ -72,7 +73,7 @@ const NewDayCheck = (props) => {
           <div id="checks">
             {tasks.map(
               (t) =>
-                checkAlreadyCompleted(t) && (
+                switchForPayload(t)._needCheck() && (
                   <div key={t.id + "new-day-check"}>
                     <label className="checkbox">
                       <input

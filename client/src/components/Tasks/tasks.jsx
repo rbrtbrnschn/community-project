@@ -4,7 +4,7 @@ import StreakComponent from "./streak";
 import ChallengeComponent from "./challenge";
 import HabitComponent from "./habit";
 import NewDayCheck from "./newDayCheck";
-import CreateModal from "./createModal";
+import CreateModal from "../CreateModal/createModal";
 
 import { config } from "../../config";
 import Fab from "./fab";
@@ -97,13 +97,13 @@ const Tasks = (props) => {
   //! Task Helpers
   const handleOnAdd = (setup) => {
     const task = switchForPayload(setup);
-    console.log(setup.payload, "created:", task);
+    //console.log(setup.payload, "created:", task);
     return addTask(task);
   };
 
   const handleOnComplete = (_id) => {
     const task = tasks.find((t) => t.id === _id);
-    console.log("before completion:", switchForPayload(task));
+    //console.log("before completion:", switchForPayload(task));
     switchForPayload(task).complete(task);
   };
 
@@ -218,14 +218,15 @@ const Tasks = (props) => {
       const _task = tasks.find((t) => t.id === id);
       _tasks.push(_task);
     });
+    // * Handles Checked Tasks
     _tasks.forEach((t) => {
-      const handledTask = switchForPayload(t).completeYesterday();
+      const handledTask = switchForPayload(t).completeLastInterval();
       handledTasks.push(handledTask);
     });
 
     const nonCompleted = tasks.filter((t) => !_tasks.includes(t));
 
-    // * Handles non-checked Tasks
+    // * Handles Non-Checked Tasks
     nonCompleted.forEach((t) => {
       const handledTask = switchForPayload(t).reset();
       handledTasks.push(handledTask);
@@ -238,7 +239,7 @@ const Tasks = (props) => {
     });
 
     // * Set State
-    //console.log(toBeReturned);
+    console.log("state to be:", toBeReturned);
     setTasks(toBeReturned);
 
     // * Removes Modal
@@ -251,40 +252,15 @@ const Tasks = (props) => {
   };
 
   const handleOnStreakColor = (task) => {
-    const s = task.streak;
-    let color = "is-info";
-    if (s <= -5) color = "is-danger";
-    else if (s < 0 && s > -5) color = "is-link";
-    else if (s === 0) {
-    } else if (s >= 5 && s < 10) color = "is-primary";
-    else if (s >= 10) color = "is-success";
-    return color;
+    return switchForPayload(task).transform(task)._handleStreakColor();
   };
   const handleCompleteColor = (task) => {
-    const { timestamps } = task;
-    const last = timestamps[timestamps.length - 1];
-    const { payload, key } = last;
-    if (
-      new Date(key).getDate() === new Date().getDate() &&
-      payload === "onComplete"
-    ) {
-      return "";
-    } else {
-      return " is-outlined";
-    }
+    return switchForPayload(task)
+      .transform(task)
+      ._handleButtonColor("complete");
   };
   const handleFailColor = (task) => {
-    const { timestamps } = task;
-    const last = timestamps[timestamps.length - 1];
-    const { payload, key } = last;
-    if (
-      new Date(key).getDate() === new Date().getDate() &&
-      payload === "onFail"
-    ) {
-      return "";
-    } else {
-      return " is-outlined";
-    }
+    return switchForPayload(task).transform(task)._handleButtonColor("fail");
   };
 
   const handleOnReturn = (task) => {
@@ -327,7 +303,7 @@ const Tasks = (props) => {
         _task = <HabitComponent key={id} all={_props} />;
         break;
       case "Daily":
-        _task = <TaskComponent key={id} all={_props} />;
+        _task = <StreakComponent key={id} all={_props} />;
         break;
       case "Streak":
         _task = <StreakComponent key={id} all={_props} />;
@@ -360,6 +336,7 @@ const Tasks = (props) => {
         onCompleteYesterday={handleOnCompleteYesterday}
         onNewDay={handleOnNewDay}
         isNewDay={handleIsNewDay}
+        switchForPayload={switchForPayload}
       />
     </div>
   );
