@@ -32,7 +32,7 @@
 /* For dropdown functionality */
 
 /* Same reason as for checkbox */
-.has-dropdown input[type=checkbox] {
+.has-dropdown input[type="checkbox"] {
   display: none;
 }
 /* Hide by default */
@@ -43,5 +43,5 @@
 #dropdown1:checked ~ #dropdown-content1,
 #dropdown2:checked ~ #dropdown-content2,
 #dropdown3:checked ~ #dropdown-content3 {
-    display: block;
+  display: block;
 }
