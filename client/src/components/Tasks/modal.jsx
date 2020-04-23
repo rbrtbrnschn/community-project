@@ -43,6 +43,7 @@ const Modal = (props) => {
   const handleOnChangeStreak = (event) => {
     setValues({ ...values, streak: event.target.value });
   };
+
   const processValues = (values) => {
     let keys = Object.keys(values);
     let vals = Object.values(values);
@@ -59,7 +60,7 @@ const Modal = (props) => {
 
   return (
     <div id={id + "-modal"} className="modal">
-      <div className="modal-background"></div>
+      <div className="modal-background" onClick={onCancle}></div>
       <div className="modal-card">
         <header className="modal-card-head">
           <p className="modal-card-title">{payload + "#" + id}</p>
