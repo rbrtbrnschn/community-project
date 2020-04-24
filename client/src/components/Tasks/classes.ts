@@ -367,8 +367,9 @@ class Habit extends Streak {
     this.streak = 0;
     this.setup(setup);
   }
-  //TODO Setup no reset / I Think that might just do
-  //TODO It wont, rewrite complete,fail
+  _needCheck() {
+    return false;
+  }
   reset() {
     return this;
   }

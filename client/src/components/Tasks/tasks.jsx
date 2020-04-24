@@ -1,23 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import TaskComponent from "./task";
 import StreakComponent from "./streak";
 import ChallengeComponent from "./challenge";
 import HabitComponent from "./habit";
 import NewDayCheck from "./newDayCheck";
-import CreateModal from "../CreateModal/createModal";
+import CreateModal from "../CreateModal";
 
 import { config } from "../../config";
-import Fab from "./fab";
+import Fab from "../Fab";
 import { Task, Habit, Daily, Streak, Goal, Dream, Challenge } from "./classes";
 import UserContext from "../../contexts/UserContext";
-import { stat } from "fs";
 const { uri } = config;
 
 const Tasks = (props) => {
+  // * Context | Global
   const context = React.useContext(UserContext);
   const { state, setState } = context;
   const { player } = state;
   const { tasks } = player;
+
+  // * State | Local
+  const _initialState = { filter: null };
+  const [_tasks, _setTasks] = useState(_initialState);
 
   //! State Helpers
   const setTasks = (newTasks) => {
@@ -177,6 +181,11 @@ const Tasks = (props) => {
     handleOnCancle();
   };
 
+  const handleOnSearch = (task, payload) => {
+    if (payload === null) return true;
+    return task.payload === payload;
+  };
+
   const handleIsNewDay = () => {
     const lastKey = player.lastLogin;
     const lastDay = new Date(lastKey);
@@ -321,7 +330,7 @@ const Tasks = (props) => {
       default:
         break;
     }
-    return _task;
+    return handleOnSearch(task, _tasks.filter) && _task;
   };
   return (
     <div className="container is-widescreen">

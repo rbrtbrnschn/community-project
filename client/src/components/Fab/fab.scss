@@ -1,0 +1,14 @@
+div.fab-background {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+}
+
+:focus,
+active,
+::-moz-focus-inner {
+  outline: none !important;
+  border: none !important;
+}
