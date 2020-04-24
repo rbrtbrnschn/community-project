@@ -181,9 +181,13 @@ const Tasks = (props) => {
     handleOnCancle();
   };
 
-  const handleOnSearch = (task, payload) => {
-    if (payload === null) return true;
-    return task.payload === payload;
+  const handleOnSearch = (task) => {
+    if (_tasks.filter === null) return true;
+    return task.payload === _tasks.filter;
+  };
+  const handleOnFilter = (filter) => {
+    if (filter === "All") filter = null;
+    _setTasks({ ..._tasks, filter: filter });
   };
 
   const handleIsNewDay = () => {
@@ -336,7 +340,7 @@ const Tasks = (props) => {
     <div className="container is-widescreen">
       {tasks.map((t) => handleOnReturn(t))}
       <CreateModal onAdd={handleOnAdd} />
-      <Fab aria-label="Add" />
+      <Fab aria-label="Add" onFilter={handleOnFilter} />
       <NewDayCheck
         tasks={tasks}
         onComplete={handleOnComplete}

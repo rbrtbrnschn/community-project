@@ -4,7 +4,7 @@ import bulmaCalendar from "bulma-calendar/dist/js/bulma-calendar.min.js";
 import "bulma-calendar/dist/css/bulma-calendar.min.css";
 import AddOn from "./addon";
 const CreateModal = (props) => {
-  const { onAdd } = props;
+  const { onAdd, className, onCancle } = props;
   const initialState = {
     title: "",
     notes: "",
@@ -44,6 +44,10 @@ const CreateModal = (props) => {
   };
 
   const handleOnCancle = () => {
+    if (onCancle) {
+      onCancle();
+      console.log("ran it");
+    }
     const modals = document.querySelectorAll(".modal.is-active");
     modals.forEach((m) => m.classList.remove("is-active"));
     const html = document.querySelector("html");
@@ -93,7 +97,7 @@ const CreateModal = (props) => {
     // eslint-disable-next-line
   }, [state.payload]);
   return (
-    <div id={"create-modal"} className="modal">
+    <div id={"create-modal"} className={className || "modal"}>
       <div className="modal-background" onClick={handleOnCancle}></div>
       <div className="modal-card">
         <header className="modal-card-head">
