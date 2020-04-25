@@ -190,6 +190,7 @@ const CreateModal = (props) => {
           <hr />
           <TagsInput
             color="is-link"
+            size="is-medium"
             tags={state.tags}
             onKeyDown={tagsOnKeyDown}
             onDelete={tagsOnDelete}

@@ -1,21 +1,28 @@
 import React, { useState, useEffect, useContext } from "react";
+import TagsInput from "../tagsInput";
 import "bulma-checkradio/dist/css/bulma-checkradio.min.css";
 import UserContext from "../../contexts/UserContext/UserContext";
 const Modal = (props) => {
   const { task } = props;
-  const { id, title, notes, payload } = props.task;
+  const { id, title, notes, payload, tags } = props.task;
   const { onCancle, onSaveChanges, onDelete } = props;
   const isStreak =
     task.payload === "Streak"
       ? true
       : task.payload === "Challenge"
       ? true
+      : task.payload === "Daily"
+      ? true
+      : task.payload === "Habit"
+      ? true
       : false;
+  const hasTags = tags === undefined ? [] : tags;
   const isPrivate = task.isPrivate === true ? true : false;
   let _initialValues = {
     title: title,
     notes: notes,
     isPrivate: isPrivate,
+    tags: hasTags,
   };
   if (isStreak) _initialValues.streak = task.streak;
 
@@ -27,6 +34,7 @@ const Modal = (props) => {
   useEffect(() => {
     setValues({
       isPrivate: values.isPrivate,
+      tags: values.tags,
       ...context.state.player.tasks[index],
     });
   }, [context.state.player.tasks[index]]);
@@ -58,6 +66,36 @@ const Modal = (props) => {
     return values;
   };
 
+  // ! Tags
+  const tagsOnKeyDown = (e) => {
+    const { value } = e.target;
+    const code = e.keyCode;
+    const valid = [13, 32, 188];
+    if (value === " ") {
+      e.target.value = "";
+      return;
+    }
+    if (valid.includes(code) && value) {
+      // * Key Code Is Valid
+      setValues({ ...values, tags: [...values.tags, value.toLowerCase()] });
+      // * Add Tag / Reset Input
+      e.target.value = "";
+    }
+  };
+  const tagsOnBackspace = (e) => {
+    const { value } = e.target;
+    const code = e.keyCode;
+    if (!value && code === 8) {
+      const _tags = [...values.tags];
+      _tags.pop();
+      setValues({ ...values, tags: _tags });
+    }
+  };
+  const tagsOnDelete = (i) => {
+    const _tags = [...values.tags];
+    _tags.splice(i, 1);
+    setValues({ ...values, tags: _tags });
+  };
   return (
     <div id={id + "-modal"} className="modal">
       <div className="modal-background" onClick={onCancle}></div>
@@ -101,6 +139,14 @@ const Modal = (props) => {
             />
             <label htmlFor="exampleCheckbox">Private</label>
           </div>
+          <TagsInput
+            color="is-link"
+            size="is-medium"
+            tags={values.tags || []}
+            onKeyDown={tagsOnKeyDown}
+            onDelete={tagsOnDelete}
+            onBackspace={tagsOnBackspace}
+          />
         </section>
         <footer className="modal-card-foot">
           <button

@@ -7,7 +7,7 @@ import NewDayCheck from "./newDayCheck";
 import CreateModal from "../CreateModal";
 
 import { config } from "../../config";
-import Fab from "../Fab";
+import Fab from "../fab";
 import { Task, Habit, Daily, Streak, Goal, Dream, Challenge } from "./classes";
 import UserContext from "../../contexts/UserContext";
 const { uri } = config;
