@@ -339,8 +339,7 @@ const Tasks = (props) => {
   return (
     <div className="container is-widescreen">
       {tasks.map((t) => handleOnReturn(t))}
-      <CreateModal onAdd={handleOnAdd} />
-      <Fab aria-label="Add" onFilter={handleOnFilter} />
+      <Fab aria-label="Add" onFilter={handleOnFilter} onAdd={handleOnAdd} />
       <NewDayCheck
         tasks={tasks}
         onComplete={handleOnComplete}

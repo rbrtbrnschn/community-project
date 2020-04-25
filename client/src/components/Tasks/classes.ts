@@ -257,7 +257,19 @@ class Streak extends Task {
     else if (s >= 10) color = "is-success";
     return color;
   }
+  _lastInterval(): Date {
+    const { key } = this.timestamps[this.timestamps.length - 1];
+    const now = Date.now();
+    const diff = this._daysBetween(new Date(key), new Date(now));
+    const day = 86400000;
 
+    if (diff > this.interval) {
+      this._stamp("onFail", false, key + this.interval * day);
+      return this._lastInterval();
+    } else {
+      return new Date(key);
+    }
+  }
   reset() {
     if (this._needCheck()) {
       // * Has Not Been Completed / Failed On Time
@@ -311,9 +323,8 @@ class Streak extends Task {
     } else {
       this.isComplete = false;
     }
-    const { key } = this.timestamps[this.timestamps.length - 1];
-    const nextDate = new Date(key + this.interval * 86400000);
-    this._stamp("onFail", false, nextDate.getTime());
+    const last = this._lastInterval();
+    this._stamp("onFail", false, last.getTime());
     this._cleanUp();
     return this;
   }
@@ -345,9 +356,8 @@ class Streak extends Task {
     } else {
       this.isComplete = false;
     }
-    const { key } = this.timestamps[this.timestamps.length - 1];
-    const nextDate = new Date(key + this.interval * 86400000);
-    this._stamp("onComplete", true, nextDate.getTime());
+    const last = this._lastInterval();
+    this._stamp("onComplete", true, last.getTime());
     this._cleanUp();
     return this;
   }

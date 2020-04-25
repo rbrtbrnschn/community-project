@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import TagsInput from "../tagsInput";
 import bulmaCalendar from "bulma-calendar/dist/js/bulma-calendar.min.js";
 import "bulma-calendar/dist/css/bulma-calendar.min.css";
 import AddOn from "./addon";
@@ -10,6 +11,7 @@ const CreateModal = (props) => {
     notes: "",
     payload: "Task",
     interval: 1,
+    tags: [],
   };
   const [state, setState] = useState(initialState);
 
@@ -19,6 +21,7 @@ const CreateModal = (props) => {
       setup.start = new Date(setup.start);
       setup.end = new Date(setup.end);
     }
+    console.log("props:", props);
     onAdd(setup);
     setState(initialState);
   };
@@ -55,18 +58,38 @@ const CreateModal = (props) => {
     return;
   };
 
-  const handleDescription = (title, desc) => {
-    return (
-      <section className="hero has-text-justified">
-        <div className="hero-body">
-          <div className="container">
-            <h1 className="title is-capitalized">{title}</h1>
-            <h2 className="subtitle">{desc}</h2>
-          </div>
-        </div>
-      </section>
-    );
+  // ! Tags
+  const tagsOnKeyDown = (e) => {
+    const { value } = e.target;
+    const code = e.keyCode;
+    const valid = [13, 32, 188];
+    const backspace = 8;
+    if (value === " ") {
+      e.target.value = "";
+      return;
+    }
+    if (valid.includes(code) && value) {
+      // * Key Code Is Valid
+      setState({ ...state, tags: [...state.tags, value.toLowerCase()] });
+      // * Add Tag / Reset Input
+      e.target.value = "";
+    }
   };
+  const tagsOnBackspace = (e) => {
+    const { value } = e.target;
+    const code = e.keyCode;
+    if (!value && code === 8) {
+      const _tags = [...state.tags];
+      _tags.pop();
+      setState({ ...state, tags: _tags });
+    }
+  };
+  const tagsOnDelete = (i) => {
+    const _tags = [...state.tags];
+    _tags.splice(i, 1);
+    setState({ ...state, tags: _tags });
+  };
+
   React.useEffect(() => {
     var calendars = bulmaCalendar.attach('[type="date"]', {
       color: "danger",
@@ -163,6 +186,14 @@ const CreateModal = (props) => {
               onChangeDate: null,
             }}
             task={state}
+          />
+          <hr />
+          <TagsInput
+            color="is-link"
+            tags={state.tags}
+            onKeyDown={tagsOnKeyDown}
+            onDelete={tagsOnDelete}
+            onBackspace={tagsOnBackspace}
           />
         </section>
         <footer className="modal-card-foot">

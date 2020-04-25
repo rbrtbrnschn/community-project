@@ -9,7 +9,7 @@ import "react-tiny-fab/dist/styles.css";
 import "./fab.scss";
 
 const FabButton = (props) => {
-  const { onFilter } = props;
+  const { onFilter, onAdd } = props;
 
   const _initalState = {
     isActive: null, //! DO NOT CHANGE TO FALSE
@@ -156,6 +156,7 @@ const FabButton = (props) => {
           onCancle={() => {
             handleAction1(setState);
           }}
+          onAdd={onAdd}
         />
       ) : state.action2 ? (
         <Filter

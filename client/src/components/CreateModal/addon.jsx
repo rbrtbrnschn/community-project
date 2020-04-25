@@ -3,7 +3,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Description from "./description";
 const AddOn = (props) => {
   const { helpers, task } = props;
+  const { getTags } = helpers;
   const { payload } = task;
+
   let div = <div></div>;
 
   const inputInterval = (
