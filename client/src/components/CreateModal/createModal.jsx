@@ -43,7 +43,11 @@ const CreateModal = (props) => {
 
   const handleOnChangeInterval = (e) => {
     const { value } = e.target;
-    setState({ ...state, interval: value });
+    const parsed = parseInt(value);
+    console.log(parsed);
+    if (parsed === parsed) {
+      setState({ ...state, interval: parsed });
+    }
   };
 
   const handleOnCancle = () => {
@@ -70,7 +74,7 @@ const CreateModal = (props) => {
     }
     if (valid.includes(code) && value) {
       // * Key Code Is Valid
-      setState({ ...state, tags: [...state.tags, value.toLowerCase()] });
+      setState({ ...state, tags: [...state.tags, value.toLowerCase().trim()] });
       // * Add Tag / Reset Input
       e.target.value = "";
     }
@@ -91,34 +95,36 @@ const CreateModal = (props) => {
   };
 
   React.useEffect(() => {
-    var calendars = bulmaCalendar.attach('[type="date"]', {
-      color: "danger",
-      isRange: true,
-      allowSameDayRange: false,
-      showButtons: true,
-      displayMode: "dialog",
-      labelFrom: "From",
-      labelTo: "To",
-    });
-    calendars.forEach((calendar) => {
-      // Add listener to date:selected event
-      calendar.on("date:selected", (date) => {
-        console.log(date);
+    if (state.payload === "Challenge") {
+      var calendars = bulmaCalendar.attach('[type="date"]', {
+        color: "danger",
+        isRange: true,
+        allowSameDayRange: false,
+        showButtons: true,
+        displayMode: "dialog",
+        labelFrom: "From",
+        labelTo: "To",
       });
-    });
+      calendars.forEach((calendar) => {
+        // Add listener to date:selected event
+        calendar.on("date:selected", (date) => {
+          console.log(date);
+        });
+      });
 
-    // To access to bulmaCalendar instance of an element
-    const element = document.querySelector("#date-picker");
-    if (element) {
-      // bulmaCalendar instance is available as element.bulmaCalendar
-      element.bulmaCalendar.on("select", (datepicker) => {
-        const datesStr = datepicker.data.value();
-        const dates = datesStr.split(" - ");
-        setState({ ...state, start: dates[0], end: dates[1] });
-      });
+      // To access to bulmaCalendar instance of an element
+      const element = document.querySelector("#date-picker");
+      if (element) {
+        // bulmaCalendar instance is available as element.bulmaCalendar
+        element.bulmaCalendar.on("select", (datepicker) => {
+          const datesStr = datepicker.data.value();
+          const dates = datesStr.split(" - ");
+          setState({ ...state, start: dates[0], end: dates[1] });
+        });
+      }
     }
     // eslint-disable-next-line
-  }, [state.payload]);
+  }, [state]);
   return (
     <div id={"create-modal"} className={className || "modal"}>
       <div className="modal-background" onClick={handleOnCancle}></div>

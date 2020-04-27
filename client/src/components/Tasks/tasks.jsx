@@ -10,6 +10,7 @@ import { config } from "../../config";
 import Fab from "../fab";
 import { Task, Habit, Daily, Streak, Goal, Dream, Challenge } from "./classes";
 import UserContext from "../../contexts/UserContext";
+import { useEffect } from "react";
 const { uri } = config;
 
 const Tasks = (props) => {
@@ -20,8 +21,8 @@ const Tasks = (props) => {
   const { tasks } = player;
 
   // * State | Local
-  const _initialState = { filter: null };
-  const [_tasks, _setTasks] = useState(_initialState);
+  const _initialState = { check: (task) => true };
+  const [filter, setFilter] = useState(_initialState);
 
   //! State Helpers
   const setTasks = (newTasks) => {
@@ -181,14 +182,21 @@ const Tasks = (props) => {
     handleOnCancle();
   };
 
-  const handleOnSearch = (task) => {
-    if (_tasks.filter === null) return true;
-    return task.payload === _tasks.filter;
+  const handleOnSearch = () => {
+    const { filter } = filter;
+    return true;
+    /*if (!filter) return true;
+    else {
+      if (filter(tasks)) return true;
+      else false;
+    }*/
   };
-  const handleOnFilter = (filter) => {
-    if (filter === "All") filter = null;
-    _setTasks({ ..._tasks, filter: filter });
+
+  const handleOnFilter = (check) => {
+    //TODO _setTasks({filter:YOUR_EXPRESSION_HERE})
+    setFilter({ ...filter, check: check });
   };
+  //TODO filter specfific function locally in Filter
 
   const handleIsNewDay = () => {
     const lastKey = player.lastLogin;
@@ -300,7 +308,7 @@ const Tasks = (props) => {
       onSaveChanges: handleOnSaveChanges,
       onArchive: handleOnArchive,
       onCheckYesterday: handleOnCheckYesterday,
-      onNewDay: handleOnNewDay,
+
       isNewDay: handleIsNewDay,
       onStreakColor: handleOnStreakColor,
       onCompleteColor: handleCompleteColor,
@@ -334,8 +342,9 @@ const Tasks = (props) => {
       default:
         break;
     }
-    return handleOnSearch(task, _tasks.filter) && _task;
+    return filter.check(task) && _task;
   };
+
   return (
     <div className="container is-widescreen">
       {tasks.map((t) => handleOnReturn(t))}
@@ -346,7 +355,6 @@ const Tasks = (props) => {
         onCancle={handleOnCancle}
         onCheckYesterday={handleOnCheckYesterday}
         onCompleteYesterday={handleOnCompleteYesterday}
-        onNewDay={handleOnNewDay}
         isNewDay={handleIsNewDay}
         switchForPayload={switchForPayload}
       />

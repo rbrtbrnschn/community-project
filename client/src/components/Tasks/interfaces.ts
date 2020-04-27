@@ -12,7 +12,7 @@ interface taskCreation {
   proto?: Boolean;
 }
 interface streakCreation extends taskCreation {
-  inerval?: number;
+  interval?: number;
   streak?: number;
   strikes?: number;
 }

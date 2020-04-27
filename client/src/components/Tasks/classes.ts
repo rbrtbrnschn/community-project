@@ -128,7 +128,7 @@ class Streak extends Task {
   strikes: number;
   constructor(setup: streakCreation) {
     super(setup);
-    this.interval = 1;
+    this.interval = setup.interval as number;
     this.streak = 0;
     this.strikes = 0;
     this.setup(setup);
@@ -409,6 +409,7 @@ class Challenge extends Streak {
     this.setup(setup);
   }
   create(setup: challengeCreation) {
+    if (setup.interval) this.interval = setup.interval;
     this._isOngoing();
     return this;
   }

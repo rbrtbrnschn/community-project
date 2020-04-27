@@ -94,6 +94,39 @@ const FabButton = (props) => {
     fab.classList.add(add);
   }, [state.isActive]);
 
+  // * Listener Action1
+  useEffect(() => {
+    const html = document.querySelector("html");
+    if (state.action1) {
+      const modal = document.getElementById("create-modal");
+      modal.classList.add("is-active");
+      html.classList.add("is-clipped");
+    } else {
+      html.classList.remove("is-clipped");
+    }
+  }, [state.action1]);
+  // * Listener Action2
+  useEffect(() => {
+    const html = document.querySelector("html");
+    if (state.action2) {
+      const modal = document.getElementById("filter-modal");
+      modal.classList.add("is-active");
+      html.classList.add("is-clipped");
+    } else {
+      html.classList.remove("is-clipped");
+    }
+  }, [state.action2]);
+  // * Listener Action3
+  useEffect(() => {
+    const html = document.querySelector("html");
+    if (state.action3) {
+      const modal = document.getElementById("search-modal");
+      modal.classList.add("is-active");
+      html.classList.add("is-clipped");
+    } else {
+      html.classList.remove("is-clipped");
+    }
+  }, [state.action3]);
   return (
     <React.Fragment>
       <Fab
@@ -108,11 +141,6 @@ const FabButton = (props) => {
         <Action
           style={{ backgroundColor: "#3273dc" }}
           onClick={() => {
-            //window.location = "/createTask";
-            const modal = document.getElementById("create-modal");
-            const html = document.querySelector("html");
-            //modal.classList.add("is-active");
-            //html.classList.add("is-clipped");
             const _state = handleAction1();
             _state.isActive = !_state.isActive;
             setState(_state);

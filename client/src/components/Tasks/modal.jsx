@@ -77,7 +77,10 @@ const Modal = (props) => {
     }
     if (valid.includes(code) && value) {
       // * Key Code Is Valid
-      setValues({ ...values, tags: [...values.tags, value.toLowerCase()] });
+      setValues({
+        ...values,
+        tags: [...values.tags, value.toLowerCase().trim()],
+      });
       // * Add Tag / Reset Input
       e.target.value = "";
     }
