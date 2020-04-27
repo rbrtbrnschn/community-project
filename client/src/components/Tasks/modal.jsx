@@ -55,14 +55,24 @@ const Modal = (props) => {
   const processValues = (values) => {
     let keys = Object.keys(values);
     let vals = Object.values(values);
-
-    for (let v in vals) {
-      const parsed = parseInt(vals[v]);
-      // eslint-disable-next-line
-      if (parsed === parsed) {
-        values[keys[v]] = parsed;
+    const valid = ["title", "notes", "payload"];
+    const invalid = ["start", "end"];
+    for (let [key, value] of Object.entries(values)) {
+      if (typeof value === "string" && !valid.includes(key)) {
+        values[key] = parseInt(value);
+      }
+      // * Safety Precaution - Don't ask
+      else if (typeof value === "string" && invalid.includes(key)) {
+        values[key] = value.toString();
       }
     }
+    //for (let v in vals) {
+    //  const parsed = parseInt(vals[v]);
+    //  // eslint-disable-next-line
+    //  if (parsed === parsed) {
+    //    values[keys[v]] = parsed;
+    //  }
+    //}
     return values;
   };
 

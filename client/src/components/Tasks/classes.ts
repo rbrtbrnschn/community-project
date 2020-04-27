@@ -402,7 +402,6 @@ class Challenge extends Streak {
   start: Date | number | any;
   end: Date | number | any;
   isOngoing: Boolean;
-  rip: any;
   constructor(setup: challengeCreation) {
     super(setup);
     this.isOngoing = false;

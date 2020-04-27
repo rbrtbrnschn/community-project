@@ -18,8 +18,8 @@ const CreateModal = (props) => {
   const handleOnClick = () => {
     const setup = { ...state };
     if (setup.start && setup.end) {
-      setup.start = new Date(setup.start);
-      setup.end = new Date(setup.end);
+      setup.start = new Date(setup.start).getTime();
+      setup.end = new Date(setup.end).getTime();
     }
     console.log("props:", props);
     onAdd(setup);
@@ -119,7 +119,10 @@ const CreateModal = (props) => {
         element.bulmaCalendar.on("select", (datepicker) => {
           const datesStr = datepicker.data.value();
           const dates = datesStr.split(" - ");
-          setState({ ...state, start: dates[0], end: dates[1] });
+          const start = new Date(dates[0]).getTime();
+          const end = new Date(dates[1]).getTime();
+          console.log(start, end, dates);
+          setState({ ...state, start: start, end: end });
         });
       }
     }
