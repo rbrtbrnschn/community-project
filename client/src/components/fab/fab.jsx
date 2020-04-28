@@ -177,7 +177,6 @@ const FabButton = (props) => {
       ) : (
         ""
       )}
-
       {state.action1 ? (
         <CreateModal
           className="modal is-active"
@@ -186,14 +185,27 @@ const FabButton = (props) => {
           }}
           onAdd={onAdd}
         />
-      ) : state.action2 ? (
+      ) : (
+        ""
+      )}{" "}
+      {state.action2 ? (
         <Filter
+          className="is-active"
           onCancle={() => {
             handleAction2(setState);
           }}
           onFilter={onFilter}
         />
-      ) : state.action3 ? (
+      ) : (
+        <Filter
+          className=""
+          onCancle={() => {
+            handleAction2(setState);
+          }}
+          onFilter={onFilter}
+        />
+      )}
+      {state.action3 ? (
         <Search
           onCancle={() => {
             handleAction3(setState);

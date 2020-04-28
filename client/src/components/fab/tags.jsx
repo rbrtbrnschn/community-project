@@ -16,7 +16,6 @@ const PayloadTags = (props) => {
     ? JSON.parse(storedFilteredTags)
     : null;
   if (parsedFilteredTags && parsedFilteredTags.ok) {
-    parsedFilteredTags.ok = !parsedFilteredTags.ok;
     lastSession = { ...parsedFilteredTags };
   }
 
@@ -31,6 +30,10 @@ const PayloadTags = (props) => {
   // * Use Either lastSession Or initialState Depending On Availability
   const _state = lastSession ? lastSession : initialState; // use last session if available
   const [state, setState] = useState(_state);
+  const usedSession =
+    state === lastSession ? true : state === initialState ? false : null;
+  console.log("usedSession:", usedSession);
+  console.log("lastsession:", lastSession);
 
   // * State Listener Handles onChange
   useEffect(() => {

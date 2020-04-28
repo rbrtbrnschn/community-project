@@ -2,10 +2,10 @@ import React from "react";
 import Tags from "./tags";
 
 const Filter = (props) => {
-  const { onCancle, onFilter } = props;
+  const { onCancle, onFilter, className } = props;
 
   return (
-    <div className="modal is-active" id="filter-modal">
+    <div className={`modal ${className}`} id="filter-modal">
       <div className="modal-background" onClick={onCancle}></div>
       <div className="modal-card">
         <header className="modal-card-head">
