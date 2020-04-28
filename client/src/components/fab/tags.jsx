@@ -55,14 +55,21 @@ const PayloadTags = (props) => {
     onFilter((task) => {
       let judge = [];
       // * true When >= 1 Tag Matches
-      if (task.tags) {
-        if (mutableTags.length === 0) judge.push(true);
-        else if (task.tags.some((t) => mutableTags.indexOf(t) >= 0)) {
-          judge.push(true);
-          //return true;
-        } else {
-          judge.push(false);
-        }
+      // * Handle Mutable Tags
+      //if (task.tags) {
+      //  if (mutableTags.length === 0) judge.push(true);
+      //  else if (task.tags.some((t) => mutableTags.indexOf(t) >= 0)) {
+      //    judge.push(true);
+      //    //return true;
+      //  } else {
+      //    judge.push(false);
+      //  }
+      //}
+
+      if (mutableTags.length > 0) {
+        mutableTags.forEach((t) => {
+          judge.push(handleMutableTags(task, t));
+        });
       }
 
       // * true When Payload Is Included In selectedPayloads
@@ -92,7 +99,7 @@ const PayloadTags = (props) => {
     });
   }, [state]);
 
-  // *
+  // * Handle Immutable Tags / Default
   const handleImmutableTags = (task, tag) => {
     let boo = true;
     switch (tag.value) {
@@ -127,6 +134,17 @@ const PayloadTags = (props) => {
       } else return false;
     } else return true;
   };
+
+  // * Handle Mutable Tags / User Created
+  const handleMutableTags = (task, tag) => {
+    if (tag) {
+      if (task.tags) {
+        if (task.tags.includes(tag)) return true;
+        else return false;
+      } else return false;
+    } else return true;
+  };
+
   // ! Custom Tag Helpers
   const handleAddTag = (v) => {
     const _state = { ...state };
