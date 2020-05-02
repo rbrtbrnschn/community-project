@@ -313,6 +313,7 @@ const Tasks = (props) => {
       onStreakColor: handleOnStreakColor,
       onCompleteColor: handleCompleteColor,
       onFailColor: handleFailColor,
+      switchForPayload : switchForPayload,
     };
     const { payload, id } = task;
     let _task;
