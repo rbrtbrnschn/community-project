@@ -257,7 +257,7 @@ class Streak extends Task {
     else if (s >= 10) color = "is-success";
     return color;
   }
-  _lastInterval(): Date {
+  _lastInterval(type: String): Date {
     const { key } = this.timestamps[this.timestamps.length - 1];
     const now = Date.now();
     const diff = this._daysBetween(new Date(key), new Date(now));
@@ -265,8 +265,19 @@ class Streak extends Task {
 
     if (diff > this.interval) {
       this._stamp("onFail", false, key + this.interval * day);
-      return this._lastInterval();
+      return this._lastInterval(type);
     } else {
+
+      // * Incase I Forget To Give A Parameter
+      if(!type)return new Date(key);
+      
+      // * Fixes Last Stamp
+      if(this._daysBetween(new Date(key),new Date()) === 1){
+        const boo = type === "onComplete" ? true : false;
+        this.timestamps[this.timestamps.length - 1].payload = type;
+        this.timestamps[this.timestamps.length - 1].isComplete = boo;
+        return new Date();
+      }
       return new Date(key);
     }
   }
@@ -323,8 +334,8 @@ class Streak extends Task {
     } else {
       this.isComplete = false;
     }
-    const last = this._lastInterval();
-    this._stamp("onFail", false, last.getTime());
+    this._lastInterval("onFail");
+    //this._stamp("onFail", false, last.getTime());
     this._cleanUp();
     return this;
   }
@@ -356,8 +367,8 @@ class Streak extends Task {
     } else {
       this.isComplete = false;
     }
-    const last = this._lastInterval();
-    this._stamp("onComplete", true, last.getTime());
+    this._lastInterval("onComplete");
+    //this._stamp("onComplete", true, last.getTime());
     this._cleanUp();
     return this;
   }

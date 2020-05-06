@@ -9,17 +9,30 @@ const ChallengeComponent = (props) => {
 	const { all } = props;
 	const { task, onDelete, onComplete, onEdit, onCancle, onSaveChanges, onArchive, onFail, onStreakColor, onCompleteColor, onFailColor, switchForPayload } = all;
 	const handleOnComplete = (task) => {
-		console.log(task.title, "| archiving...");
+                const options = {
+                        method: "POST",
+                        headers: {
+                                "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(task)
+                }
+                // * Archive Task
+                // * Delete Upon Archivation
 		setTimeout(()=>{
-			//TODO insert actual archive url here
-
-			fetch(`${uri.domain}/api/test/secret`)
+			
+			fetch(`${uri.domain}/api/task/archive`,options)
 			.then(res =>{
 				if(res.ok){
 					onDelete(task);
 				}
 			})
 		},3000)
+                // * Add Score To Player
+                const score = task.timestamps[task.timestamps.length - 1].streak;
+                task.score = score;
+                options.body = JSON.stringify(task)
+                fetch(`${uri.domain}/api/task/addScore`, options)
+                
 
 	}
 	const handleOnStartInDays = (task) => {

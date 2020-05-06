@@ -268,6 +268,18 @@ router.post("/archive", (req: any, res: any) => {
   return res.end()
 });
 
+//! Add Score To Player
+router.post("/addScore/:score",async (req: any,res :any)=> {
+  const task = req.body;
+  const id = req.user.userID;
+  const score = task.score;
+  const player = await Player.findOne({playerID: id});
+  if(!player)return res.end();
+
+  // ! Add score to player.score;
+  return res.end();
+})
+
 //! Update All
 router.post("/update",async (req: any, res: any) => {
   const tasks = req.body;
