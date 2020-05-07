@@ -1,5 +1,5 @@
 import React from "react";
-import Tasks from "./tasks"
+import Tasks from "./_tasks"
 const TasksPage = (props) => {
 
 	return(<div>

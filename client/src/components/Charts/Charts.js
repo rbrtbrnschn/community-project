@@ -1,5 +1,5 @@
 import React from "react";
-import Charts from "./charts";
+import Charts from "./_charts";
 const ChartsPage = (props) => {
   return <Charts {...props} />;
 };

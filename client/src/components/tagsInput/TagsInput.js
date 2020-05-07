@@ -1,5 +1,5 @@
 import React from "react";
-import TagsInput from "./tagsInput";
+import TagsInput from "./_tagsInput";
 const Tags = (props) => {
   const {
     onDelete,
