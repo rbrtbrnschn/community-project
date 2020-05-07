@@ -28,10 +28,11 @@ const ChallengeComponent = (props) => {
 			})
 		},3000)
                 // * Add Score To Player
-                const score = task.timestamps[task.timestamps.length - 1].streak;
+                const score = task.streak;
                 task.score = score;
                 options.body = JSON.stringify(task)
-                fetch(`${uri.domain}/api/task/addScore`, options)
+		console.log(options);
+                fetch(`${uri.domain}/api/task/addScore/${task.score}`, options)
                 
 
 	}
