@@ -5,7 +5,7 @@ const ChartComponent = (props) => {
   const { task, tasks } = props;
 
   const handleData = (task) => {
-    /*const timestamps = task.timestamps.filter((t) => {
+    const timestamps = task.timestamps.filter((t) => {
       if (t.streak) return t;
     });
 
@@ -15,30 +15,38 @@ const ChartComponent = (props) => {
     const data = timestamps.map((t, i) => {
       return { x: new Date(keys[i]), y: streaks[i] };
     });
-    */
-	  let datasets = []
-	  tasks.forEach((t,index)=>{
-	  	let data = []
-	  	const timestamps = t.timestamps.filter(s=>{
-	  		if(s.streak)return s;
-	  	})
-		const keys = timestamps.map((t)=>t.key);
-		const streaks = timestamps.map((t)=>t.streak);
-
-		timestamps.forEach((s,i)=>{
-			data.push({x: new Date(keys[i]),y:streaks[i]})
-		})
-		  let r = Math.random()*250,g = Math.random()*250, b = Math.random() * 250;
-		datasets.push({
-			label:tasks[index].title,
-			data: data,
-			borderDash: [10,5],
-			backgroundColor: `rgba(${r},${g},${b},0.5)`,
-			borderColor: `rgba(${r},${g},${b},1)`,
-			backThickness: 10
-		})
-
-	  })
+    let r = Math.random()*250,g = Math.random()*250, b = Math.random() * 250;
+    const datasets = [{
+      label:task.title,
+      data:data,
+      borderDash: [10,5],
+      backgroundColor: `rgba(${r},${g},${b},0.5)`,
+      	borderColor: `rgba(${r},${g},${b},1)`,
+      	backThickness: 10
+      }]
+	  //let datasets = []
+	  //tasks.forEach((t,index)=>{
+	  //	let data = []
+	  //	const timestamps = t.timestamps.filter(s=>{
+	  //		if(s.streak)return s;
+	  //	})
+		//const keys = timestamps.map((t)=>t.key);
+		//const streaks = timestamps.map((t)=>t.streak);
+//
+		//timestamps.forEach((s,i)=>{
+		//	data.push({x: new Date(keys[i]),y:streaks[i]})
+		//})
+		//  let r = Math.random()*250,g = Math.random()*250, b = Math.random() * 250;
+		//datasets.push({
+		//	label:tasks[index].title,
+		//	data: data,
+		//	borderDash: [10,5],
+		//	backgroundColor: `rgba(${r},${g},${b},0.5)`,
+		//	borderColor: `rgba(${r},${g},${b},1)`,
+		//	backThickness: 10
+		//})
+//
+	  //})
     
     return {
       datasets: datasets,

@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import ChartComponent from "./chart";
 import UserContext from "../../contexts/UserContext";
-
+import TotalLine from './totalLine'
 const Charts = (props) => {
   // * Get Context
   const context = useContext(UserContext);
@@ -21,8 +21,9 @@ const Charts = (props) => {
 
           <div className="content">
             {state.player.tasks.map((t, i) => (
-              <ChartComponent {...props} key={i + "chart"} task={t} tasks={state.player.tasks}/>
+              <ChartComponent {...props} key={i + "chart"} task={t} tasks={state.player.tasks} />
             ))}
+            <TotalLine {...props} tasks={state.player.tasks} />
           </div>
         </div>
       </div>
